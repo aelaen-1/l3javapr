@@ -12,7 +12,6 @@ public class Main {
 
         /*
         test ScolariteService prerequis*/
-        //String code, String intitule, int credit, Mention mention
         UE ue1 = new UE("ue1", "ue numero 1", 3, Mention.MIASHS);
         UE ue2 = new UE("ue2", "ue numero 2", 3, Mention.MIASHS);
         UE ue3 = new UE("ue3", "ue numero 3", 3, Mention.MIASHS);
@@ -24,6 +23,9 @@ public class Main {
         UE ue9 = new UE("ue9", "ue numero 9", 3, Mention.MIASHS);
         UE ue10 = new UE("ue10", "ue numero 10", 3, Mention.MIASHS);
         UE ue11 = new UE("ue11", "ue numero 11", 3, Mention.MIASHS);
+        UE ue12 = new UE("ue12", "ue numero 12", 3, Mention.MIASHS);
+        UE ue13 = new UE("ue13", "ue numero 13", 3, Mention.MIASHS);
+
 
 
         ue3.setUEprerequis(ue2);
@@ -32,14 +34,19 @@ public class Main {
         ue9.setUEprerequis(ue4);
         ue9.setUEprerequis(ue6);
         ue9.setUEprerequis(ue8);
-        ue11.setUEprerequis(ue10);
+        ue12.setUEprerequis(ue11);
+        ue12.setUEprerequis(ue10);
+        ue13.setUEprerequis(ue10);
+        ue13.setUEprerequis(ue3);
 
-        Parcours Miage = new Parcours("Miage", Mention.MIASHS);
-        Miage.addUEObligatoire(ue2);
-        Miage.addUEObligatoire(ue3);
-        Miage.addUEObligatoire(ue6);
+        Parcours miage = new Parcours("Miage", Mention.MIASHS);
+        miage.addUEObligatoire(ue2);
+        miage.addUEObligatoire(ue3);
+        miage.addUEObligatoire(ue6);
 
-        Etudiant e1 = new Etudiant(1,"noù1","pre1",Miage );
+        Etudiant e1 = new Etudiant(1,"nom1","pre1",miage );
+
+        Etudiant e2 = new Etudiant(2,"nom2","pre2",miage );
 
         ResultatUE resultatue1 = new ResultatUE(ue1,"2022", Semestre.IMPAIR, StatutUE.VALIDE);
         ResultatUE resultatue2 = new ResultatUE(ue2,"2022", Semestre.IMPAIR, StatutUE.VALIDE);
@@ -65,8 +72,10 @@ public class Main {
         //e1.afficherCusrus();
 
         ScolariteService sco = new ScolariteService();
-        log.info("UE X pre-requis : "+sco.prerequis(ue9,e1));
+        log.info("UE X pre-requis : "+sco.prerequis(ue12,e1));
         log.info("Diplôme validé "+sco.estDiplome(e1));
+
+        log.info("Etudiant 2 " +sco.prerequis(ue12, e2));
     }
 
 }

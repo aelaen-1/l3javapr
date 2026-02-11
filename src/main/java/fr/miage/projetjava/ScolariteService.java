@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ScolariteService {
 
     public Boolean prerequis(UE ue, Etudiant etudiant){
-        ArrayList<ResultatUE> listeUE = etudiant.getCursus(); //récupération liste des UE passé par l'étudiant peu import son statut
+        ArrayList<ResultatUE> listeUE = etudiant.getCursus(); //récupération liste des UE passé par l'étudiant peu importe son statut
         ArrayList<UE> UEvalide = new ArrayList<>(); //liste pour stocké les UE validé par l'étudiant pour après pouvoir comparé avec les UE nécessaire pour le pré-requis
 
         for (int i = 0; i<listeUE.size() ; i++){ //ajout des UE validé par l'étudiant dans la liste UEvalide
@@ -18,11 +18,14 @@ public class ScolariteService {
         if(UEprerequis.isEmpty()){
             return true;
         }
+        else if(!UEprerequis.isEmpty() && UEvalide.isEmpty()){ //s'il y a des pré-requis et que la liste des ue valides est vide
+            return false;
+        }
 
-        while(!UEprerequis.isEmpty() && !UEvalide.isEmpty()){
+
+        while(!UEprerequis.isEmpty()){
             if(UEvalide.contains(UEprerequis.getFirst())){
-                UEprerequis.remove(UEvalide.getFirst());
-                UEvalide.removeFirst();
+                UEprerequis.remove(UEprerequis.getFirst());
             }
             else {
                 return false;
