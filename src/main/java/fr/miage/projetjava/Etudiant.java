@@ -1,5 +1,7 @@
 package fr.miage.projetjava;
 
+import java.util.ArrayList;
+
 public class Etudiant {
     private int numE;
     private String nomE;
