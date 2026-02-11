@@ -1,4 +1,4 @@
 package fr.miage.projetjava;
 
-public class Mention {
+public enum Mention {
 }

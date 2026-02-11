@@ -1,4 +1,4 @@
 package fr.miage.projetjava;
 
-public class Gestionnaire {
+public class ScolariteService {
 }
