@@ -21,19 +21,7 @@ public class ScolariteService {
         else if(!UEprerequis.isEmpty() && UEvalide.isEmpty()){ //s'il y a des pré-requis et que la liste des ue valides est vide
             return false;
         }
-
-
-        while(!UEprerequis.isEmpty()){
-            if(UEvalide.contains(UEprerequis.getFirst())){
-                UEprerequis.removeFirst();
-            }
-            else {
-                return false;
-            }
-
-        }
-
-        return true;
+        return compare(UEvalide, UEprerequis);
     }
 
     //avoir validé 180 ECTS, avoir validé les UE obligatoire du parcours
@@ -48,16 +36,18 @@ public class ScolariteService {
                 UEvalide.add(listeUE.get(i).getUe());
             }
         }
-
         if(nbECTS<180){
             return false;
         }
 
         ArrayList<UE> UEobligatoire = etudiant.getParcours().getUEObligatoire();//récupération des UE obligaoires que doit passer l'étudiant
+        return compare(UEvalide, UEobligatoire);
+    }
 
-        while(!UEobligatoire.isEmpty()){
-            if(UEvalide.contains(UEobligatoire.getFirst())){
-                UEobligatoire.removeFirst();
+    public Boolean compare (ArrayList<UE> UEvalide, ArrayList<UE> UEcomparaison){
+        while(!UEcomparaison.isEmpty()){
+            if(UEvalide.contains(UEcomparaison.getFirst())){
+                UEcomparaison.removeFirst();
             }
             else {
                 return false;
@@ -67,3 +57,4 @@ public class ScolariteService {
         return true;
     }
 }
+

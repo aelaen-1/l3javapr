@@ -72,10 +72,10 @@ public class Main {
         //e1.afficherCusrus();
 
         ScolariteService sco = new ScolariteService();
-        log.info("UE X pre-requis : "+sco.prerequis(ue12,e1));
+        log.info("UE X pre-requis : "+sco.prerequis(ue9,e1));
         log.info("Diplôme validé "+sco.estDiplome(e1));
 
-        log.info("Etudiant 2 " +sco.prerequis(ue12, e2));
+        log.info("Etudiant 2 " +sco.prerequis(ue2, e2));
     }
 
 }
