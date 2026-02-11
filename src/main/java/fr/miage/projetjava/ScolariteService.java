@@ -25,7 +25,7 @@ public class ScolariteService {
 
         while(!UEprerequis.isEmpty()){
             if(UEvalide.contains(UEprerequis.getFirst())){
-                UEprerequis.remove(UEprerequis.getFirst());
+                UEprerequis.removeFirst();
             }
             else {
                 return false;
@@ -49,17 +49,21 @@ public class ScolariteService {
             }
         }
 
+        if(nbECTS<180){
+            return false;
+        }
+
         ArrayList<UE> UEobligatoire = etudiant.getParcours().getUEObligatoire();//récupération des UE obligaoires que doit passer l'étudiant
-        while(!UEobligatoire.isEmpty() && !UEvalide.isEmpty()){
+
+        while(!UEobligatoire.isEmpty()){
             if(UEvalide.contains(UEobligatoire.getFirst())){
-                UEobligatoire.remove(UEvalide.getFirst());
-                UEvalide.remove(0);
+                UEobligatoire.removeFirst();
             }
             else {
                 return false;
             }
 
         }
-        return false;
+        return true;
     }
 }
