@@ -33,4 +33,7 @@ public class UE {
     public Mention getMention() {
         return mention;
     }
+    public String toString(){
+        return "codeUE: "+this.code+" , Credit: "+credit+" Mention: "+mention;
+    }
 }

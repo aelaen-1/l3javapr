@@ -26,4 +26,7 @@ public class ResultatUE {
     public void setStatutUE(StatutUE statut){
         this.statut=statut;
     }
+    public String toString(){
+        return ue.getCode()+ " Annee: "+this.annee+" semestre: "+semestre+ "Statut: "+statut;
+    }
 }
