@@ -36,7 +36,7 @@ public class Etudiant {
         return cursus;
     }
 
-    public void setCursus(ResultatUE resultat) {
+    public void addResultatUE(ResultatUE resultat) {
         this.cursus.add(resultat);
     }
 

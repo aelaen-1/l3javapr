@@ -27,7 +27,6 @@ public class Main {
         UE ue13 = new UE("ue13", "ue numero 13", 3, Mention.MIASHS);
 
 
-
         ue3.setUEprerequis(ue2);
         ue4.setUEprerequis(ue3);
         ue5.setUEprerequis(ue4);
@@ -59,15 +58,15 @@ public class Main {
         ResultatUE resultatue10 = new ResultatUE(ue10,"2024", Semestre.PAIR, StatutUE.ECHOUE);
 
 
-        e1.setCursus(resultatue1);
-        e1.setCursus(resultatue2);
-        e1.setCursus(resultatue3);
-        e1.setCursus(resultatue4);
-        e1.setCursus(resultatue5);
-        e1.setCursus(resultatue6);
-        e1.setCursus(resultatue7);
-        e1.setCursus(resultatue8);
-        e1.setCursus(resultatue10);
+        e1.addResultatUE(resultatue1);
+        e1.addResultatUE(resultatue2);
+        e1.addResultatUE(resultatue3);
+        e1.addResultatUE(resultatue4);
+        e1.addResultatUE(resultatue5);
+        e1.addResultatUE(resultatue6);
+        e1.addResultatUE(resultatue7);
+        e1.addResultatUE(resultatue8);
+        e1.addResultatUE(resultatue10);
 
         //e1.afficherCusrus();
 
