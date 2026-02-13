@@ -5,7 +5,6 @@ public enum StatutUE {
     ENCOURS("En cours"),
     ECHOUE("Echoué");
 
-
     private String affichage;
 
     private StatutUE(String affichage) {

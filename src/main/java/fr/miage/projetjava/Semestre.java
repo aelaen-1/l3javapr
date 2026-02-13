@@ -4,7 +4,6 @@ public enum Semestre {
     IMPAIR("Impair"),
     PAIR("Pair");
 
-
     private String affichage;
 
     private Semestre(String affichage) {

@@ -7,7 +7,6 @@ public enum Mention {
     CHIMIE("Chimie"),
     PHYSIQUE("Physique");
 
-
     private String affichage;
 
     private Mention(String affichage) {
