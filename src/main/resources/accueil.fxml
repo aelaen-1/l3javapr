@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.miage.projetjava.ControllerAccueil"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="106.0" AnchorPane.leftAnchor="6.0"
+    AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+        <children>
+            <!--- on peut faire <Button></Button> mais c'est pas ouf si on veut
+            faire un onAction, il vaut donc mieux garder l'ecriture comme celle
+            qui est juste ci-dessous-->
+            <Button onAction="#afficheEtudiant" mnemonicParsing="false" />
+        </children>
+
+    </VBox>
+</AnchorPane>
