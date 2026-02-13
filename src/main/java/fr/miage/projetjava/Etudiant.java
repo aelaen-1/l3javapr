@@ -9,7 +9,8 @@ public class Etudiant {
     private Parcours parcours;
     private ArrayList<ResultatUE> cursus = new ArrayList<>();
 
-    public Etudiant(int numE, String nomE, String prenomE, Parcours parcours){
+    public Etudiant(int numE, String nomE, String prenomE, Parcours parcours)
+    {
         this.numE = numE;
         this.nomE = nomE;
         this.prenomE = prenomE;
@@ -41,7 +42,8 @@ public class Etudiant {
         this.cursus.add(resultat);
     }
 
-    public void afficherCusrus(){
+    public void afficherCusrus()
+    {
         for (ResultatUE ue : cursus){
             ue.afficher();
         }

@@ -8,21 +8,25 @@ public class Parcours {
     private ArrayList<UE> UEObligatoire = new ArrayList<>();
     private Mention mention;
 
-    public Parcours(String nom, Mention mention){
+    public Parcours(String nom, Mention mention)
+    {
         this.nom = nom;
         this.mention = mention;
     }
 
-    public ArrayList<UE> getUEObligatoire() {
+    public ArrayList<UE> getUEObligatoire()
+    {
         return UEObligatoire;
     }
 
-    public String getNom() {
+    public String getNom()
+    {
         return nom;
     }
 
-    public void addUEObligatoire(UE ue){
-        if(!UEObligatoire.contains(ue)){
+    public void addUEObligatoire(UE ue)
+    {
+        if (!UEObligatoire.contains(ue)){
             UEObligatoire.add(ue);
         }
 

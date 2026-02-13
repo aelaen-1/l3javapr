@@ -10,12 +10,14 @@ public enum Mention {
 
     private String affichage;
 
-    private Mention(String affichage) {
+    private Mention(String affichage)
+    {
         this.affichage = affichage;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.affichage;
     }
 }

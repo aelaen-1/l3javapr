@@ -10,34 +10,42 @@ public class UE {
     private Mention mention;
     private ArrayList<UE> UEprerequis = new ArrayList<>();
 
-    public UE(String code, String intitule, int credit, Mention mention){
+    public UE(String code, String intitule, int credit, Mention mention)
+    {
         this.code = code;
         this.intitule = intitule;
         this.credit = credit;
         this.mention = mention;
     }
 
-    public ArrayList<UE> getUEprerequis() {
+    public ArrayList<UE> getUEprerequis()
+    {
         return UEprerequis;
     }
 
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
-    public Mention getMention() {
+    public Mention getMention()
+    {
         return mention;
     }
 
-    public String getIntitule() {
+    public String getIntitule()
+    {
         return intitule;
     }
 
-    public int getCredit() {
+    public int getCredit()
+    {
         return credit;
     }
 
-    public void setUEprerequis(UE ue) {
+    public void setUEprerequis(UE ue)
+    {
+
         this.UEprerequis.add(ue);
     }
 }
