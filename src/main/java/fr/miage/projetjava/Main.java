@@ -1,7 +1,7 @@
 package fr.miage.projetjava;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class Main {
@@ -46,16 +46,17 @@ public class Main {
 
         Etudiant e1 = new Etudiant(1,"nom1","pre1",miage );
 
-        Etudiant e2 = new Etudiant(2,"nom2","pre2",miage );
-
+        /*problème : on peut mettre StatutUE.VALIDE sans vérifier pré-requis
+        renvoyer une exception dans le constructeur ? */
         ResultatUE resultatue1 = new ResultatUE(ue1,"2022", Semestre.IMPAIR, StatutUE.VALIDE);
         ResultatUE resultatue2 = new ResultatUE(ue2,"2022", Semestre.IMPAIR, StatutUE.VALIDE);
         ResultatUE resultatue3 = new ResultatUE(ue3,"2022", Semestre.PAIR, StatutUE.VALIDE);
         ResultatUE resultatue4 = new ResultatUE(ue4,"2023", Semestre.IMPAIR, StatutUE.VALIDE);
         ResultatUE resultatue5 = new ResultatUE(ue5,"2023", Semestre.PAIR, StatutUE.VALIDE);
         ResultatUE resultatue6 = new ResultatUE(ue6,"2023", Semestre.PAIR, StatutUE.VALIDE);
-        ResultatUE resultatue8 = new ResultatUE(ue8,"2023", Semestre.PAIR, StatutUE.VALIDE);
         ResultatUE resultatue7 = new ResultatUE(ue7,"2025", Semestre.PAIR, StatutUE.ENCOURS);
+        ResultatUE resultatue8 = new ResultatUE(ue8,"2023", Semestre.PAIR, StatutUE.VALIDE);
+
         ResultatUE resultatue10 = new ResultatUE(ue10,"2024", Semestre.PAIR, StatutUE.ECHOUE);
 
 
@@ -73,8 +74,8 @@ public class Main {
 
         ScolariteService sco = new ScolariteService();
         log.info("UE X pre-requis : " + sco.verifierValidationPrerequis(ue9,e1));
+        log.info("Etudiant 1 " + sco.verifierValidationPrerequis(ue2, e1));
         log.info("Diplôme validé "+ sco.estDiplome(e1));
-        log.info("Etudiant 2 " + sco.verifierValidationPrerequis(ue2, e2));
     }
 
 }
