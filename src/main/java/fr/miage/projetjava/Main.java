@@ -27,6 +27,7 @@ public class Main {
         UE ue13 = new UE("ue13", "ue numero 13", 3, Mention.MIASHS);
 
 
+
         ue3.setUEprerequis(ue2);
         ue4.setUEprerequis(ue3);
         ue5.setUEprerequis(ue4);
@@ -71,10 +72,9 @@ public class Main {
         //e1.afficherCusrus();
 
         ScolariteService sco = new ScolariteService();
-        log.info("UE X pre-requis : "+sco.prerequis(ue9,e1));
-        log.info("Diplôme validé "+sco.estDiplome(e1));
-
-        log.info("Etudiant 2 " +sco.prerequis(ue2, e2));
+        log.info("UE X pre-requis : " + sco.verifierValidationPrerequis(ue9,e1));
+        log.info("Diplôme validé "+ sco.estDiplome(e1));
+        log.info("Etudiant 2 " + sco.verifierValidationPrerequis(ue2, e2));
     }
 
 }
