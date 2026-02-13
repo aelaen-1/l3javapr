@@ -11,7 +11,6 @@ public class ResultatUE {
     private StatutUE statut;
     private static final Logger log = LogManager.getLogger(ResultatUE.class);
 
-
     public ResultatUE(UE ue, String annee, Semestre semestre, StatutUE statut) {
         this.ue = ue;
         this.annee = annee;
@@ -41,7 +40,7 @@ public class ResultatUE {
 
     public void afficher() {
         String message = "Nom de l'UE : " + ue.getIntitule() + "\nUE pré-requis "
-            + ue.getUEprerequis() + "\n Statut :" + statut;
+                + ue.getUEprerequis() + "\n Statut :" + statut;
         log.info(message);
     }
 }

@@ -3,20 +3,22 @@ package fr.miage.projetjava;
 import java.util.ArrayList;
 
 public class Etudiant {
+
     private int numE;
     private String nomE;
     private String prenomE;
     private Parcours parcours;
-    private ArrayList<ResultatUE> cursus = new ArrayList<>();
+    private ArrayList<ResultatUE> resultatsUE = new ArrayList<>();
 
-    public Etudiant(int numE, String nomE, String prenomE, Parcours parcours){
+    public Etudiant(int numE, String nomE, String prenomE, Parcours parcours) {
+
         this.numE = numE;
         this.nomE = nomE;
         this.prenomE = prenomE;
         this.parcours = parcours;
     }
 
-    public int getNumE(){
+    public int getNumE() {
         return this.numE;
     }
 
@@ -32,16 +34,16 @@ public class Etudiant {
         return prenomE;
     }
 
-    public ArrayList<ResultatUE> getCursus() {
-        return cursus;
+    public ArrayList<ResultatUE> getResultatsUE() {
+        return resultatsUE;
     }
 
     public void addResultatUE(ResultatUE resultat) {
-        this.cursus.add(resultat);
+        this.resultatsUE.add(resultat);
     }
 
-    public void afficherCusrus(){
-        for (ResultatUE ue : cursus){
+    public void afficherCusrus() {
+        for (ResultatUE ue : resultatsUE) {
             ue.afficher();
         }
     }
