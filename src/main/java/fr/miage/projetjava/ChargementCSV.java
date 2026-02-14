@@ -58,8 +58,30 @@ public class ChargementCSV {
             String nomE = data.get(i+1).get(2);
             String nomParcours = data.get(i+1).get(3);
 
-            //création du parcours et de l'étudiant
-            Parcours parcours = new Parcours(nomParcours, Mention.MIASHS);
+            //création de l'objet parcours de l'étudiant
+            Parcours parcours;
+            if (nomParcours == "IO" || nomParcours == "MIAGE")
+            {
+                parcours = new Parcours(nomParcours, Mention.MIASHS);
+            }
+            else if(nomParcours == "Biologie")
+            {
+                parcours = new Parcours(nomParcours, Mention.BIOLOGIE);
+            }
+            else if(nomParcours == "Chimie")
+            {
+                parcours = new Parcours(nomParcours, Mention.CHIMIE);
+            }
+            else if(nomParcours == "Informatique")
+            {
+                parcours = new Parcours(nomParcours, Mention.INFORMATIQUE);
+            }
+            else
+            {
+                parcours = new Parcours(nomParcours, Mention.PHYSIQUE);
+            }
+
+            //création de l'étudiant
             Etudiant e = new Etudiant(id, nomE, prenomE, parcours );
 
             //ajout de l'étudiant à la liste d'étudiant
