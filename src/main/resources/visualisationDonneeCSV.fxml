@@ -10,5 +10,8 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="fr.miage.projetjava.ControllerVisualisationDonneeCSV"
             prefHeight="400.0" prefWidth="600.0">
+    <!--va créer une liste où on peut scroller, prefHeight et Width pour la taille et largeur et fx:id va permettre de faire le lien avec le controller
+    et donc de pouvoir y afficher la liste des étudiants récupérer du fichier csv grâce à la classe ChargementCSV-->
+    <ListView prefHeight="500.0" prefWidth="1000.0"  fx:id="listeEtudiants"/>
 
 </AnchorPane>
