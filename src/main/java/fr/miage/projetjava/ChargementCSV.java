@@ -77,7 +77,7 @@ public class ChargementCSV {
     {
 
         // Chemin vers le fichier CSV, on pourras le mettre en paramètre de la méthode aussi
-        String fichierCSV = "src/test/resources/etudiant.csv";
+        String fichierCSV = "src/main/resources/etudiant.csv";
 
         // va stocker les différentes lignes du fichier csv lors de l'appel de la méthode lectureStockInfoCSV
         List<List<String>> donneeCSV = new ArrayList<>();
