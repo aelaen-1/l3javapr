@@ -73,7 +73,7 @@ public class ChargementCSV {
     //va charger le ficher CSV, appeller la méthode pour lire et stocker les informations du fichier csv
     // puis utiliser ce qui est retourné par cette méthode pour appeler la méthode pour créer la liste d'étudiant
     //Cette méthode va être appelé dans ControllerVisualisationDonneeCSV
-    public List<Etudiant> chargementCSV()
+    public List<Etudiant> chargementFichierCSV()
     {
 
         // Chemin vers le fichier CSV, on pourras le mettre en paramètre de la méthode aussi
