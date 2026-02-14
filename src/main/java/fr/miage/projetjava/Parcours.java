@@ -3,7 +3,6 @@ package fr.miage.projetjava;
 import java.util.ArrayList;
 
 public class Parcours {
-    private int Id;
     private String nom;
     private ArrayList<UE> UEObligatoire = new ArrayList<>();
     private Mention mention;
