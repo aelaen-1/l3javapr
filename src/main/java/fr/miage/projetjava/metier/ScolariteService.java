@@ -1,6 +1,7 @@
-package fr.miage.projetjava;
+package fr.miage.projetjava.metier;
 
 import java.util.ArrayList;
+import fr.miage.projetjava.model.*;
 
 public class ScolariteService {
 

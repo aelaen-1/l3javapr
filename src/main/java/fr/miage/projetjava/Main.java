@@ -2,6 +2,8 @@ package fr.miage.projetjava;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import fr.miage.projetjava.model.*;
+import fr.miage.projetjava.metier.ScolariteService;
 
 
 public class Main {
