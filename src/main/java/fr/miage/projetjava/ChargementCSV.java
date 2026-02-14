@@ -46,6 +46,33 @@ public class ChargementCSV {
         return donneeCSV;
     }
 
+
+    private Parcours creerParcours(String nomParcours)
+    {
+        Parcours parcours;
+        if (nomParcours == "IO" || nomParcours == "MIAGE")
+        {
+            parcours = new Parcours(nomParcours, Mention.MIASHS);
+        }
+        else if(nomParcours == "Biologie")
+        {
+            parcours = new Parcours(nomParcours, Mention.BIOLOGIE);
+        }
+        else if(nomParcours == "Chimie")
+        {
+            parcours = new Parcours(nomParcours, Mention.CHIMIE);
+        }
+        else if(nomParcours == "Informatique")
+        {
+            parcours = new Parcours(nomParcours, Mention.INFORMATIQUE);
+        }
+        else
+        {
+            parcours = new Parcours(nomParcours, Mention.PHYSIQUE);
+        }
+        return parcours;
+    }
+
     //avec la liste de liste de données du fichier CSV, la méthode va créer un à un tous les étudiants et les stocker dans une liste d'étudiant
     private List<Etudiant> creationEtudiant(List<List<String>> data)
     {
@@ -59,27 +86,8 @@ public class ChargementCSV {
             String nomParcours = data.get(i+1).get(3);
 
             //création de l'objet parcours de l'étudiant
-            Parcours parcours;
-            if (nomParcours == "IO" || nomParcours == "MIAGE")
-            {
-                parcours = new Parcours(nomParcours, Mention.MIASHS);
-            }
-            else if(nomParcours == "Biologie")
-            {
-                parcours = new Parcours(nomParcours, Mention.BIOLOGIE);
-            }
-            else if(nomParcours == "Chimie")
-            {
-                parcours = new Parcours(nomParcours, Mention.CHIMIE);
-            }
-            else if(nomParcours == "Informatique")
-            {
-                parcours = new Parcours(nomParcours, Mention.INFORMATIQUE);
-            }
-            else
-            {
-                parcours = new Parcours(nomParcours, Mention.PHYSIQUE);
-            }
+            Parcours parcours = creerParcours(nomParcours);
+
 
             //création de l'étudiant
             Etudiant e = new Etudiant(id, nomE, prenomE, parcours );
