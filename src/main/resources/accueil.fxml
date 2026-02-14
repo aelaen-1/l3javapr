@@ -24,7 +24,7 @@ spacing donne l'espace entre les différents éléments (aussi appelés enfants)
         qui est juste ci-dessous
         fx:id permet de faire la liaison entre le fxml et le controller
         en le déclarant avec @FXML  private Button monBouton; dans le controller on peut modifier son style, ajouter des évènements...-->
-        <Button onAction="#afficheEtudiant" mnemonicParsing="false" fx:id="monBouton" text="Visualiser les étudiants" />
+        <Button onAction="#changementFenetre" mnemonicParsing="false" fx:id="monBouton" text="Visualiser les étudiants" />
 
     </VBox>
 </AnchorPane>
