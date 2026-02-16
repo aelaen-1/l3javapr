@@ -2,7 +2,7 @@
 package fr.miage.projetjava.controller;
 
 import static java.lang.Integer.parseInt;
-
+import fr.miage.projetjava.model.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

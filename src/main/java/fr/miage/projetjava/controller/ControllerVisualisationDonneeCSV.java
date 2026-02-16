@@ -2,7 +2,7 @@ package fr.miage.projetjava.controller;
 
 import java.util.List;
 
-import javax.swing.text.html.ListView;
+import javafx.scene.control.ListView;
 
 import fr.miage.projetjava.model.Etudiant;
 import javafx.collections.FXCollections;

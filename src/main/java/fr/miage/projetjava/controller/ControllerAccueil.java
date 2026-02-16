@@ -1,9 +1,9 @@
 package fr.miage.projetjava.controller;
-
+import fr.miage.projetjava.model.*;
 import java.io.IOException;
 import java.net.URL;
 
-import org.w3c.dom.Node;
+import javafx.scene.Node;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
