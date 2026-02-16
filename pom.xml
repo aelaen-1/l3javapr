@@ -26,6 +26,22 @@
             <artifactId>log4j-core</artifactId>
             <version>2.25.3</version>
         </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+        <!--contient les composants de javaFx standard comme les boutons, label, textfield, checkbox etc...-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+
+        <!-- Permet de gérer et charger les fichiers fxml et les injections fxml entre le controller et le fichier fxml-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -50,6 +66,16 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>fr.miage.projetjava.Main</mainClass>
+                </configuration>
+            </plugin>
+            -->
         </plugins>
     </build>
 </project>
