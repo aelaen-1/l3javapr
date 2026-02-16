@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- xmlns qui permet d'indiquer que les balises utilisées ici appartiennet au framework JavaFx (ex: Button, AnchorPane ou Vbox)
+xmlns:fx sert à activer les fonctionnalités spéciales FXML. fx indique que ce n'est pas un composant mais une instruction pour le moteur-->
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.miage.projetjava.ControllerAccueil"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <!-- Vbox est un conteneur qui dispose ses éléments verticalement les uns sous les autres
+    prefHeight et prefWidth sont les préferences d'affichages de la Vbox, mais pas imposés ce n'est pas une taille obligatoire
+    spacing donne l'espace entre les différents éléments (aussi appelés enfants) de la Vbox
+     AnchorPane.bottomAnchor utiliser car Vbox est dans un AnchorPane et est utiliser pour ancrer la Vbox par rapport au bord du conteneur parent-->
+    <VBox prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="106.0" AnchorPane.leftAnchor="6.0"
+          AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+
+
+        <!--- on peut faire <Button></Button> mais c'est pas ouf si on veut
+        faire un onAction, il vaut donc mieux garder l'ecriture comme celle
+        qui est juste ci-dessous
+        fx:id permet de faire la liaison entre le fxml et le controller
+        en le déclarant avec @FXML  private Button monBouton; dans le controller on peut modifier son style, ajouter des évènements...-->
+        <Button onAction="#changementFenetre" mnemonicParsing="false" fx:id="monBouton" text="Visualiser les étudiants" />
+
+    </VBox>
+</AnchorPane>
