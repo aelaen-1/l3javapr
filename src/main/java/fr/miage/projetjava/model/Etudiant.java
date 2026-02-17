@@ -47,4 +47,9 @@ public class Etudiant {
             ue.afficher();
         }
     }
+
+    @Override
+    public String toString(){
+        return "Numéro étudiant: "+this.numE + "\n Nom: "+ this.nomE +"\n Prénom: "+this.prenomE +"\n Parcours: "+ this.parcours;
+    }
 }

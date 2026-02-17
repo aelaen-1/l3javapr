@@ -24,4 +24,9 @@ public class Parcours {
         if (!UEObligatoire.contains(ue))
             UEObligatoire.add(ue);
     }
+
+    @Override
+    public String toString(){
+        return this.nom;
+    }
 }
