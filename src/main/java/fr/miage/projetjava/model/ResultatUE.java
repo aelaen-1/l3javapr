@@ -1,4 +1,4 @@
-package fr.miage.projetjava;
+package fr.miage.projetjava.model;
 
 
 import org.apache.logging.log4j.LogManager;

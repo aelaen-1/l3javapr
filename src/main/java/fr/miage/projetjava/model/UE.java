@@ -1,4 +1,4 @@
-package fr.miage.projetjava;
+package fr.miage.projetjava.model;
 
 
 import java.util.ArrayList;

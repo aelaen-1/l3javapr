@@ -2,9 +2,9 @@ package fr.miage.projetjava.CSV;
 
 
 
-import fr.miage.projetjava.Etudiant;
-import fr.miage.projetjava.Mention;
-import fr.miage.projetjava.Parcours;
+import fr.miage.projetjava.model.Etudiant;
+import fr.miage.projetjava.model.Mention;
+import fr.miage.projetjava.model.Parcours;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
