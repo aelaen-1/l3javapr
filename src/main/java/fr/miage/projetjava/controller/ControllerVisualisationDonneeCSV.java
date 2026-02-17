@@ -24,7 +24,7 @@ public class ControllerVisualisationDonneeCSV {
 
         //on va appeler la méthode chargementFichierCSV qui va appeler les deux méthodes pour lire et récuperer les données du fichier csv
         // et qui va créer les objets étudiants pour les mettre dans une liste
-        List<Etudiant> listeEtudiant = donneCSV.chargementFichierCSV();
+        List<Etudiant> listeEtudiant = donneCSV.chargementFichierCSV("src/main/resources/etudiant.csv");
 
         //ObservableList est une interface de javafx, du même style que List mais ListView (ou TableView) peut voir si ya des
         // changements et les prendre en compte
