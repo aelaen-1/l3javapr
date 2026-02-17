@@ -3,6 +3,7 @@ package fr.miage.projetjava.CSV;
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Mention;
 import fr.miage.projetjava.model.Parcours;
+import fr.miage.projetjava.CSV.ChargementCSV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,18 @@ public class EtudiantCSV {
             listeEtudiants.add(e);
 
         }
+        return listeEtudiants;
+    }
+
+    public List<Etudiant> ChargerEtudiant(String cheminFichier ){
+        ChargementCSV chargerFichierCSV = new ChargementCSV();
+        List<List<String>> donneeCSV  = chargerFichierCSV.chargementFichierCSV(cheminFichier);
+
+
+        //va stocker les étudiants qui vont être créer à partir du fichier csv et de l'appel de la méthode creationEtudiant
+        List<Etudiant> listeEtudiants = new ArrayList<>();
+        listeEtudiants = creationEtudiant(donneeCSV);
+
         return listeEtudiants;
     }
 }
