@@ -1,4 +1,6 @@
-package fr.miage.projetjava;
+package fr.miage.projetjava.controller;
+import fr.miage.projetjava.ChargementCSV;
+import fr.miage.projetjava.Etudiant;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

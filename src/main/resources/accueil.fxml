@@ -8,7 +8,7 @@
 xmlns:fx sert à activer les fonctionnalités spéciales FXML. fx indique que ce n'est pas un composant mais une instruction pour le moteur-->
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fr.miage.projetjava.ControllerAccueil"
+            fx:controller="fr.miage.projetjava.controller.ControllerAccueil"
             prefHeight="400.0" prefWidth="600.0">
 
 <!-- Vbox est un conteneur qui dispose ses éléments verticalement les uns sous les autres

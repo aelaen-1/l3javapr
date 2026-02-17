@@ -1,4 +1,4 @@
-package fr.miage.projetjava;
+package fr.miage.projetjava.controller;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
