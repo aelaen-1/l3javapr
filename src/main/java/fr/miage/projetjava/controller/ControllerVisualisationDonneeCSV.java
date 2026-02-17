@@ -1,5 +1,5 @@
 package fr.miage.projetjava.controller;
-import fr.miage.projetjava.CSV.ChargementCSV;
+import fr.miage.projetjava.CSV.EtudiantCSV;
 import fr.miage.projetjava.model.Etudiant;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,11 +20,11 @@ public class ControllerVisualisationDonneeCSV {
     {
 
         // Charge et affiche les données CSV
-        ChargementCSV donneCSV = new ChargementCSV();
+        EtudiantCSV donneCSV = new EtudiantCSV();
 
         //on va appeler la méthode chargementFichierCSV qui va appeler les deux méthodes pour lire et récuperer les données du fichier csv
         // et qui va créer les objets étudiants pour les mettre dans une liste
-        List<Etudiant> listeEtudiant = donneCSV.chargementFichierCSV("src/main/resources/etudiant.csv");
+        List<Etudiant> listeEtudiant = donneCSV.ChargerEtudiant("src/main/resources/etudiant.csv");
 
         //ObservableList est une interface de javafx, du même style que List mais ListView (ou TableView) peut voir si ya des
         // changements et les prendre en compte
