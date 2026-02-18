@@ -1,0 +1,39 @@
+code,intitulé,crédit,mention,UE pré-requis
+KMIAZ10U,Mise à niveau mathématique,6,Mathématiques,Aucun
+KMIAZ20U,Mise à niveau informatique,6,Informatique,Aucun
+KTRDE00U,Devenir Étudiant,3,MIASHS,Aucun
+KMIAC10U,Le poste de travail,3,MIASHS,Aucun
+KMIAE20U,Projet math-info,3,MIASHS,Mise à niveau informatique
+KMIAE10U,Création web,3,MIASHS,Aucun
+KMIAM00U,Ensemble 1,6,Mathématiques,Mise à niveau mathématique
+KMIAG10U,Connaissance de l'organisation et du monde du travail,3,MIASHS,Aucun
+KMIAH10U,Économie,3,MIASHS,Aucun
+KMIAG20U,Introduction à la gestion d'entreprise,3,MIASHS,Aucun
+KMIAP10U,Professionnalisation niv1,3,MIASHS,Aucun
+KMIAB10U,Projet data,3,MIASHS,Aucun
+KMIAF10U,Production d'algorithmes,3,MIASHS,Mise à niveau informatique
+KMIAC20U,Usage avancé d'un poste de travail,3,MIASHS,Aucun
+KLANH10U,Anglais niv1,3,MIASHS,Aucun
+KMIAH20U,Culture générale,3,MIASHS,Aucun
+KLANG20U,Anglais niv2 premier semestre,3,MIASHS,Anglais niv1
+KLANE20U,Anglais niv2 deuxième semestre,3,MIASHS,Anglais niv1
+KMIAC30U,Configuration d'un poste de travail,3,MIASHS,"Le poste de travail, Usage avancé d'un poste de travail"
+KMIAF30U,Réseaux et services,3,MIASHS,"Le poste de travail, Usage avancé d'un poste de travail"
+KMIAE40U,Réseaux pour les organisations ,3,MIASHS,"Le poste de travail, Usage avancé d'un poste de travail"
+KMIAF20U,Mise en oeuvre d'algorithmes,3,MIASHS,"Mise à niveau informatique, Projet math-info, Production d'algorithmes"
+KMIAD10U,Structure de données,3,MIASHS,"Mise à niveau informatique, Projet math-info, Production d'algorithmes"
+KMIAE30U,Interaction homme-machine,3,MIASHS,"Mise à niveau informatique, Projet math-info, Production d'algorithmes"
+KMIAF40U,Programmation Objet,3,MIASHS,"Mise à niveau informatique, Projet math-info, Production d'algorithmes"
+KMIAB20U,Interactivite et gamification,3,MIASHS,"Mise à niveau informatique, Projet math-info, Production d'algorithmes"
+KMIAD20U,BD Modelisation,3,MIASHS,"Création web, Projet data"
+KMIXPQ11,Projet Logiciel BD / Web,6,MIASHS,"Création web, Projet data"
+KMIAP20U,Professionnalisation niv2,3,MIASHS,Professionnalisation niv1
+KMIAM10U,Mathématiques pour l'informatique,3,MIASHS,"Mise à niveau mathématique, Ensemble 1"
+KMIOK10U,Mathématiques pour la gestion,3,MIASHS,"Mise à niveau mathématique, Ensemble 1"
+KMIAA10U,SI : enjeux et usages pour les entreprises,6,MIASHS,"Connaissance de l'organisation et du monde du travail, Économie, Introduction à la gestion d'entreprise"
+KMIAM20U,Algèbre pour l'informatique,3,MIASHS,"Mise à niveau mathématique, Ensemble 1"
+KMIAI10U,Initiation à la gestion de projets,3,MIASHS,"Connaissance de l'organisation et du monde du travail, Économie, Introduction à la gestion d'entreprise"
+KMIOT10U,Découverte des systèmes productifs,3,MIASHS,"Connaissance de l'organisation et du monde du travail, Économie, Introduction à la gestion d'entreprise"
+KMIAG30U,Concept avancés de gestion,3,MIASHS,"Connaissance de l'organisation et du monde du travail, Économie, Introduction à la gestion d'entreprise"
+KMIAH30U,Psychologie sociale et sociologie des organisations ,3,MIASHS,"Connaissance de l'organisation et du monde du travail, Économie, Introduction à la gestion d'entreprise"
+KMIOU10U,Droit des affaires et droit social,3,MIASHS,"Connaissance de l'organisation et du monde du travail, Économie, Introduction à la gestion d'entreprise"
