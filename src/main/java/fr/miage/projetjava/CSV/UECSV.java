@@ -7,6 +7,7 @@ import fr.miage.projetjava.model.UE;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -37,9 +38,20 @@ public class UECSV {
 
 
     //utiliser split(,) pour creer l'arraylist de string puis les passer en arraylist d'UE
-    private List<UE>  passageStringToArrayList(String stringUEprerequis)
+    private List<UE>  passageStringToArrayList(String stringUEprerequis, List<UE> listeUE)
     {
+        //va faire un tableau de String et chaque élément du tableau va correspondre à un element de la liste qui est
+        // séparé par une virgule
+        //Exemple: stringUEprerequis = "UE1, UE2, UE3"
+        //valeur va donner = ["UE1", "UE2", "UE3"]
+        String[] tabStringUEPrerequis = stringUEprerequis.split(",");
+
+        List<String> lineData = Arrays.asList(tabStringUEPrerequis);
+
         List<UE> UEprerequis = new ArrayList<>();
+
+        //faire une boucle for qui va vérifier que chaque UE de lineData existe dans listeUE et si c'est le cas on prend
+        // l'UE de listeUE et on l'ajoute à la liste UEprerequis
 
         return UEprerequis;
     }
@@ -48,7 +60,7 @@ public class UECSV {
     //avec la liste de liste de données du fichier CSV, la méthode va créer un à un toutes les UE et les stocker dans une liste d'UE
     private List<UE> creationUE(List<List<String>> data)
     {
-        List<UE> listeEtudiants = new ArrayList<>();
+        List<UE> listeUE = new ArrayList<>();
 
         for (int i = 0; i < data.size()-1; i++) {
             //récupération des différentes informations qui viennent du fichier CSV et qui sont nécessaire à la création des objets UE
@@ -61,11 +73,11 @@ public class UECSV {
             //création de l'UE
             UE ue = new UE(code, intitule, credit, mention, UEprerequis);
 
-            //ajout de l'UE à la liste d'étudiant
-            listeEtudiants.add(ue);
+            //ajout de l'UE à la liste d'UE
+            listeUE.add(ue);
 
         }
-        return listeEtudiants;
+        return listeUE;
     }
 
 
