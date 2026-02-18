@@ -35,6 +35,15 @@ public class UECSV {
         }
     }
 
+
+    //utiliser split(,) pour creer l'arraylist de string puis les passer en arraylist d'UE
+    private List<UE>  passageStringToArrayList(String stringUEprerequis)
+    {
+        List<UE> UEprerequis = new ArrayList<>();
+
+        return UEprerequis;
+    }
+
     //String code, String intitule, int credit,   mention, ArrayList<UE> UEprerequis = new ArrayList<>();
     //avec la liste de liste de données du fichier CSV, la méthode va créer un à un toutes les UE et les stocker dans une liste d'UE
     private List<UE> creationUE(List<List<String>> data)
