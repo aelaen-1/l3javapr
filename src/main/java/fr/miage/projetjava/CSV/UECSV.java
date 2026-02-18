@@ -92,8 +92,9 @@ public class UECSV {
 
             //méthode permettant de passer de la ligne contenant les pre-requis à l'ajout des UE déjà
             // existante dans l'arrayList de UE
-            ajoutPreRequisUE(stringUEprerequis, listeUE, ue);
-
+            if(stringUEprerequis != "Aucun") {
+                ajoutPreRequisUE(stringUEprerequis, listeUE, ue);
+            }
 
             //ajout de l'UE à la liste d'UE
             listeUE.add(ue);
@@ -102,5 +103,33 @@ public class UECSV {
         return listeUE;
     }
 
+
+    public List<UE> chargerUE(String cheminFichier )
+    {
+        //appel à la méthode pour charger un fichier étudiant et recevoir les informations sous formes de listes, une fois les donneEtudiantCSV
+        //stocker on va pouvoir créer une liste d'objets Étudiants
+        ChargementCSV chargerFichierCSV = new ChargementCSV();
+        List<List<String>> donneeUECSV  = chargerFichierCSV.chargementFichierCSV(cheminFichier);
+
+
+        //va stocker les étudiants qui vont être créer à partir du fichier csv et de l'appel de la méthode creationEtudiant
+        List<UE> listeUE;
+        listeUE = creationUE(donneeUECSV);
+
+        return listeUE;
+    }
+
+    public static void main(String[] agr){
+
+        UECSV ue = new UECSV();
+        //on va appeler la méthode chargementFichierCSV qui va appeler les deux méthodes pour lire et récuperer les données du fichier csv
+        // et qui va créer les objets étudiants pour les mettre dans une liste
+        List<UE> listeUE = ue.chargerUE("src/main/resources/ue.csv");
+        for (int i=0; i<listeUE.size(); i++){
+            System.out.println(listeUE.get(i));
+        }
+
+
+    }
 
 }
