@@ -75,7 +75,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fr.miage.projetjava.Main</mainClass>
+                            <mainClass>fr.miage.projetjava.vue.Lanceur</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -101,7 +101,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fr.miage.projetjava.Main</mainClass>
+                            <mainClass>fr.miage.projetjava.vue.Lanceur</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

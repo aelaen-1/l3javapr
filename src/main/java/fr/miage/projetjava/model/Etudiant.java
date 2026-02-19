@@ -7,17 +7,25 @@ public class Etudiant {
     private int numE;
     private String nomE;
     private String prenomE;
+    private Semestre semestreCourant;
     private Parcours parcours;
     private ArrayList<ResultatUE> resultatsUE = new ArrayList<>();
 
-    public Etudiant(int numE, String nomE, String prenomE, Parcours parcours) {
+    public Etudiant(int numE, String nomE, String prenomE, Parcours parcours, Semestre semestreCourant) {
 
         this.numE = numE;
         this.nomE = nomE;
         this.prenomE = prenomE;
+        this.semestreCourant=semestreCourant;
         this.parcours = parcours;
     }
 
+    public Semestre getSemestreCourant() {
+        return semestreCourant;
+    }
+    public void setSemestreCourant(Semestre semestreCourant){
+        this.semestreCourant=semestreCourant;
+    }
     public int getNumE() {
         return this.numE;
     }
@@ -46,5 +54,20 @@ public class Etudiant {
         for (ResultatUE ue : resultatsUE) {
             ue.afficher();
         }
+    }
+    public void setNomE(String nomE){
+        this.nomE=nomE;
+    }
+    public void setPrenomE(String prenomE){
+        this.prenomE=prenomE;
+    }
+    public void setParcours(Parcours p){
+        this.parcours=p;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.numE+" - "+this.nomE+" - "+this.prenomE+"/n"+this.parcours+" - "+this.semestreCourant;
     }
 }

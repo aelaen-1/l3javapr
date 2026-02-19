@@ -46,7 +46,7 @@ public class Main {
         miage.addUEObligatoire(ue3);
         miage.addUEObligatoire(ue6);
 
-        Etudiant e1 = new Etudiant(1,"nom1","pre1",miage );
+        Etudiant e1 = new Etudiant(1,"nom1","pre1",miage,Semestre.PAIR);
 
         /*problème : on peut mettre StatutUE.VALIDE sans vérifier pré-requis
         renvoyer une exception dans le constructeur ? */
@@ -73,10 +73,10 @@ public class Main {
         e1.addResultatUE(resultatue10);
 
         //e1.afficherCusrus();
-
+        log.info(e1);
         ScolariteService sco = new ScolariteService();
-        log.info("UE X pre-requis : " + sco.verifierValidationPrerequis(ue9,e1));
-        log.info("Etudiant 1 " + sco.verifierValidationPrerequis(ue2, e1));
+        log.info("UE X pre-requis : " + sco.possedePrerequis(ue9,e1));
+        log.info("Etudiant 1 " + sco.possedePrerequis(ue2, e1));
         log.info("Diplôme validé "+ sco.estDiplome(e1));
     }
 

@@ -24,4 +24,8 @@ public class Parcours {
         if (!UEObligatoire.contains(ue))
             UEObligatoire.add(ue);
     }
+
+    public Mention getMention() {
+        return mention;
+    }
 }

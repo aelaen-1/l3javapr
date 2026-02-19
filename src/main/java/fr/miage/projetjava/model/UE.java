@@ -39,4 +39,9 @@ public class UE {
     public void setUEprerequis(UE ue) {
         this.UEprerequis.add(ue);
     }
+    @Override
+    public String toString() {
+        // C'est ce texte qui apparaîtra dans tes listes et ComboBox
+        return this.code + " - " + this.intitule + " (" + this.credit + " ECTS)";
+    }
 }
