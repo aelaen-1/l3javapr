@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public class ConnexionBD {
     //contient une String de connexion à la BD, si la base de donnée testBD.db n'existe pas elle seras créé automatiquement
-    private static final String URL = "jdbc:sqlite:testBD.db";
+    private static final String URL = "jdbc:sqlite:projetjavaBD.db";
     private static final Logger log = LogManager.getLogger(ConnexionBD.class);
 
 
