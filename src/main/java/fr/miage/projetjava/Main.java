@@ -1,5 +1,6 @@
 package fr.miage.projetjava;
 
+import fr.miage.projetjava.database.CreationTableBD;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -62,6 +63,8 @@ public class Main extends Application {
 
     public static void main(String[] arg)
     {
+        //creation bd et des tables
+        CreationTableBD.init();
         //lancement de l'interface
         launch(arg);
     }
