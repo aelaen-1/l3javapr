@@ -9,25 +9,25 @@ public class UEDAO {
 
     public List<UE> chargerUEs() {
         List<UE> ues = new ArrayList<>();
-        System.out.println("=== CHARGEMENT DES UEs DEPUIS CSV ===");
+        Map<String, String> prerequisMap = new HashMap<>();
+
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
                 String[] data = line.split(";");
-
-                // data: code;intitule;credits;mention
-                UE ue = new UE(data[0], data[1], Integer.parseInt(data[2]),
+                UE ue = new UE(data[0].trim(), data[1].trim(), Integer.parseInt(data[2].trim()),
                         Mention.valueOf(data[3].trim().toUpperCase()));
                 ues.add(ue);
-
-                // AFFICHAGE CONSOLE
-                System.out.println("[DAO] UE détectée : " + ue.getCode() + " | " + ue.getIntitule());
+                if (data.length > 4) prerequisMap.put(data[0].trim(), data[4].trim());
             }
-            System.out.println("TOTAL : " + ues.size() + " UEs chargées.\n");
-        } catch (IOException | IllegalArgumentException e) {
-            System.err.println("Erreur lecture UEs: " + e.getMessage());
-        }
+            // Liaison des prérequis
+            for (UE ue : ues) {
+                String codePre = prerequisMap.get(ue.getCode());
+                if (codePre != null && !codePre.isEmpty()) {
+                    ues.stream().filter(u -> u.getCode().equals(codePre)).findFirst().ifPresent(ue::setUEprerequis);
+                }
+            }
+        } catch (IOException e) { e.printStackTrace(); }
         return ues;
     }
 }

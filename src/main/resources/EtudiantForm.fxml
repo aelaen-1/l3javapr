@@ -25,11 +25,16 @@
         <Label text="Prénom :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
         <TextField fx:id="txtPrenom" promptText="Entrez le prénom" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-        <Label text="Parcours :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="comboParcours" prefWidth="250" promptText="Choisir un parcours" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Mention :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="comboMention" prefWidth="250" promptText="Choisir une mention"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <Label text="Semestre :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="comboSemestre" prefWidth="250" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <Label text="Parcours :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="comboParcours" prefWidth="250" promptText="Choisir un parcours"
+                  GridPane.rowIndex="3" GridPane.columnIndex="1" disable="true"/>
+
+        <Label text="Semestre :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="comboSemestre" prefWidth="250" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="15" alignment="CENTER">

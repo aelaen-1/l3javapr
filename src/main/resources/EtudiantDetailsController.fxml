@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="fr.miage.projetjava.controller.EtudiantDetailsController"
+      style="-fx-background-color: #f8f9fa;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <HBox spacing="15" alignment="CENTER_LEFT"
+          style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+
+        <Button text="⬅ RETOUR" onAction="#handleRetour"
+                style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+
+        <VBox spacing="2">
+            <Label fx:id="lblTitre" text="Chargement..."
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label fx:id="lblParcours" text="Parcours"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2980b9;"/>
+            <Label fx:id="lblMention" text="Mention"
+                   style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+        </VBox>
+
+        <Pane HBox.hgrow="ALWAYS" />
+
+        <VBox alignment="CENTER" style="-fx-background-color: #fff9db; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #f1c40f; -fx-border-radius: 10;">
+            <Label text="SEMESTRE" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #f39c12;"/>
+            <Label fx:id="lblSemestreActuel" text="-" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" style="-fx-background-color: #f1f2f6; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #bdc3c7; -fx-border-radius: 10;">
+            <Label text="ANNÉE" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+            <Label fx:id="lblAnneeActuelle" text="-" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" style="-fx-background-color: #ebfbee; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #27ae60; -fx-border-radius: 10;">
+            <Label text="VALIDÉS" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+            <Label fx:id="lblCreditsValides" text="0 ECTS" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" style="-fx-background-color: #eef2ff; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #3949ab; -fx-border-radius: 10;">
+            <Label text="EN COURS" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #3949ab;"/>
+            <Label fx:id="lblCreditsEnCours" text="0 ECTS" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #3949ab;"/>
+        </VBox>
+    </HBox>
+
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="🎓 UNITÉS D'ENSEIGNEMENT VALIDÉES" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+            <ListView fx:id="listValidees" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+
+            <Label text="📝 INSCRIPTIONS EN COURS" style="-fx-font-weight: bold; -fx-text-fill: #2980b9;"/>
+            <ListView fx:id="listEnCours" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+        </VBox>
+
+        <VBox spacing="15" prefWidth="320">
+            <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10; -fx-border-color: #dcdde1; -fx-border-width: 1;">
+                <Label text="OPÉRATIONS" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+
+                <Button text="INSCRIRE À UNE UE" onAction="#handleInscrire"
+                        maxWidth="Infinity" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand;"/>
+
+                <Button text="Marquer UE VALIDE/ECHOUEE" onAction="#handleNoter"
+                        maxWidth="Infinity" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand;"/>
+
+                <Button text="Voir Resultats" onAction="#handleVisualiserResultats"
+                        maxWidth="Infinity" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-cursor: hand;"/>
+
+                <Separator/>
+
+                <Button text="PASSER SEMESTRE SUIVANT" onAction="#handleSemestre"
+                        maxWidth="Infinity" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-cursor: hand;"/>
+            </VBox>
+
+            <Label text="🔓 UE ACCESSIBLES" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+            <ListView fx:id="listAccessibles" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+        </VBox>
+    </HBox>
+</VBox>

@@ -65,6 +65,13 @@ public class Etudiant {
         this.parcours=p;
     }
 
+    public int getTotalCredits() {
+        return resultatsUE.stream()
+                .filter(r -> r.getStatut() == StatutUE.VALIDE) // Uniquement les UE validées
+                .mapToInt(r -> r.getUe().getCredit())       // On récupère les crédits de l'UE
+                .sum();                                        // On fait la somme
+    }
+
 
     @Override
     public String toString() {

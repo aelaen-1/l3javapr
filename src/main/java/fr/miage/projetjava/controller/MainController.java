@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
-import javafx.application.Platform;
 import java.io.IOException;
 
 public class MainController {
@@ -13,8 +12,8 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        // Au lancement de l'application, on affiche la liste par défaut
-        handleVoirEtudiants();
+        // On ne fait rien ici : le StackPane affiche déjà
+        // les boutons définis dans le FXML au lancement.
     }
 
     @FXML
@@ -31,18 +30,15 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
-            // On remplace le contenu actuel par le nouveau
+            // On remplace les boutons d'accueil par la nouvelle vue (Liste ou Form)
             contentArea.getChildren().setAll(root);
-
         } catch (IOException e) {
-            System.err.println("Erreur lors du chargement de la vue : " + fxmlPath);
             e.printStackTrace();
         }
     }
 
     @FXML
     private void handleQuitter() {
-        Platform.exit();
+        javafx.application.Platform.exit();
     }
 }
