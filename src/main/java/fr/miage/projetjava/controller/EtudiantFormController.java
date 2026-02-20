@@ -4,76 +4,79 @@ import fr.miage.projetjava.dao.*;
 import fr.miage.projetjava.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+import java.io.IOException;
 import java.util.List;
 
 public class EtudiantFormController {
 
-    @FXML private TextField txtNom;
-    @FXML private TextField txtPrenom;
+    @FXML private TextField txtNom, txtPrenom;
     @FXML private ComboBox<Parcours> comboParcours;
     @FXML private ComboBox<Semestre> comboSemestre;
     @FXML private Button btnEnregistrer;
-    @FXML private Button btnAnnuler;
 
     private List<Parcours> parcoursDispos;
+    private Etudiant etudiantModif;
 
     @FXML
     public void initialize() {
-        // Charger les données pour remplir les ComboBox
-        UEDAO ueDao = new UEDAO();
-        ParcoursDAO pDao = new ParcoursDAO();
-        this.parcoursDispos = pDao.chargerParcours(ueDao.chargerUEs());
-
+        this.parcoursDispos = new ParcoursDAO().chargerParcours(new UEDAO().chargerUEs());
         comboParcours.setItems(FXCollections.observableArrayList(parcoursDispos));
         comboSemestre.setItems(FXCollections.observableArrayList(Semestre.values()));
+    }
 
-        // Personnalisation de l'affichage du parcours dans la combo
-        comboParcours.setCellFactory(lv -> new ListCell<Parcours>() {
-            @Override protected void updateItem(Parcours p, boolean empty) {
-                super.updateItem(p, empty);
-                setText(empty ? "" : p.getNom());
-            }
-        });
-        comboParcours.setButtonCell(comboParcours.getCellFactory().call(null));
+    public void setEtudiant(Etudiant e) {
+        this.etudiantModif = e;
+        if (e != null) {
+            txtNom.setText(e.getNomE());
+            txtPrenom.setText(e.getPrenomE());
+            comboParcours.setValue(e.getParcours());
+            comboSemestre.setValue(e.getSemestreCourant());
+        }
     }
 
     @FXML
     private void handleEnregistrer() {
-        if (txtNom.getText().isEmpty() || comboParcours.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Le nom et le parcours sont obligatoires.");
-            alert.showAndWait();
-            return;
-        }
-
         EtudiantDAO dao = new EtudiantDAO();
         List<Etudiant> liste = dao.chargerTout(parcoursDispos);
 
-        // Calcul d'un nouvel ID simple
-        int nouvelId = liste.stream().mapToInt(Etudiant::getNumE).max().orElse(0) + 1;
-
-        Etudiant nouv = new Etudiant(
-                nouvelId,
-                txtNom.getText(),
-                txtPrenom.getText(),
-                comboParcours.getValue(),
-                comboSemestre.getValue()
-        );
-
-        liste.add(nouv);
+        if (etudiantModif == null) {
+            int nouvelId = liste.stream().mapToInt(Etudiant::getNumE).max().orElse(0) + 1;
+            liste.add(new Etudiant(nouvelId, txtNom.getText(), txtPrenom.getText(), comboParcours.getValue(), comboSemestre.getValue()));
+        } else {
+            for (Etudiant e : liste) {
+                if (e.getNumE() == etudiantModif.getNumE()) {
+                    e.setNomE(txtNom.getText());
+                    e.setPrenomE(txtPrenom.getText());
+                    e.setParcours(comboParcours.getValue());
+                    e.setSemestreCourant(comboSemestre.getValue());
+                }
+            }
+        }
         dao.sauvegarderTout(liste);
-
-        fermerFenetre();
+        retournerALaListe(); // Redirection automatique
     }
 
     @FXML
     private void handleAnnuler() {
-        fermerFenetre();
+        retournerALaListe();
     }
 
-    private void fermerFenetre() {
-        Stage stage = (Stage) btnEnregistrer.getScene().getWindow();
-        stage.close();
+    // Méthode de navigation interne
+    private void retournerALaListe() {
+        try {
+            // On récupère le StackPane (contentArea) depuis la scène actuelle
+            StackPane contentArea = (StackPane) btnEnregistrer.getScene().lookup("#contentArea");
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EtudiantListView.fxml"));
+            Parent root = loader.load();
+
+            contentArea.getChildren().setAll(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

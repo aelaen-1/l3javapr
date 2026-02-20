@@ -9,7 +9,13 @@ import java.io.IOException;
 
 public class MainController {
 
-    @FXML private StackPane contentArea; // Le conteneur central de ta MainView.fxml
+    @FXML private StackPane contentArea;
+
+    @FXML
+    public void initialize() {
+        // Au lancement de l'application, on affiche la liste par défaut
+        handleVoirEtudiants();
+    }
 
     @FXML
     private void handleVoirEtudiants() {
@@ -26,17 +32,11 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            if (contentArea != null) {
-                contentArea.getChildren().clear();
-                contentArea.getChildren().add(root);
-            } else {
-                // Si tu n'as pas encore de contentArea, on ouvre une nouvelle fenêtre (fallback)
-                javafx.scene.Scene scene = new javafx.scene.Scene(root);
-                javafx.stage.Stage stage = new javafx.stage.Stage();
-                stage.setScene(scene);
-                stage.show();
-            }
+            // On remplace le contenu actuel par le nouveau
+            contentArea.getChildren().setAll(root);
+
         } catch (IOException e) {
+            System.err.println("Erreur lors du chargement de la vue : " + fxmlPath);
             e.printStackTrace();
         }
     }
