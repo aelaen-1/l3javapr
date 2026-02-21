@@ -41,7 +41,6 @@ public class BDEtudiant {
                 ajoutValues.setString(4,parcours.getNom());
 
                 ajoutValues.executeUpdate();
-
                 log.info("étudiant ajouté : " + etu);
             }
 
