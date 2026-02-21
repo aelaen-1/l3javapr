@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 public class BDEtudiant {
     private static final Logger log = LogManager.getLogger(BDEtudiant.class);
 
@@ -42,6 +44,41 @@ public class BDEtudiant {
 
                 ajoutValues.executeUpdate();
                 log.info("étudiant ajouté : " + etu);
+            }
+
+        }
+        catch(SQLException e){
+            log.error(e.getMessage());
+            throw new RuntimeException("Erreur de connexion à la base de donnée");
+        }
+    }
+
+    public void insertEtudiantCSV(List<List<String>> listeEtudiantCSV)
+    {
+
+        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
+        try(Connection conn = ConnexionBD.connexionBD(); Statement stmt = conn.createStatement();){
+
+            for (int i = 0; i < listeEtudiantCSV.size()-1; i++) {
+                //récupération des différentes informations qui viennent du fichier CSV et qui sont nécessaire à la création des objets étudiants
+                int numE = parseInt(listeEtudiantCSV.get(i+1).get(0));
+                String prenomE = listeEtudiantCSV.get(i+1).get(1);
+                String nomE = listeEtudiantCSV.get(i+1).get(2);
+                String nomParcours = listeEtudiantCSV.get(i+1).get(3);
+
+                log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+nomParcours);
+
+                String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
+                        "VALUES ( ?, ?, ?, ?);";
+
+                PreparedStatement ajoutValues = conn.prepareStatement(requeteInsertEtudiant);
+                ajoutValues.setInt(1, numE);
+                ajoutValues.setString(2,prenomE);
+                ajoutValues.setString(3,nomE);
+                ajoutValues.setString(4,nomParcours);
+
+                ajoutValues.executeUpdate();
+                log.info("étudiant ajouté : " +i);
             }
 
         }
