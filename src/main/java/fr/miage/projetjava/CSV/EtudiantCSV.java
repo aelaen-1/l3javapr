@@ -63,14 +63,18 @@ public class EtudiantCSV {
         return listeEtudiants;
     }
 
-    public List<Etudiant> ChargerEtudiant(String cheminFichier ){
+
+    public List<Etudiant> ChargerEtudiant(String cheminFichier )
+    {
+        //appel à la méthode pour charger un fichier étudiant et recevoir les informations sous formes de listes, une fois les donneEtudiantCSV
+        //stocker on va pouvoir créer une liste d'objets Étudiants
         ChargementCSV chargerFichierCSV = new ChargementCSV();
-        List<List<String>> donneeCSV  = chargerFichierCSV.chargementFichierCSV(cheminFichier);
+        List<List<String>> donneeEtudiantCSV  = chargerFichierCSV.chargementFichierCSV(cheminFichier);
 
 
         //va stocker les étudiants qui vont être créer à partir du fichier csv et de l'appel de la méthode creationEtudiant
-        List<Etudiant> listeEtudiants = new ArrayList<>();
-        listeEtudiants = creationEtudiant(donneeCSV);
+        List<Etudiant> listeEtudiants;
+        listeEtudiants = creationEtudiant(donneeEtudiantCSV);
 
         return listeEtudiants;
     }

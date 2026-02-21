@@ -48,4 +48,9 @@ public class UE {
 
         this.UEprerequis.add(ue);
     }
+
+    @Override
+    public String toString(){
+        return "code : " + this.code + "\n intitule : " + this.intitule + "\n credit: " +this.credit  + "\n pré-requis "+UEprerequis;
+    }
 }
