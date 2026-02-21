@@ -44,18 +44,23 @@ public class Main extends Application {
             // Retourne une URL pointant sur le fichier FXML
             final URL url_fichier_fxml = getClass().getResource("/accueil.fxml");
 
-            // ÉTAPE 2 : Créer un FXMLLoader en pointant vers le fichier
-            // FXMLLoader est un outil JavaFX qui va transformer du XML en composants Java
+            // ÉTAPE 2 : Créer un objet FXMLLoader
+            // qui permettra (grâce à load()) de transformer le fichier FXML (texte XML)
+            // en objets Java (Button, Label, VBox, AnchorPane, etc.)
+            // On l'initialise juste avec l'URL du fichier à transformer
+            // À ce stade, AUCUN objet Java n'a été créé, juste un objet FXMLLOADER
             final FXMLLoader fxmlLoader = new FXMLLoader(url_fichier_fxml);
 
-            // ÉTAPE 3 : Charger le FXML et créer l'interface graphique en mémoire
-            // fxmlLoader.load() :
-            // 1. Lit le fichier accueil.fxml
-            // 2. Parse chaque balise XML (<Button>, <Label>, <VBox>, etc.)
-            // 3. Crée les objets Java correspondants
-            // 4. Les lie les uns aux autres selon la hiérarchie XML
-            // 5. Retourne l'élément racine (ici : AnchorPane)
-            // (AnchorPane) : cast nécessaire car load() retourne Object, pas AnchorPane
+            // ÉTAPE 3 : EXÉCUTER la transformation FXML → Java
+            // C'est fxmlLoader.load() qui CRÉE TOUS LES OBJETS JAVA :
+            // 1. Lit le fichier accueil.fxml (du texte XML brut)
+            // 2. Parse chaque balise XML (<Button>, <Label>, <VBox>, <AnchorPane>, etc.)
+            // 3. CRÉE les objets Java correspondants pour chaque balise
+            // 4. Les relie les uns aux autres selon la hiérarchie du FXML
+            // 5. Retourne l'élément RACINE (ici : AnchorPane)
+            // AnchorPane est l'UN DES OBJETS créés par load() - le conteneur racine
+            // les autres élements (VBbox, Button, etc) seront à l'intérieur de cet objet (AnchorPane)
+            // (AnchorPane) : cast nécessaire car load() retourne Object
             final AnchorPane root = (AnchorPane) fxmlLoader.load();
 
             // ÉTAPE 4 : Créer une Scene (le contenu visible dans la fenêtre)
