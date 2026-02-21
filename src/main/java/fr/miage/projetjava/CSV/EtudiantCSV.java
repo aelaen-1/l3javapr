@@ -1,5 +1,7 @@
 package fr.miage.projetjava.CSV;
 
+import fr.miage.projetjava.dao.BDEtudiant;
+import fr.miage.projetjava.dao.BDParcours;
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Mention;
 import fr.miage.projetjava.model.Parcours;
@@ -71,6 +73,15 @@ public class EtudiantCSV {
         //va stocker les étudiants qui vont être créer à partir du fichier csv et de l'appel de la méthode creationEtudiant
         List<Etudiant> listeEtudiants = new ArrayList<>();
         listeEtudiants = creationEtudiant(donneeCSV);
+
+
+        BDParcours insertionParcoursBD = new BDParcours();
+        insertionParcoursBD.insertParcours();
+
+        BDEtudiant insertionEtudiantBD = new BDEtudiant();
+        insertionEtudiantBD.insertEtudiant(listeEtudiants);
+
+
 
         return listeEtudiants;
     }

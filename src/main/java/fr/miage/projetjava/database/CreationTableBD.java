@@ -23,7 +23,7 @@ public class CreationTableBD {
                 "CREATE TABLE IF NOT EXISTS Parcours ("
                         + "nom text PRIMARY KEY,"
                         + "mention text,"
-                        + "CONSTRAINT ck_UE_MENTION CHECK (mention in('MIASHS','Informatique', 'Biologie'))"
+                        + "CONSTRAINT ck_UE_MENTION CHECK (mention in('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique'))"
                         + ");",
 
                 "CREATE TABLE IF NOT EXISTS Etudiant ("
@@ -39,7 +39,7 @@ public class CreationTableBD {
                         + "intitule text,"
                         + "credit int,"
                         + "mention text,"
-                        + "CONSTRAINT ck_UE_MENTION CHECK (mention in('MIASHS','Informatique', 'Biologie'))"
+                        + "CONSTRAINT ck_UE_MENTION CHECK (mention in('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique'))"
                         + ");",
 
                 "CREATE TABLE IF NOT EXISTS UEObligatoire ("
