@@ -81,10 +81,10 @@ public class EtudiantCSV {
         BDEtudiant insertionEtudiantBD = new BDEtudiant();
 
         //creation bd à partir de la liste d'étudiant
-        insertionEtudiantBD.insertEtudiant(listeEtudiants);
+        insertionEtudiantBD.recuperationInformationListEtudiant(listeEtudiants);
 
         //creation bd à partir de la liste string récupérer du fichier csv
-        insertionEtudiantBD.insertEtudiantCSV(donneeCSV);
+        insertionEtudiantBD.recuperationInformationEtudiantCSV(donneeCSV);
 
 
 
