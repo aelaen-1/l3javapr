@@ -12,7 +12,6 @@ public class Etudiant {
     private ArrayList<ResultatUE> resultatsUE = new ArrayList<>();
 
     public Etudiant(int numE, String nomE, String prenomE, Parcours parcours, Semestre semestreCourant) {
-
         this.numE = numE;
         this.nomE = nomE;
         this.prenomE = prenomE;
@@ -65,14 +64,18 @@ public class Etudiant {
         this.parcours=p;
     }
 
+
     public int getTotalCredits() {
-        return resultatsUE.stream()
-                .filter(r -> r.getStatut() == StatutUE.VALIDE) // Uniquement les UE validées
-                .mapToInt(r -> r.getUe().getCredit())       // On récupère les crédits de l'UE
-                .sum();                                        // On fait la somme
+        int totalcredit =0;
+        for( ResultatUE res:resultatsUE){
+            if(res.getStatut()==StatutUE.VALIDE){
+                totalcredit =+res.getUe().getCredit();
+
+            }
+        }
+        return totalcredit;
+                                                        // On fait la somme
     }
-
-
     @Override
     public String toString() {
         return this.numE+" - "+this.nomE+" - "+this.prenomE+"/n"+this.parcours+" - "+this.semestreCourant;
