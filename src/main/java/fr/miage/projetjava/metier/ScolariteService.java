@@ -7,18 +7,13 @@ public class ScolariteService {
     /* cette méthode permet d'obtenir  les Ues accessibles par un etudiant
      * elle prend en entrée un etduant et la liste des Ues du parcours dans le quel l'etudidant est inscrit
      * si l'utilisateur veut voir les Ues accessibles par un etudiant, le controller doit faire appel  a cete methode */
-
     public List<UE> obtenirUEAccessibles(Etudiant etudiant, List<UE> toutesLesUE) {
         //on crée un tableaux des Ues pour stocker les Ues accessibmes par l'étudiant
         ArrayList<UE> accessibles = new ArrayList<>();
-
         //on recupere les Ues du parcours de l'etudiant
         List<UE> uesDuParcours = etudiant.getParcours().getUEObligatoire();
-
         // On boucle sur les UE du parcours
         for (UE ueDuParcours : uesDuParcours) {
-
-            // 1. ON VERIFIE LES PREREQUIS
             // On part du principe que c'est bon, et on cherche si un prérequis manque
             boolean possedePrerequis = true;
             if (ueDuParcours.getUEprerequis() != null && !ueDuParcours.getUEprerequis().isEmpty()) {
@@ -48,7 +43,7 @@ public class ScolariteService {
                         break;
                     }
                 }
-                // si historique est vide on ajoute les Ues qui ont getPrerequis == null
+                // si historique est vide on ajoute les Ues qui ont null
                 if (historique == null) {
                     if (ueDuParcours.getUEprerequis() == null || ueDuParcours.getUEprerequis().isEmpty()) {
                         // on ajoute l'UE car elle n'a pas de prérequis et jamais été inscrite
@@ -95,52 +90,79 @@ public class ScolariteService {
         }
         return true;
     }
-
+/* cette méthode permet savoir si un etudiant peut avoir son diplome*/
     public Boolean estDiplome(Etudiant e) {
+        //on initilase à 0 un compteur qui calcul les credits de l'etudiant
         int totalcredits = 0;
+        //on parcout dans les resutats de l'etudiant
         for (ResultatUE res : e.getResultatsUE()) {
+            //on ajoute les credit des Ues validés par l'etuadiant
             if (res.getStatut() == StatutUE.VALIDE) {
                 totalcredits += res.getUe().getCredit();
             }
         }
-        if (totalcredits < 180) return false;
-
+        //on verifie si total credit est inferieur à 180
+        if (totalcredits < 180)
+            //si oui on retourne false
+            return false;
+        //On verifie s'il a validé toutes les Ues obligatoires du parcours
         for (UE ueObligatoire : e.getParcours().getUEObligatoire()) {
+            //varibale boolean pour verfie s'il a validé toutes les Ues de l'etudiant
             boolean valide = false;
             for (ResultatUE res : e.getResultatsUE()) {
                 if (res.getUe().getCode().equals(ueObligatoire.getCode()) && res.getStatut() == StatutUE.VALIDE) {
+                    // si l'ue a un statut VALIDE , la variable valide deveint true
                     valide = true;
                     break;
                 }
             }
-            if (!valide) return false;
+            //si au moins une Ue du parcours n est pas validé  la variable est false
+            if (!valide)
+                //on retourne false
+                return false;
         }
+        // si l'etudiant à un credit >180 et a validé toutes les Ues obligatoires du parcours
+        // alors on retourne true ,il est diplomé
         return true;
     }
-
+/* Cette methode  permet de changer le statut d'une UE de l'etudant ( qui suit au semestre courant
+) à VALIDE*/
     public boolean validerUE(Etudiant e, UE ue) {
+        //on boucle sur Resutlat de l'etudant
         for (ResultatUE res : e.getResultatsUE()) {
+            //on recupere l'UE correspondant
             if (res.getUe().getCode().equals(ue.getCode())) {
+                //on change le statut
                 res.setStatut(StatutUE.VALIDE);
                 return true;
             }
         }
+        //s'il existe pas alors on retourne false car on peut pas valider qu on la suit pas
         return false;
     }
-
+/* cette methode permet de marquer Echouer une Ue suivit par l'etudiant*/
     public boolean echoueUE(Etudiant e, UE ue) {
+        //on recupere les resulats de l'etudiant
         for (ResultatUE res : e.getResultatsUE()) {
+            //on cherche l'Ue correspondant
             if (res.getUe().getCode().equals(ue.getCode())) {
+                //on marque statut ECHOUE
                 res.setStatut(StatutUE.ECHOUE);
                 return true;
             }
         }
+        //si l'Ue n est pas suivi par l'etudiant alors on retourne false
         return false;
     }
+    /* cette methode permet de passer un etudiant d'un semesre cournat à un semestre
+    * suivant*/
     public void passerSemestre(Etudiant e) {
+        //on recupere le semestre Cournat de l'etudiant suivant et on teste s'il est Impair
         if (e.getSemestreCourant() == Semestre.IMPAIR)
+            //on change à PAIR
             e.setSemestreCourant(Semestre.PAIR);
         else
+            //sion on change à IMPAIR le semestre courant
             e.setSemestreCourant(Semestre.IMPAIR);
     }
 }
