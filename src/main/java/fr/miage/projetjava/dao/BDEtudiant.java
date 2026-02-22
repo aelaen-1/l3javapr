@@ -18,33 +18,26 @@ import static java.lang.Integer.parseInt;
 public class BDEtudiant {
     private static final Logger log = LogManager.getLogger(BDEtudiant.class);
 
-    public void insertEtudiant(List<Etudiant> listeEtudiantCSV)
+    public void insertEtudiant(int numE, String prenomE, String nomE, String parcours)
     {
 
         // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        try(Connection conn = ConnexionBD.connexionBD(); Statement stmt = conn.createStatement();){
+        try(Connection conn = ConnexionBD.connexionBD()){
 
-            for (Etudiant etu : listeEtudiantCSV){
-                int numE = etu.getNumE();
-                String prenomE = etu.getPrenomE();
-                String nomE = etu.getNomE();
-                Parcours parcours = etu.getParcours();
-                List<ResultatUE> resultatUE = etu.getResultatUE();
 
-                log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+parcours);
+            log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+parcours);
 
-                String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
-                        "VALUES ( ?, ?, ?, ?);";
+            String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
+                    "VALUES ( ?, ?, ?, ?);";
 
-                PreparedStatement ajoutValues = conn.prepareStatement(requeteInsertEtudiant);
-                ajoutValues.setInt(1, numE);
-                ajoutValues.setString(2,prenomE);
-                ajoutValues.setString(3,nomE);
-                ajoutValues.setString(4,parcours.getNom());
+            PreparedStatement ajoutValues = conn.prepareStatement(requeteInsertEtudiant);
+            ajoutValues.setInt(1, numE);
+            ajoutValues.setString(2,prenomE);
+            ajoutValues.setString(3,nomE);
+            ajoutValues.setString(4,parcours);
 
-                ajoutValues.executeUpdate();
-                log.info("étudiant ajouté : " + etu);
-            }
+            ajoutValues.executeUpdate();
+            log.info("étudiant ajouté : " );
 
         }
         catch(SQLException e){
@@ -53,39 +46,30 @@ public class BDEtudiant {
         }
     }
 
-    public void insertEtudiantCSV(List<List<String>> listeEtudiantCSV)
-    {
+    public void recuperationInformationListEtudiant (List<Etudiant> listeEtudiantCSV){
+        for (Etudiant etu : listeEtudiantCSV) {
+            int numE = etu.getNumE();
+            String prenomE = etu.getPrenomE();
+            String nomE = etu.getNomE();
+            Parcours parcours = etu.getParcours();
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        try(Connection conn = ConnexionBD.connexionBD(); Statement stmt = conn.createStatement();){
+            insertEtudiant(numE,prenomE,nomE,parcours.getNom());
+        }
+    }
 
-            for (int i = 0; i < listeEtudiantCSV.size()-1; i++) {
-                //récupération des différentes informations qui viennent du fichier CSV et qui sont nécessaire à la création des objets étudiants
-                int numE = parseInt(listeEtudiantCSV.get(i+1).get(0));
-                String prenomE = listeEtudiantCSV.get(i+1).get(1);
-                String nomE = listeEtudiantCSV.get(i+1).get(2);
-                String nomParcours = listeEtudiantCSV.get(i+1).get(3);
 
-                log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+nomParcours);
+    public void recuperationInformationEtudiantCSV(List<List<String>> listeEtudiantCSV) {
+        for (int i = 0; i < listeEtudiantCSV.size() - 1; i++) {
+            //récupération des différentes informations qui viennent du fichier CSV et qui sont nécessaire à la création des objets étudiants
+            int numE = parseInt(listeEtudiantCSV.get(i + 1).get(0));
+            String prenomE = listeEtudiantCSV.get(i + 1).get(1);
+            String nomE = listeEtudiantCSV.get(i + 1).get(2);
+            String nomParcours = listeEtudiantCSV.get(i + 1).get(3);
 
-                String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
-                        "VALUES ( ?, ?, ?, ?);";
-
-                PreparedStatement ajoutValues = conn.prepareStatement(requeteInsertEtudiant);
-                ajoutValues.setInt(1, numE);
-                ajoutValues.setString(2,prenomE);
-                ajoutValues.setString(3,nomE);
-                ajoutValues.setString(4,nomParcours);
-
-                ajoutValues.executeUpdate();
-                log.info("étudiant ajouté : " +i);
-            }
+            insertEtudiant(numE,prenomE,nomE,nomParcours);
 
         }
-        catch(SQLException e){
-            log.error(e.getMessage());
-            throw new RuntimeException("Erreur de connexion à la base de donnée");
-        }
+
     }
 
 }
