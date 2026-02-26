@@ -28,7 +28,7 @@ public class MainApp extends Application {
      * C'est la méthode main standard de Java.
      */
     public static void main(String[] args) {
-        //On appelle launch() pour démarrer tout le système JavaFX
+        //On appelle launch() pour démarrer le logiciel
         launch(args);
     }
 }
