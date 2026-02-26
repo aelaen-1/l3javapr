@@ -12,9 +12,9 @@ public class EtudiantDAO {
     /*
      * Cette méthode sert à lire le fichier et à créer les étudiants dans le logiciel.
      */
-    public List<Etudiant> chargerTout(List<Parcours> parcoursDispos, List<UE> toutesLesUE) {
+    public ArrayList<Etudiant> chargerTout(List<Parcours> parcoursDispos, List<UE> toutesLesUE) {
         // On prépare une liste vide pour y mettre les étudiants qu'on va trouver
-        List<Etudiant> etudiants = new ArrayList<>();
+        ArrayList<Etudiant> etudiants = new ArrayList<>();
         // On vérifie si le fichier existe bien avant de l'ouvrir
         Path path = Paths.get(FILE_PATH);
         if (!Files.exists(path)) {
@@ -53,7 +53,8 @@ public class EtudiantDAO {
                     for (Parcours p : parcoursDispos) {
                         if (p.getNom().equalsIgnoreCase(nomDuParcours)) {
                             leBonParcours = p;
-                            break; // On a trouvé, on arrête de chercher
+                            // On a trouvé, on arrête de chercher
+                            break;
                         }
                     }
                     // Si on a trouvé le parcours, on crée l'étudiant

@@ -10,9 +10,9 @@ public class ParcoursDAO {
     /*
      * Cette méthode sert à LIRE le fichier parcours.csv pour créer les objets Parcours.
      */
-    public List<Parcours> chargerParcours(List<UE> ttesLesUEs) {
+    public ArrayList<Parcours> chargerParcours(List<UE> ttesLesUEs) {
         // On prépare une liste vide pour stocker les parcours qu'on va trouver
-        List<Parcours> listeParcours = new ArrayList<>();
+        ArrayList<Parcours> listeParcours = new ArrayList<>();
         File file = new File(FILE_PATH);
         // On vérifie si le fichier existe bien sur le disque
         if (!file.exists()) {

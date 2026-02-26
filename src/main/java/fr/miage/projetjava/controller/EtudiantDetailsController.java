@@ -17,163 +17,151 @@ import java.io.IOException;
 import java.util.*;
 
 public class EtudiantDetailsController {
-    // Identité de l'étudiant
+    // identité de l'étudiant
     @FXML private Label lblTitre, lblParcours, lblMention;
-
-    // Badges d'informations
+    // affichage sur l'IHM les informations d'un Etudiant
     @FXML private Label lblCreditsValides, lblCreditsEnCours, lblSemestreActuel, lblAnneeActuelle;
-
-    // Listes de suivi
+    // Listes des Ues  suivies par un Etudiant
     @FXML private ListView<String> listValidees, listEnCours, listAccessibles;
-
     private Etudiant etudiant;
     private List<UE> toutesLesUE;
     private final ScolariteService service = new ScolariteService();
-
-    /**
-     * Initialise les données de la vue
+    /*
+     * Initialise les données de la vue quand on arrive sur la fiche
      */
     public void setEtudiant(Etudiant e, List<UE> ues) {
         this.etudiant = e;
         this.toutesLesUE = ues;
         rafraichir();
     }
-
-    /**
-     * Met à jour tous les éléments graphiques
+    /*
+     * cette méthode met à jour tous les éléments graphiques de l'écran
      */
     private void rafraichir() {
         if (etudiant == null) return;
-
-        // 1. Mise à jour de l'identité
+        // mise à jour du nom et prénom en haut
         lblTitre.setText(etudiant.getNomE() + " " + etudiant.getPrenomE());
-
-        // Sécurité pour le parcours et la mention
+        // Affichage du parcours et de la mention
         if (etudiant.getParcours() != null) {
-            lblParcours.setText("Parcours :" +etudiant.getParcours().getNom());
+            lblParcours.setText("Parcours : " + etudiant.getParcours().getNom());
             lblMention.setText("Mention : " + etudiant.getParcours().getMention());
         }
-
-        // 2. Mise à jour des badges (Semestre et Année)
+        // Affichage du semestre actuel
         lblSemestreActuel.setText(etudiant.getSemestreCourant().toString());
-
-        // On récupère l'année la plus récente du cursus de l'étudiant
-        String anneeRef = etudiant.getResultatsUE().stream()
-                .map(ResultatUE::getAnnee)
-                .max(Comparator.naturalOrder())
-                .orElse("2026");
+        // Recherche de l'année la plus récente
+        String anneeRef = "2026";
+        for (ResultatUE r : etudiant.getResultatsUE()) {
+            if (r.getAnnee().compareTo(anneeRef) > 0) {
+                anneeRef = r.getAnnee();
+            }
+        }
         lblAnneeActuelle.setText(anneeRef);
-
-        // 3. Calcul des crédits ECTS
-        int valides = etudiant.getResultatsUE().stream()
-                .filter(r -> r.getStatut() == StatutUE.VALIDE)
-                .mapToInt(r -> r.getUe().getCredit()).sum();
-
-        int enCours = etudiant.getResultatsUE().stream()
-                .filter(r -> r.getStatut() == StatutUE.ENCOURS)
-                .mapToInt(r -> r.getUe().getCredit()).sum();
-
+        // Calcul des crédits ECTS de l'etudiant
+        int valides = 0;
+        int enCours = 0;
+        for (ResultatUE r : etudiant.getResultatsUE()) {
+            if (r.getStatut() == StatutUE.VALIDE) {
+                valides += r.getUe().getCredit();
+            } else if (r.getStatut() == StatutUE.ENCOURS) {
+                enCours += r.getUe().getCredit();
+            }
+        }
         lblCreditsValides.setText(valides + " ECTS");
         lblCreditsEnCours.setText(enCours + " ECTS");
+        // Remplissage des listes UEs
+        ArrayList<String> listeValidees = new ArrayList<>();
+        ArrayList<String> listeEnCours = new ArrayList<>();
 
-        // 4. Remplissage des listes
-        listValidees.getItems().setAll(etudiant.getResultatsUE().stream()
-                .filter(r -> r.getStatut() == StatutUE.VALIDE)
-                .map(r -> r.getUe().getCode() + " - " + r.getUe().getIntitule() + " (" + r.getUe().getCredit() + " pts)")
-                .toList());
-
-        listEnCours.getItems().setAll(etudiant.getResultatsUE().stream()
-                .filter(r -> r.getStatut() == StatutUE.ENCOURS)
-                .map(r -> r.getUe().getCode() + " - " + r.getUe().getIntitule())
-                .toList());
-
-        listAccessibles.getItems().setAll(service.obtenirUEAccessibles(etudiant, new ArrayList<>(toutesLesUE))
-                .stream().map(ue -> ue.getCode() + " - " + ue.getIntitule()).toList());
+        for (ResultatUE r : etudiant.getResultatsUE()) {
+            if (r.getStatut() == StatutUE.VALIDE) {
+                listeValidees.add(r.getUe().getCode() + " - " + r.getUe().getIntitule() + " (" + r.getUe().getCredit() + " pts)");
+            } else if (r.getStatut() == StatutUE.ENCOURS) {
+                listeEnCours.add(r.getUe().getCode() + " - " + r.getUe().getIntitule());
+            }
+        }
+        listValidees.getItems().setAll(listeValidees);
+        listEnCours.getItems().setAll(listeEnCours);
+        //cette méthode fait appel au Service pour savoir quelles UEs sont accessibles
+        List<UE> accessibles = service.obtenirUEAccessibles(etudiant, new ArrayList<>(toutesLesUE));
+        ArrayList<String> listeAcc = new ArrayList<>();
+        for (UE ue : accessibles) {
+            listeAcc.add(ue.getCode() + " - " + ue.getIntitule());
+        }
+        listAccessibles.getItems().setAll(listeAcc);
     }
-
+    /*
+     * cettte methode affiche une fenêtre surgissante avec tout l'historique de l'étudiant
+     */
     @FXML
     private void handleVisualiserResultats() {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Historique Académique");
         dialog.setHeaderText("Détail du cursus de " + etudiant.getNomE());
 
-        // Création de la TableView
         TableView<ResultatUE> table = new TableView<>();
         table.setItems(FXCollections.observableArrayList(etudiant.getResultatsUE()));
 
-        // 1. Colonne UE (Code)
         TableColumn<ResultatUE, String> colUE = new TableColumn<>("UE");
         colUE.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getUe().getCode()));
 
-        // 2. Colonne Année
         TableColumn<ResultatUE, String> colAnnee = new TableColumn<>("Année");
-        // Vérifie que ta classe ResultatUE a bien une méthode getAnnee()
         colAnnee.setCellValueFactory(new PropertyValueFactory<>("annee"));
 
-        // 3. Colonne Semestre (AJOUTÉE)
         TableColumn<ResultatUE, String> colSemestre = new TableColumn<>("Semestre");
         colSemestre.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getSemestre().toString()));
 
-        // 4. Colonne Statut
         TableColumn<ResultatUE, String> colStatut = new TableColumn<>("Résultat");
         colStatut.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getStatut().toString()));
 
-        // Ajout de toutes les colonnes à la table
         table.getColumns().addAll(colUE, colAnnee, colSemestre, colStatut);
-
-        // Ajustement de la taille pour que tout soit visible
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        table.setPrefWidth(500);
-        table.setPrefHeight(300);
 
         dialog.getDialogPane().setContent(new VBox(10, table));
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-
-        // Empêcher la fenêtre d'être minuscule
-        dialog.getDialogPane().setMinHeight(400);
-        dialog.getDialogPane().setMinWidth(550);
-
         dialog.showAndWait();
     }
 
+    /*
+     * Ouvre une boîte de choix pour inscrire l'étudiant à une nouvelle UE
+     */
     @FXML
     private void handleInscrire() {
         List<UE> accessibles = service.obtenirUEAccessibles(etudiant, new ArrayList<>(toutesLesUE));
-
         ChoiceDialog<UE> dialog = new ChoiceDialog<>(null, accessibles);
         dialog.setTitle("Inscription");
         dialog.setHeaderText("Inscrire l'étudiant à une UE");
-        dialog.setContentText("UE disponibles :");
-
         dialog.showAndWait().ifPresent(ue -> {
             service.inscrireEtudiant(etudiant, ue, "2026", etudiant.getSemestreCourant());
             sauvegarder();
         });
     }
-
+    /*
+     *cette methode permet de mettre une note (Valider ou Échouer) à une UE en cours
+     */
     @FXML
     private void handleNoter() {
-        List<ResultatUE> enCours = etudiant.getResultatsUE().stream()
-                .filter(r -> r.getStatut() == StatutUE.ENCOURS).toList();
+        ArrayList<ResultatUE> enCours = new ArrayList<>();
+        for (ResultatUE r : etudiant.getResultatsUE()) {
+            if (r.getStatut() == StatutUE.ENCOURS) {
+                enCours.add(r);
+            }
+        }
 
         if (enCours.isEmpty()) {
             new Alert(Alert.AlertType.INFORMATION, "Aucune UE en cours à noter.").show();
             return;
         }
-
         ChoiceBox<ResultatUE> cb = new ChoiceBox<>(FXCollections.observableArrayList(enCours));
         cb.setConverter(new StringConverter<>() {
-            @Override public String toString(ResultatUE r) { return r == null ? "" : r.getUe().getCode() + " - " + r.getUe().getIntitule(); }
+            @Override public String toString(ResultatUE r) { return r == null ? "" : r.getUe().getCode(); }
             @Override public ResultatUE fromString(String s) { return null; }
         });
-        cb.setValue(enCours.get(0));
 
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Évaluation");
-        dialog.getDialogPane().setContent(new VBox(10, new Label("Sélectionnez l'UE :"), cb));
+        dialog.getDialogPane().setContent(new VBox(10, new Label("UE à noter :"), cb));
 
-        ButtonType bVal = new ButtonType("Valider ✅", ButtonBar.ButtonData.OK_DONE);
-        ButtonType bEch = new ButtonType("Échouer ❌", ButtonBar.ButtonData.NO);
+        ButtonType bVal = new ButtonType("Valider ", ButtonBar.ButtonData.OK_DONE);
+        ButtonType bEch = new ButtonType("Échouer", ButtonBar.ButtonData.NO);
         dialog.getDialogPane().getButtonTypes().setAll(bVal, bEch, ButtonType.CANCEL);
 
         dialog.showAndWait().ifPresent(res -> {
@@ -182,13 +170,17 @@ public class EtudiantDetailsController {
             sauvegarder();
         });
     }
-
+    /*
+     * Change le semestre de l'étudiant (Impair <-> Pair)
+     */
     @FXML
     private void handleSemestre() {
         service.passerSemestre(etudiant);
         sauvegarder();
     }
-
+    /*
+     * Retourne à la liste globale des étudiants
+     */
     @FXML
     private void handleRetour() {
         try {
@@ -200,12 +192,13 @@ public class EtudiantDetailsController {
             e.printStackTrace();
         }
     }
-
+    /*
+     * Enregistre les modifications dans le fichier CSV et rafraîchit l'écran
+     */
     private void sauvegarder() {
         EtudiantDAO dao = new EtudiantDAO();
         List<Parcours> parcours = new ParcoursDAO().chargerParcours(toutesLesUE);
         List<Etudiant> liste = dao.chargerTout(parcours, toutesLesUE);
-
         for (int i = 0; i < liste.size(); i++) {
             if (liste.get(i).getNumE() == etudiant.getNumE()) {
                 liste.set(i, etudiant);

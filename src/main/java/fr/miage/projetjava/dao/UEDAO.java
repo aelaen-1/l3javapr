@@ -10,8 +10,8 @@ public class UEDAO {
     /*
      * Cette méthode charge toutes les UEs et gère les listes de prérequis.
      */
-    public List<UE> chargerUEs() {
-        List<UE> ues = new ArrayList<>();
+    public ArrayList<UE> chargerUEs() {
+        ArrayList<UE> ues = new ArrayList<>();
         // on cree des objects
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             String ligne;

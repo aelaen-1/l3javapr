@@ -11,11 +11,10 @@
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-
     <HBox spacing="15" alignment="CENTER_LEFT"
           style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
 
-        <Button text="⬅ RETOUR" onAction="#handleRetour"
+        <Button text="RETOUR" onAction="#handleRetour"
                 style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
 
         <VBox spacing="2">
@@ -53,10 +52,10 @@
     <HBox spacing="20" VBox.vgrow="ALWAYS">
 
         <VBox spacing="10" HBox.hgrow="ALWAYS">
-            <Label text="🎓 UNITÉS D'ENSEIGNEMENT VALIDÉES" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+            <Label text=" UNITÉS D'ENSEIGNEMENT VALIDÉES" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
             <ListView fx:id="listValidees" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
 
-            <Label text="📝 INSCRIPTIONS EN COURS" style="-fx-font-weight: bold; -fx-text-fill: #2980b9;"/>
+            <Label text="INSCRIPTIONS EN COURS" style="-fx-font-weight: bold; -fx-text-fill: #2980b9;"/>
             <ListView fx:id="listEnCours" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
         </VBox>
 
@@ -79,7 +78,7 @@
                         maxWidth="Infinity" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-cursor: hand;"/>
             </VBox>
 
-            <Label text="🔓 UE ACCESSIBLES" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+            <Label text="UE ACCESSIBLES" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
             <ListView fx:id="listAccessibles" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
         </VBox>
     </HBox>
