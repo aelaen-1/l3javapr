@@ -28,7 +28,10 @@ public class BDParcours {
                 "INSERT INTO  Parcours (nom, mention) VALUES ( 'Informatique', 'Informatique' );"
         };
         // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        try(Connection conn = ConnexionBD.connexionBD(); Statement stmt = conn.createStatement();){
+        try(Connection connexion = ConnexionBD.connexionBD(); Statement stmt = connexion.createStatement();){
+
+            //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute
+            // peux éxecuter que un à un toutes les requêtes
             for(String requete : requeteAjoutParcours){
                 stmt.executeUpdate(requete);
                 log.info("parcours ajouté : ");
@@ -38,7 +41,6 @@ public class BDParcours {
         }
         catch(SQLException e){
             log.error(e.getMessage());
-            throw new RuntimeException("Erreur de connexion à la base de donnée");
         }
     }
 }

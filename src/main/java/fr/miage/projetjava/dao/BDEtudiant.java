@@ -15,37 +15,85 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
+
+/**
+ * Classe BDEtudiant : Gère l'insertion des étudiants dans la BS
+ * 3 méthodes : void insertEtudiant, void recuperationInformationListEtudiant  et void recuperationInformationEtudiantCSV
+ *
+ * Cette classe est responsable de :
+ * 1. Récupérer les informations transmises des fichiers CSV concernant les Étudiants
+ * 2. Mettre ces informations sous le bon format
+ * 3. Ajouter ces ifnormations dans la BD
+ *
+ * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+ *
+ *
+ *
+ */
+
 public class BDEtudiant {
     private static final Logger log = LogManager.getLogger(BDEtudiant.class);
 
+
+    /**
+     * Méthode appelée  par  les deux autres méthodes de cette classe (recuperationInformationListEtudiant et recuperationInformationEtudiantCSV)
+     *
+     * Cette méthode va insérer les Étudiants dans la base de donnée à partir des inforlmations de l'étudiant passé en paramètre
+     *
+     * @param int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
+     *
+     *
+     */
     public void insertEtudiant(int numE, String prenomE, String nomE, String parcours)
     {
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        try(Connection conn = ConnexionBD.connexionBD()){
-
+        // on se connecte à la bd
+        try(Connection connexion = ConnexionBD.connexionBD()){
 
             log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+parcours);
 
-            String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
+            //requête qui va être exécuté
+            // les ? sont là car on va utiliser PreparedStatement qui créé des objets preparedStatement permettant
+            // d'envoyer des requêtes sql paramétrés à la BD
+            //
+
+                    String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
                     "VALUES ( ?, ?, ?, ?);";
 
-            PreparedStatement ajoutValues = conn.prepareStatement(requeteInsertEtudiant);
+            //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
+            //pour être exécuté chaque ? de la requete doit être définis sur un type (int, String...)
+            //prend en paramètre une requête sql qui conetient des ? pour le- an SQL statement that may contain one or more '?' IN parameter placeholders
+            PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
+            //on set le type des différents paramètres de la requête et en premier c'est l'indice de où se trouve le paramètre dans la requête
             ajoutValues.setInt(1, numE);
             ajoutValues.setString(2,prenomE);
             ajoutValues.setString(3,nomE);
             ajoutValues.setString(4,parcours);
 
+            //executeUpdate() va executer la requête sql qui est contenu dans l'objet ajoutValues
+            //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
             ajoutValues.executeUpdate();
             log.info("étudiant ajouté : " );
 
         }
         catch(SQLException e){
             log.error(e.getMessage());
-            throw new RuntimeException("Erreur de connexion à la base de donnée");
         }
     }
 
+
+    /**
+     * Méthode appelée depuis EtudiantCSV  dans la méthode ChargerEtudiant
+     *
+     * Cette méthode va récupérer les informations des étudiants donné dans la liste d'étudiant
+     * et va appelé pour chaque étudiant la méthode insertEtudiant
+     * afin d'insérer un par un les étudiants dans la BD.
+     *
+     *
+     * @param List<Etudiant> listeEtudiantCSV:  liste d'objets Étudiant créés à partir des données du CSV
+     *
+     *
+     */
     public void recuperationInformationListEtudiant (List<Etudiant> listeEtudiantCSV){
         for (Etudiant etu : listeEtudiantCSV) {
             int numE = etu.getNumE();
@@ -58,6 +106,20 @@ public class BDEtudiant {
     }
 
 
+
+    /**
+     * Méthode appelée depuis EtudiantCSV dans la méthode ChargerEtudiant
+     *
+     * Cette méthode va récupérer les informations des étudiants donné dans la liste de liste d'étudiant
+     * sortant directement du fichhier csv et va appelé pour chaque étudiant la méthode insertEtudiant
+     * afin d'insérer un par un les étudiants dans la BD.
+     *
+     *
+     *
+     * @param List<List<String>> listeEtudiantCSV: liste d'objets Étudiant créés à partir des données du CSV
+     *
+     *
+     */
     public void recuperationInformationEtudiantCSV(List<List<String>> listeEtudiantCSV) {
         for (int i = 0; i < listeEtudiantCSV.size() - 1; i++) {
             //récupération des différentes informations qui viennent du fichier CSV et qui sont nécessaire à la création des objets étudiants
