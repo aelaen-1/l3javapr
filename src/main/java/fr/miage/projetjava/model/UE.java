@@ -41,7 +41,6 @@ public class UE {
     }
     @Override
     public String toString() {
-        // C'est ce texte qui apparaîtra dans tes listes et ComboBox
         return this.code + " - " + this.intitule + " (" + this.credit + " ECTS)";
     }
 }

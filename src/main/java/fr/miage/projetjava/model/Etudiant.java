@@ -26,6 +26,7 @@ public class Etudiant {
         this.semestreCourant=semestreCourant;
     }
     public int getNumE() {
+
         return this.numE;
     }
 
@@ -34,6 +35,7 @@ public class Etudiant {
     }
 
     public String getNomE() {
+
         return nomE;
     }
 
@@ -74,10 +76,9 @@ public class Etudiant {
             }
         }
         return totalcredit;
-                                                        // On fait la somme
     }
     @Override
     public String toString() {
-        return this.numE+" - "+this.nomE+" - "+this.prenomE+"/n"+this.parcours+" - "+this.semestreCourant;
+        return this.numE+" - "+this.nomE+" - "+this.prenomE+"\n"+this.parcours+" - "+this.semestreCourant;
     }
 }
