@@ -40,8 +40,8 @@ public class ConnexionBD {
 
 
     /**
-     * Elle permet d'établir une connexion à la Base de donnée présente dans URL.
-     * Elle est appellée depuis les classes dans le package dao (pour le moment BDEtudiant et BDParcours)
+     * Elle permet d'établir une connexion à la Base de données présente dans URL.
+     * Elle est appelée depuis les classes dans le package dao (pour le moment BDEtudiant et BDParcours)
      *
 
      * @return : Une connexion à la BD de type Connection. Connection est une interface
@@ -60,21 +60,19 @@ public class ConnexionBD {
             Connection connexionBD = DriverManager.getConnection(URL);
 
             //pour avoir la possibilité d'avoir des clés étrangères
-            //Statement est une classe permettant l'execution des différentes requêtes avec l'appel de la méthode execute
+            //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
             //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
             // à la BD
             try (Statement stmt = connexionBD.createStatement()) {
-                //va permettre de pouvoir gérer les clé étrangères
+                //va permettre de pouvoir gérer les clés étrangères
                 stmt.execute("PRAGMA foreign_keys = ON;");
             }
             log.info("Connexion à la base de donnée réussi");
             return connexionBD;
         }
+        // le RuntimException permet d'arrêter le programme lorsqu'il y a une erreur qui n'est pas géré
         catch(SQLException e){
             log.error(e.getMessage());
-            throw new RuntimeException("Erreur de connexion à la base de donnée");
-        }
-        catch (RuntimeException r){
             throw new RuntimeException("Erreur de connexion à la base de donnée");
         }
 

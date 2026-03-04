@@ -9,9 +9,36 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+
+/**
+ * Classe CreationTableBD : Gère la création des tables dans la bd
+ * 3 méthodes : void insertEtudiant, void recuperationInformationListEtudiant  et void recuperationInformationEtudiantCSV
+ *
+ * Cette classe est responsable de :
+ * 1. Récupérer les informations transmises des fichiers CSV concernant les Étudiants
+ * 2. Mettre ces informations sous le bon format
+ * 3. Ajouter ces informations dans la BD
+ *
+ * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+ *
+ *
+ *
+ */
+
+
 public class CreationTableBD {
     private static final Logger log = LogManager.getLogger(ConnexionBD.class);
 
+
+    /**
+     * Méthode appelée  dans la méthode main de la classe Main
+     *
+     * Cette méthode va se connecter à la BD et exécuter toute les requêtes pour créer les différentes tables
+     *
+     *
+     *
+     */
     public static void init()
     {
 
@@ -76,6 +103,9 @@ public class CreationTableBD {
         } ;
 
         // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
+        //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
+        //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
+        // à la BD
         try(Connection conn = ConnexionBD.connexionBD(); Statement stmt = conn.createStatement();){
 
             //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute

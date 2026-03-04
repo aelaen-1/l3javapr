@@ -17,7 +17,7 @@ import static java.lang.Integer.parseInt;
 
 
 /**
- * Classe BDEtudiant : Gère l'insertion des étudiants dans la BS
+ * Classe BDEtudiant : Gère l'insertion des étudiants dans la BD
  * 3 méthodes : void insertEtudiant, void recuperationInformationListEtudiant  et void recuperationInformationEtudiantCSV
  *
  * Cette classe est responsable de :
@@ -38,7 +38,7 @@ public class BDEtudiant {
     /**
      * Méthode appelée  par  les deux autres méthodes de cette classe (recuperationInformationListEtudiant et recuperationInformationEtudiantCSV)
      *
-     * Cette méthode va insérer les Étudiants dans la base de donnée à partir des inforlmations de l'étudiant passé en paramètre
+     * Cette méthode va insérer les Étudiants dans la base de donnée à partir des informations de l'étudiant passé en paramètre
      *
      * @param int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
      *
@@ -53,18 +53,18 @@ public class BDEtudiant {
             log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+parcours);
 
             //requête qui va être exécuté
-            // les ? sont là car on va utiliser PreparedStatement qui créé des objets preparedStatement permettant
+            // les ? sont là car on va utiliser PreparedStatement qui crée des objets preparedStatement permettant
             // d'envoyer des requêtes sql paramétrés à la BD
-            //
 
                     String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
                     "VALUES ( ?, ?, ?, ?);";
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
-            //pour être exécuté chaque ? de la requete doit être définis sur un type (int, String...)
-            //prend en paramètre une requête sql qui conetient des ? pour le- an SQL statement that may contain one or more '?' IN parameter placeholders
+            //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
+            //prend en paramètre une requête sql qui contient des ? qui vont ensuite être remplacé par des valeurs
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
-            //on set le type des différents paramètres de la requête et en premier c'est l'indice de où se trouve le paramètre dans la requête
+            //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
+            // et en premier c'est l'indice de où se trouve le paramètre dans la requête
             ajoutValues.setInt(1, numE);
             ajoutValues.setString(2,prenomE);
             ajoutValues.setString(3,nomE);
