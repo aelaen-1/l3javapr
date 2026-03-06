@@ -57,7 +57,7 @@ public class BDEtudiant {
             // d'envoyer des requêtes sql paramétrés à la BD
 
                     String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
-                    "VALUES ( ?, ?, ?, ?);";
+                    "VALUES ( ?, ?, ?, ?)";
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
             //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
