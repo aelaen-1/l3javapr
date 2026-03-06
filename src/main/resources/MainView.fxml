@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.miage.projetjava.controller.MainController"
+            prefWidth="1100" prefHeight="700" style="-fx-background-color: #f0f2f5;">
+
+    <top>
+        <ToolBar style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <Label text="SCOLARITÉ" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
+
+            <Separator orientation="VERTICAL" />
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button text="Quitter" onAction="#handleQuitter"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <StackPane fx:id="contentArea">
+
+            <VBox alignment="CENTER" spacing="40">
+                <padding><Insets top="50" right="50" bottom="50" left="50"/></padding>
+
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="Bienvenue dans le Service Scolarité"
+                           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <Label text="Gestion des étudiants, cursus et inscriptions"
+                           style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <HBox alignment="CENTER" spacing="30">
+
+                    <VBox spacing="15" alignment="CENTER" onMouseClicked="#handleVoirEtudiants"
+                          style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 15; -fx-border-color: #dcdde1; -fx-border-radius: 15; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+                        <Label text="📁" style="-fx-font-size: 50px;"/>
+                        <Label text="LISTE DES ÉTUDIANTS" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
+                        <Text text="Consulter, modifier et gérer les dossiers des étudiany." wrappingWidth="200" textAlignment="CENTER" style="-fx-fill: #95a5a6;"/>
+                    </VBox>
+
+                    <VBox spacing="15" alignment="CENTER" onMouseClicked="#handleAjouterEtudiant"
+                          style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 15; -fx-border-color: #dcdde1; -fx-border-radius: 15; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+                        <Label text="👤" style="-fx-font-size: 50px;"/>
+                        <Label text="NOUVEL ÉTUDIANT" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
+                        <Text text="Inscrire un nouvel étudiantndans un parcours spécifique." wrappingWidth="200" textAlignment="CENTER" style="-fx-fill: #95a5a6;"/>
+                    </VBox>
+                </HBox>
+                <Label text="©2025-2026" style="-fx-text-fill: #bdc3c7; -fx-font-size: 12px;"/>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>
