@@ -39,4 +39,8 @@ public class UE {
     public void setUEprerequis(UE ue) {
         this.UEprerequis.add(ue);
     }
+    @Override
+    public String toString() {
+        return this.code + " - " + this.intitule + " (" + this.credit + " ECTS)";
+    }
 }
