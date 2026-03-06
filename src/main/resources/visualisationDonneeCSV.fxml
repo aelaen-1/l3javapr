@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fr.miage.projetjava.ControllerVisualisationDonneeCSV"
+            fx:controller="fr.miage.projetjava.controller.ControllerVisualisationDonneeCSV"
             prefHeight="400.0" prefWidth="600.0">
     <!--va créer une liste où on peut scroller, prefHeight et Width pour la taille et largeur et fx:id va permettre de faire le lien avec le controller
     et donc de pouvoir y afficher la liste des étudiants récupérer du fichier csv grâce à la classe ChargementCSV-->

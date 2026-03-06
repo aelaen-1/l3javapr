@@ -1,13 +1,60 @@
 package fr.miage.projetjava;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import fr.miage.projetjava.model.*;
 import fr.miage.projetjava.metier.ScolariteService;
 
+import java.io.IOException;
+import java.net.URL;
 
-public class Main {
+
+public class Main extends Application {
     private static final Logger log = LogManager.getLogger(Main.class);
+
+
+    @Override
+    public void start(final Stage primaryStage)
+    {
+        try
+        {
+            // Localisation du fichier FXML qui va être lance, on va dans la classe courante et on va chercher le fichier accueil
+            //renvoie une URL pointant sur le fichier
+            final URL url_fichier_fxml = getClass().getResource("/accueil.fxml");
+
+            // FXMLLoader permet de charger les fichiers fxml
+            //Loader va lire le fichier fxml et créer des composants graphiques qui sont décrit dedans
+            final FXMLLoader fxmlLoader = new FXMLLoader(url_fichier_fxml);
+
+            // fxmlLoader.load lit le fichier accueil, créé les objets graphiques et retourne le noeud principale du fichier
+            //(AnchorPane) -> conversion car c'est l'élément racine du fichier fxml
+            //l'interface graphique est créé en mémoire ici
+            final AnchorPane root = (AnchorPane) fxmlLoader.load();
+
+
+            // Scene esreprésente le contenu afficher dans la fenêtre
+            // on lui donne root qui est le coeur principale et la largeur et la hauteur
+            final Scene scene = new Scene(root, 1100, 800);
+
+            //primaryStage est la fenêtre principale de l'application
+            //permet d'aficher l'interface dans la fenêtre
+            primaryStage.setScene(scene);
+        }
+        catch (IOException ex)
+        {
+            System.err.println("Erreur au chargement: " + ex);
+        }
+
+        primaryStage.setTitle("Accueil");
+        //affichage de la scene
+        primaryStage.show();
+    }
+
 
     public static void main(String[] args) {
         log.info("Log4j2 OK");
@@ -78,6 +125,8 @@ public class Main {
         log.info("UE X pre-requis : " + sco.verifierValidationPrerequis(ue9,e1));
         log.info("Etudiant 1 " + sco.verifierValidationPrerequis(ue2, e1));
         log.info("Diplôme validé "+ sco.estDiplome(e1));
+
+        launch(args);
     }
 
 }

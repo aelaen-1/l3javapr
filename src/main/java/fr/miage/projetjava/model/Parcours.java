@@ -25,7 +25,15 @@ public class Parcours {
             UEObligatoire.add(ue);
     }
 
+<<<<<<< HEAD
     public Mention getMention() {
         return mention;
     }
 }
+=======
+    @Override
+    public String toString(){
+        return this.nom;
+    }
+}
+>>>>>>> 248a4bf9eab9d7833a9b78b88e41ce003a65f133

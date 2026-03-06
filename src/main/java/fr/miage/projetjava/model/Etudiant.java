@@ -56,6 +56,7 @@ public class Etudiant {
             ue.afficher();
         }
     }
+<<<<<<< HEAD
     public void setNomE(String nomE){
         this.nomE=nomE;
     }
@@ -82,3 +83,11 @@ public class Etudiant {
         return this.numE+" - "+this.nomE+" - "+this.prenomE+"\n"+this.parcours+" - "+this.semestreCourant;
     }
 }
+=======
+
+    @Override
+    public String toString(){
+        return "Numéro étudiant: "+this.numE + "\n Nom: "+ this.nomE +"\n Prénom: "+this.prenomE +"\n Parcours: "+ this.parcours;
+    }
+}
+>>>>>>> 248a4bf9eab9d7833a9b78b88e41ce003a65f133
