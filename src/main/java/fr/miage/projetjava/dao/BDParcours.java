@@ -42,14 +42,12 @@ public class BDParcours {
     public void insertParcours()
     {
         String[] requeteAjoutParcours = {
-                "delete from Etudiant; ",
-                "delete from Parcours; ",
-                "INSERT INTO  Parcours (nom, mention) VALUES ( 'MIAGE', 'MIASHS' );",
-                "INSERT INTO  Parcours (nom, mention) VALUES ( 'IO', 'MIASHS' );",
-                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Biologie', 'Biologie' );",
-                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Physique', 'Physique' );",
-                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Chimie', 'Chimie' );",
-                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Informatique', 'Informatique' );"
+                "INSERT INTO  Parcours (nom, mention) VALUES ( 'MIAGE', 'MIASHS' )",
+                "INSERT INTO  Parcours (nom, mention) VALUES ( 'IO', 'MIASHS' )",
+                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Biologie', 'Biologie' )",
+                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Physique', 'Physique' )",
+                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Chimie', 'Chimie' )",
+                "INSERT INTO  Parcours (nom, mention) VALUES ( 'Informatique', 'Informatique' )"
         };
         // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
         //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
