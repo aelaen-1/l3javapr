@@ -14,30 +14,29 @@ import javafx.scene.layout.StackPane;
 
 public class MainController {
 
-    // C'est la zone vide au centre de la fenêtre où on va charger les différentes
-    // pages
+    /*
+    * Conteneur vide, centré par défaut, où on va charger les différentes pages
+    * sans que le BorderPane (header) ne bouge
+    * Il modifie le module <StackPane fx:id="contentArea"> dans le MainView.fxml
+    */
     @FXML
     private StackPane contentArea;
 
     // s'exécute automatiquement au démarrage de la fenêtre.
     @FXML
     public void initialize() {
-        // pour l'instant vide
     }
 
-    // méthode qui change le contenu à l'écran à partir du fichier fxml dont on donne le chemin
-    // (fxmlPath) en paramètre
+    // méthode qui change le contenu à l'écran à partir d'un fichier fxml (chemin en paramètre)
     private void loadView(String fxmlPath) {
         try {
-            // crée un objet fxml qui nous permettra de convertir les balises du fichier en
-            // objets java
+            // crée un objet FXMLLoader
             FXMLLoader fxmlObject = new FXMLLoader(getClass().getResource(fxmlPath));
-            // load() transforme les balises fxml en objets java et renvoie le conteneur
-            // racine correspondant à notre cast (ici Parent)
+            // load() est une méthode de la classe FXMLLoader qui transforme les balises fxml
+            // en objets java et renvoie le conteneur racine correspondant à notre cast (ici Parent)
             Parent root = fxmlObject.load();
-            // On vide la zone centrale et on met la nouvelle page à la place
-            // contentArea est un objet stackPane
-            contentArea.getChildren().setAll();
+            // Vide la zone centrale et on met la nouvelle page à la place
+            contentArea.getChildren().setAll(root);
 
         } catch (IOException e) {
             System.out.println("Erreur : Impossible de charger la vue " + fxmlPath);
@@ -54,15 +53,12 @@ public class MainController {
     // Onclick boutton "Ajouter un étudiant".
     @FXML
     private void handleAjouterEtudiant() {
-        // On demande de charger le formulaire de création
-        // (le formulaire ou l'utilisateur veut ajouter un nouveau etudiant
         loadView("/EtudiantForm.fxml");
     }
-    
+
     // Onclick boutton "Quitter"
     @FXML
     private void handleQuitter() {
-        // On ferme proprement toute l'application
         javafx.application.Platform.exit();
     }
 }
