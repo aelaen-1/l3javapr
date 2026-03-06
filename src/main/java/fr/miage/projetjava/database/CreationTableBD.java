@@ -42,63 +42,30 @@ public class CreationTableBD {
     public static void init()
     {
 
+        String[] requeteSuppressionTable = {
+                "DROP Table ResultatUE",
+                "DROP Table UEObligatoire",
+                "DROP Table UEprerequis",
+                "DROP Table UE",
+                "DROP Table Etudiant",
+                "DROP Table Parcours"
+        };
         //tableau de String contenant toutes les requêtes de créations de table
         String[] requeteAjoutTable = {
 
+                "CREATE TABLE Parcours (nom Varchar2(30) PRIMARY KEY, mention Varchar2(20),CONSTRAINT ck_Parcours_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
+                "CREATE TABLE Etudiant (numE number PRIMARY KEY, prenomE Varchar2(30), nomE Varchar2(30), parcours Varchar2(30), CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(nom))",
 
-                "CREATE TABLE IF NOT EXISTS Parcours ("
-                        + "nom text PRIMARY KEY,"
-                        + "mention text,"
-                        + "CONSTRAINT ck_UE_MENTION CHECK (mention in('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique'))"
-                        + ");",
+                "CREATE TABLE UE ( code Varchar2(10) PRIMARY KEY, intitule Varchar2(40), credit Number, mention Varchar2(20), CONSTRAINT ck_UE_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
-                "CREATE TABLE IF NOT EXISTS Etudiant ("
-                        + "numE INTEGER PRIMARY KEY,"
-                        + "prenomE text,"
-                        +    "nomE text,"
-                        + "parcours text,"
-                        + "CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(nom)"
-                        + ");",
+                "CREATE TABLE UEObligatoire (nom Varchar2(30), UE Varchar2(10), PRIMARY KEY(nom, UE),CONSTRAINT fk_UEObligatoire_Parcours FOREIGN KEY (nom) REFERENCES Parcours(nom),CONSTRAINT fk_UEObligatoire_UE FOREIGN KEY (UE) REFERENCES UE(code))",
 
-                "CREATE TABLE IF NOT EXISTS UE ("
-                        + "code text PRIMARY KEY,"
-                        + "intitule text,"
-                        + "credit int,"
-                        + "mention text,"
-                        + "CONSTRAINT ck_UE_MENTION CHECK (mention in('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique'))"
-                        + ");",
-
-                "CREATE TABLE IF NOT EXISTS UEObligatoire ("
-                        + "nom text,"
-                        + "UE text,"
-                        + "PRIMARY KEY(nom, UE),"
-                        + "CONSTRAINT fk_UEObligatoire_Parcours FOREIGN KEY (nom) REFERENCES Parcours(nom),"
-                        + "CONSTRAINT fk_UEObligatoire_UE FOREIGN KEY (UE) REFERENCES UE(code)"
-                        + ");",
-
-                "CREATE TABLE IF NOT EXISTS UEprerequis ("
-                        + "codeUE text," //correspond au code de l'UE qui veut stocker ces UEprerequis
-                        + "codeUEPrerequis text,"//correspond au code de l'UE qui fait partie des prerequis de codeUE
-                        + "PRIMARY KEY(codeUE, codeUEPrerequis),"
-                        + "CONSTRAINT fk_UEPrerequis_codeUE FOREIGN KEY (codeUE) REFERENCES UE(code),"
-                        + "CONSTRAINT fk_UEPrerequis_codeUEPrerequis FOREIGN KEY (codeUEPrerequis) REFERENCES UE(code)"
-                        + ");",
+                "CREATE TABLE UEprerequis (codeUE Varchar2(10), codeUEPrerequis Varchar2(10), PRIMARY KEY(codeUE, codeUEPrerequis), CONSTRAINT fk_UEPrerequis_codeUE FOREIGN KEY (codeUE) REFERENCES UE(code), CONSTRAINT fk_UEPrerequis_codeUEPrerequis FOREIGN KEY (codeUEPrerequis) REFERENCES UE(code))",
 
 
 
-                "CREATE TABLE IF NOT EXISTS ResultatUE ("
-                        + "code text,"
-                        + "numE text,"
-                        + "annee text,"
-                        + "semestre text,"
-                        + "statut text,"
-                        + "PRIMARY KEY (code, numE),"
-                        + "CONSTRAINT fk_ResultatUE_code FOREIGN KEY (code) REFERENCES UE(code),"
-                        + "CONSTRAINT fk_ResultatUE_numE FOREIGN KEY (numE) REFERENCES Etudiant(numE),"
-                        + "CONSTRAINT ck_ResultatUE_statut CHECK (statut in ('Valide', 'En cours', 'Echoué')),"
-                        + "CONSTRAINT ck_ResultatUE_Semestre CHECK(semestre = 'Pair' or semestre = 'Impair')"
-                        + ");",
+                "CREATE TABLE ResultatUE (code Varchar2(10), numE number, annee number ,semestre Varchar2(20), statut Varchar2(20), PRIMARY KEY (code, numE), CONSTRAINT fk_ResultatUE_code FOREIGN KEY (code) REFERENCES UE(code), CONSTRAINT fk_ResultatUE_numE FOREIGN KEY (numE) REFERENCES Etudiant(numE), CONSTRAINT ck_ResultatUE_statut CHECK (statut in ('Valide', 'En cours', 'Echoué')), CONSTRAINT ck_ResultatUE_Semestre CHECK(semestre = 'Pair' or semestre = 'Impair'))"
 
         } ;
 
@@ -110,9 +77,17 @@ public class CreationTableBD {
 
             //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute
             // peux éxecuter que un à un toutes les requêtes
+            for (String requete : requeteSuppressionTable){
+
+                stmt.executeUpdate(requete);
+                log.info("table supprimé");
+
+            }
+            //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute
+            // peux éxecuter que un à un toutes les requêtes
             for (String requete : requeteAjoutTable){
 
-                stmt.execute(requete);
+                stmt.executeUpdate(requete);
                 log.info("table créé");
 
             }
