@@ -71,9 +71,11 @@ import fr.miage.projetjava.model.StatutUE;
 import fr.miage.projetjava.model.UE;
 
 public class ScolariteService {
-    /* cette méthode permet d'obtenir  les Ues accessibles par un etudiant
-     * elle prend en entrée un etduant et la liste des Ues du parcours dans le quel l'etudidant est inscrit
-     * si l'utilisateur veut voir les Ues accessibles par un etudiant, le controller doit faire appel  a cete methode */
+    /** cette méthode permet d'obtenir  les Ues accessibles par un etudiant
+     * @param etudiant l'etudiant qu'on souhaite Obtenir Les Ues Acceessibles
+     * @param toutesLesUE un tableau des Ues de la formation de l'etudiant
+     * si l'utilisateur veut voir les Ues accessibles par un etudiant, le controller doit faire appel  a cete methode *
+     **/
     public List<UE> obtenirUEAccessibles(Etudiant etudiant, List<UE> toutesLesUE) {
         //on crée un tableaux des Ues pour stocker les Ues accessibmes par l'étudiant
         ArrayList<UE> accessibles = new ArrayList<>();
