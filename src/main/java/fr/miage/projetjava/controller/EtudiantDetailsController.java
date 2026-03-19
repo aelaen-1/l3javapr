@@ -21,11 +21,17 @@ public class EtudiantDetailsController {
     @FXML private Label lblTitre, lblParcours, lblMention;
     // affichage sur l'IHM les informations d'un Etudiant
     @FXML private Label lblCreditsValides, lblCreditsEnCours, lblSemestreActuel, lblAnneeActuelle;
+
+    // NOUVEAU : Label pour l'algorithme du chemin critique (estimation)
+    @FXML private Label lblEstimation;
+
     // Listes des Ues  suivies par un Etudiant
     @FXML private ListView<String> listValidees, listEnCours, listAccessibles;
+
     private Etudiant etudiant;
     private List<UE> toutesLesUE;
     private final ScolariteService service = new ScolariteService();
+
     /*
      * Initialise les données de la vue quand on arrive sur la fiche
      */
@@ -34,11 +40,13 @@ public class EtudiantDetailsController {
         this.toutesLesUE = ues;
         rafraichir();
     }
+
     /*
      * cette méthode met à jour tous les éléments graphiques de l'écran
      */
     private void rafraichir() {
         if (etudiant == null) return;
+
         // mise à jour du nom et prénom en haut
         lblTitre.setText(etudiant.getNomE() + " " + etudiant.getPrenomE());
         // Affichage du parcours et de la mention
@@ -56,6 +64,7 @@ public class EtudiantDetailsController {
             }
         }
         lblAnneeActuelle.setText(anneeRef);
+
         // Calcul des crédits ECTS de l'etudiant
         int valides = 0;
         int enCours = 0;
@@ -68,6 +77,19 @@ public class EtudiantDetailsController {
         }
         lblCreditsValides.setText(valides + " ECTS");
         lblCreditsEnCours.setText(enCours + " ECTS");
+
+        // --- NOUVEAU : CALCUL DU CHEMIN CRITIQUE (ESTIMATION) ---
+        if (service.estDiplome(etudiant)) {
+            lblEstimation.setText("DIPLÔMÉ !");
+        } else {
+            // On appelle l'algorithme de simulation
+            int semestresSimules = service.simulerDureeOptimale(etudiant, toutesLesUE);
+            // Conversion en années (2 semestres = 1 an)
+            double anneesRestantes = semestresSimules / 2.0;
+            lblEstimation.setText(anneesRestantes + " an(s)");
+        }
+        // --------------------------------------------------------
+
         // Remplissage des listes UEs
         ArrayList<String> listeValidees = new ArrayList<>();
         ArrayList<String> listeEnCours = new ArrayList<>();
@@ -81,6 +103,7 @@ public class EtudiantDetailsController {
         }
         listValidees.getItems().setAll(listeValidees);
         listEnCours.getItems().setAll(listeEnCours);
+
         //cette méthode fait appel au Service pour savoir quelles UEs sont accessibles
         List<UE> accessibles = service.obtenirUEAccessibles(etudiant, new ArrayList<>(toutesLesUE));
         ArrayList<String> listeAcc = new ArrayList<>();
@@ -89,6 +112,7 @@ public class EtudiantDetailsController {
         }
         listAccessibles.getItems().setAll(listeAcc);
     }
+
     /*
      * cettte methode affiche une fenêtre surgissante avec tout l'historique de l'étudiant
      */
@@ -135,6 +159,7 @@ public class EtudiantDetailsController {
             sauvegarder();
         });
     }
+
     /*
      *cette methode permet de mettre une note (Valider ou Échouer) à une UE en cours
      */
@@ -170,6 +195,7 @@ public class EtudiantDetailsController {
             sauvegarder();
         });
     }
+
     /*
      * Change le semestre de l'étudiant (Impair <-> Pair)
      */
@@ -178,6 +204,7 @@ public class EtudiantDetailsController {
         service.passerSemestre(etudiant);
         sauvegarder();
     }
+
     /*
      * Retourne à la liste globale des étudiants
      */
@@ -192,6 +219,7 @@ public class EtudiantDetailsController {
             e.printStackTrace();
         }
     }
+
     /*
      * Enregistre les modifications dans le fichier CSV et rafraîchit l'écran
      */

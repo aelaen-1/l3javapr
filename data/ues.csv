@@ -1,20 +1,93 @@
-INF101;Algorithmique 1;6;INFORMATIQUE;
-INF102;Programmation Java;6;INFORMATIQUE;
-INF201;Algorithmique 2;6;INFORMATIQUE;INF101
-INF202;Base de donnees;6;INFORMATIQUE;INF102
-INF301;Reseaux;6;INFORMATIQUE;
-INF302;Developpement Web;6;INFORMATIQUE;INF102
-INF401;Architecture;6;INFORMATIQUE;
-INF402;Genie Logiciel;6;INFORMATIQUE;INF201
-INF501;IA;6;INFORMATIQUE;INF201
-INF502;Projet;6;INFORMATIQUE;INF402
-MIA101;Analyse 1;6;MIASHS;
-MIA102;Eco Generale;6;MIASHS;
-MIA201;Analyse 2;6;MIASHS;MIA101
-MIA202;Microeconomie;6;MIASHS;MIA102
-MIA301;Probabilites;6;MIASHS;MIA101
-MIA302;Statistiques;6;MIASHS;
-MIA401;Maths Fi;6;MIASHS;MIA201
-MIA402;Comptabilite;6;MIASHS;
-MIA501;Econometrie;6;MIASHS;MIA301
-MIA502;Gestion Projet;6;MIASHS;
+Code;Intitule;Credit;Mention;Prerequis
+MIA101;Mathématiques Fondamentales 1;6;MIASHS;
+MIA102;Introduction à l'Algorithmique;3;MIASHS;
+MIA103;Economie et Entreprise;3;MIASHS;
+MIA104;Anglais S1;3;MIASHS;
+MIA105;Outils Numériques;3;MIASHS;
+MIA106;Algèbre Linéaire 1;6;MIASHS;
+MIA107;Méthodologie Universitaire;3;MIASHS;
+MIA108;Certificat Informatique C2i;3;MIASHS;
+MIA201;Mathématiques Fondamentales 2;6;MIASHS;MIA101
+MIA202;Programmation Orientée Objet;3;MIASHS;MIA102
+MIA203;Modélisation et Bases de Données;3;MIASHS;MIA102
+MIA204;Anglais S2;3;MIASHS;MIA104
+MIA205;Comptabilité Générale;3;MIASHS;MIA103
+MIA206;Analyse Mathématique;6;MIASHS;MIA101
+MIA207;Logique et Ensembles;3;MIASHS;
+MIA208;Introduction au Web Design;3;MIASHS;
+MIA301;Probabilités et Statistiques;6;MIASHS;MIA201
+MIA302;Développement Web;3;MIASHS;MIA202,MIA203
+MIA303;Introduction au Droit;3;MIASHS;
+MIA304;Architecture des Réseaux;3;MIASHS;MIA105
+MIA305;Algorithmique Avancée;6;MIASHS;MIA202
+MIA306;Comptabilité Analytique;3;MIASHS;MIA205
+MIA307;Anglais S3;3;MIASHS;MIA204
+MIA308;Droit du Numérique;3;MIASHS;MIA303
+MIA401;Projet Logiciel;6;MIASHS;MIA302
+MIA402;Recherche Opérationnelle;3;MIASHS;MIA301
+MIA403;Gestion de Projet;3;MIASHS;
+MIA404;Bases de Données Avancées;6;MIASHS;MIA203
+MIA405;Statistiques Inférentielles;3;MIASHS;MIA301
+MIA406;Anglais S4;3;MIASHS;MIA307
+MIA407;Ergonomie des IHM;3;MIASHS;
+MIA408;Économie Numérique;3;MIASHS;MIA103
+MIA501;Introduction à l'Intelligence Artificielle;6;MIASHS;MIA305
+MIA502;Programmation Java EE;6;MIASHS;MIA202
+MIA503;Droit Social et du Travail;3;MIASHS;MIA303
+MIA504;Finance d'Entreprise;3;MIASHS;MIA205
+MIA505;Réseaux Avancés;3;MIASHS;MIA304
+MIA506;Anglais S5;3;MIASHS;MIA406
+MIA507;Projet de Développement S5;6;MIASHS;MIA401
+MIA601;Stage en Entreprise;6;MIASHS;MIA507
+MIA602;Big Data et NoSQL;6;MIASHS;MIA404,MIA405
+MIA603;Business Intelligence;6;MIASHS;MIA404
+MIA604;Sécurité Informatique;3;MIASHS;MIA505
+MIA605;Management des Organisations;3;MIASHS;MIA403
+MIA606;Propriété Intellectuelle;3;MIASHS;MIA308
+MIA607;Anglais S6;3;MIASHS;MIA506
+BIO101;Biologie Moléculaire;6;Biologie;
+BIO102;Chimie Générale;3;Biologie;
+BIO103;Physique pour la Biologie;3;Biologie;
+BIO104;Anglais Scientifique 1;3;Biologie;
+BIO105;Diversité du Vivant;6;Biologie;
+BIO106;Méthodes de Travail Scientifique;3;Biologie;
+BIO107;Introduction aux Géosciences;3;Biologie;
+BIO108;Informatique S1;3;Biologie;
+BIO201;Biologie Cellulaire;6;Biologie;BIO101
+BIO202;Chimie Organique;3;Biologie;BIO102
+BIO203;Mathématiques et Statistiques;3;Biologie;
+BIO204;Physiologie Végétale;6;Biologie;BIO105
+BIO205;Biochimie Structurale;3;Biologie;BIO102
+BIO206;Anglais Scientifique 2;3;Biologie;BIO104
+BIO207;Histoire des Sciences et Bioéthique;3;Biologie;
+BIO208;Outils Numériques;3;Biologie;BIO108
+BIO301;Génétique Fondamentale;6;Biologie;BIO201
+BIO302;Écologie Générale;3;Biologie;
+BIO303;Microbiologie;3;Biologie;BIO201
+BIO304;Génétique des Populations;6;Biologie;BIO301
+BIO305;Immunologie Base;3;Biologie;BIO201
+BIO306;Anglais Scientifique 3;3;Biologie;BIO206
+BIO307;Communication et Vulgarisation;3;Biologie;
+BIO308;Écologie Appliquée;3;Biologie;BIO302
+BIO401;Physiologie Animale;6;Biologie;BIO201,BIO202
+BIO402;Botanique et Évolution;3;Biologie;BIO302
+BIO403;Biologie du Développement;6;Biologie;BIO201
+BIO404;Virologie;3;Biologie;BIO303
+BIO405;Anglais Scientifique 4;3;Biologie;BIO306
+BIO406;Statistiques Appliquées;3;Biologie;BIO203
+BIO407;Conservation de la Biodiversité;3;Biologie;BIO308
+BIO408;Pharmacologie de Base;3;Biologie;BIO202
+BIO501;Biologie Moléculaire Avancée;6;Biologie;BIO301
+BIO502;Neurobiologie;6;Biologie;BIO401
+BIO503;Génomique;3;Biologie;BIO301
+BIO504;Écologie Systémique;3;Biologie;BIO308
+BIO505;Biostatistiques Avancées;3;Biologie;BIO406
+BIO506;Anglais Scientifique 5;3;Biologie;BIO405
+BIO507;Projet Tuteuré de Recherche;6;Biologie;
+BIO601;Stage en Laboratoire;6;Biologie;BIO507
+BIO602;Toxicologie;6;Biologie;BIO202,BIO401
+BIO603;Biotechnologies;6;Biologie;BIO501
+BIO604;Éthologie Animale;3;Biologie;BIO401
+BIO605;Gestion de Projets Scientifiques;3;Biologie;
+BIO606;Anglais Scientifique 6;3;Biologie;BIO506
+BIO607;Droit de l'Environnement;3;Biologie;

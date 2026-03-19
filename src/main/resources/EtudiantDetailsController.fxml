@@ -59,6 +59,11 @@
             <ListView fx:id="listEnCours" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
         </VBox>
 
+        <VBox alignment="CENTER" style="-fx-background-color: #fff0f6; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #d63384; -fx-border-radius: 10;">
+            <Label text="ESTIMATION FIN" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #d63384;"/>
+            <Label fx:id="lblEstimation" text="-" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #d63384;"/>
+        </VBox>
+
         <VBox spacing="15" prefWidth="320">
             <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10; -fx-border-color: #dcdde1; -fx-border-width: 1;">
                 <Label text="OPÉRATIONS" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>

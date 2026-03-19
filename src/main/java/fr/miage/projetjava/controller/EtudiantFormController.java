@@ -92,7 +92,7 @@ public class EtudiantFormController {
             if (etudiantModif == null) {
                 //création d'un nouvel étudiant
                 //On cherche le NumE le plus élevé pour calculer le suivant
-                int maxId = 1000;
+                int maxId = 00000000;
                 for (Etudiant e : liste) {
                     if (e.getNumE() > maxId) {
                         maxId = e.getNumE();
