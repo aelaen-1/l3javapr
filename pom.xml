@@ -51,6 +51,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Source: https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11,
+        va permettre de faire le lien avec la bd oracle-->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <version>23.9.0.25.07</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
