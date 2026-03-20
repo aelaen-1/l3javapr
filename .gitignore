@@ -40,4 +40,4 @@ build/
 
 ##fichier contenant les identifiants##
 
-.config.porperties
+./src/main/ressources/config.properties
