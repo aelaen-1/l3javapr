@@ -18,15 +18,15 @@ import static java.lang.Integer.parseInt;
  *
  * 2 méthodes : static void insertResultatUE et static void recuperationInformationListResultatUE
  *
- * Cette classe permet de récupérer la liste d'étudiant fabriquer à partie du fichier csv et
+ * Cette classe permet de récupérer la liste d'étudiants fabriquée à partir du fichier csv et
  * d'insérer les différents résultats aux UE des étudiants dans la BD
  *
- * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+ * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
  */
 
 public class ResultatUEBD {
 
-    private static final Logger log = LogManager.getLogger(UEObligatoiresBD.class);
+    private static final Logger log = LogManager.getLogger(ResultatUEBD.class);
 
 
     /**
@@ -34,7 +34,7 @@ public class ResultatUEBD {
      *
      * Cette méthode va insérer les résultats des UE des étudiants dans la base de données
      *
-     * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+     * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
      *
      * @param :int numE, String codeUE, int annee, String semestre, String statut: information nécessaire pour l'ajout des résultats à une UE dans la BD
      *
@@ -76,7 +76,7 @@ public class ResultatUEBD {
      * Cette méthode va récupérer les informations des résultats d'UE des étudiants à partir de la liste d'étudiants
      * donnée en paramètre.
      * Si un étudiant possède des résultats pour au moins une UE, la méthode va appeler pour chaque UE la méthode insertResultatUE
-     * afin d'insérer dans la table ResultatUE les informations concernant ce résultat d'UE pour cette étudiant
+     * afin d'insérer dans la table ResultatUE les informations concernant ce résultat d'UE pour cet étudiant.
      *
      *
      * @param : ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Etudiant créés à partir des données du CSV
