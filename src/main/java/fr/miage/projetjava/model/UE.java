@@ -40,6 +40,13 @@ public class UE {
         this.UEprerequis.add(ue);
     }
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        UE autreUE = (UE) obj;
+        return this.code.equals(autreUE.code);
+    }
+    @Override
     public String toString() {
         return this.code + " - " + this.intitule + " (" + this.credit + " ECTS)";
     }
