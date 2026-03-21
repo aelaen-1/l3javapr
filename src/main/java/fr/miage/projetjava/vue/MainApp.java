@@ -1,4 +1,5 @@
 package fr.miage.projetjava.vue;
+import fr.miage.projetjava.dao.CreationTableBD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,6 +28,8 @@ public class MainApp extends Application {
      * C'est la méthode main standard de Java.
      */
     public static void main(String[] args) {
+        //création des tables dans la BD
+        CreationTableBD.createTable();
         //On appelle launch() pour démarrer le logiciel
         launch(args);
     }
