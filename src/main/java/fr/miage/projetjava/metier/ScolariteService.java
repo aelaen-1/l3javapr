@@ -389,4 +389,32 @@ public class ScolariteService {
         }
         return false;
     }
+
+    /*
+     * méthode qui donne un score de priorité en fonction de si elle est obligatoire
+     * et si elle est prérequis d'autres ue (si elle "bloque" d'autres ue)
+     * plus elle est bloquante/prérequis pour d'autres ue, plus elle est prioritaire
+     */
+    public int calculerPrioriteUE(UE ue, List<UE> uesRestantes, List<UE> obligatoiresRestantes) {
+        int niveauDePriorite = 0;
+
+        if (estDansLaListe(ue, obligatoiresRestantes)) {
+            niveauDePriorite += 1000;
+        }
+        int nbBloquees = 0;
+        for (UE autreUE : uesRestantes) {
+            if (autreUE.getUEprerequis() != null) {
+                for (UE pre : autreUE.getUEprerequis()) {
+                    if (pre.getCode().equals(ue.getCode())) {
+                        nbBloquees++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        niveauDePriorite += nbBloquees * 100;
+        niveauDePriorite += ue.getCredit();
+        return niveauDePriorite;
+    }
 }
