@@ -79,7 +79,7 @@ public class EtudiantBD {
 
 
     /**
-     * Méthode appelée depuis EtudiantDAO  dans la méthode ChargerTout
+     * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
      *
      * Cette méthode va récupérer les informations des étudiants donné dans la liste d'étudiant
      * et va appelé pour chaque étudiant la méthode insertEtudiant
