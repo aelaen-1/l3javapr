@@ -1,11 +1,22 @@
 package fr.miage.projetjava.metier;
-import fr.miage.projetjava.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.miage.projetjava.model.Etudiant;
+import fr.miage.projetjava.model.Mention;
+import fr.miage.projetjava.model.ResultatUE;
+import fr.miage.projetjava.model.Semestre;
+import fr.miage.projetjava.model.StatutUE;
+import fr.miage.projetjava.model.UE;
+
 public class ScolariteService {
-    /* cette méthode permet d'obtenir les Ues accessibles par un etudiant
+    /*
+     * cette méthode permet d'obtenir les Ues accessibles par un etudiant
      * elle prend en entrée un etudiant et la liste de TOUTES les Ues
-     * si l'utilisateur veut voir les Ues accessibles par un etudiant, le controller doit faire appel a cete methode */
+     * si l'utilisateur veut voir les Ues accessibles par un etudiant, le controller
+     * doit faire appel a cete methode
+     */
     public List<UE> obtenirUEAccessibles(Etudiant etudiant, List<UE> toutesLesUE) {
         // on crée un tableaux des Ues pour stocker les Ues accessibmes par l'étudiant
         ArrayList<UE> accessibles = new ArrayList<>();
@@ -15,8 +26,8 @@ public class ScolariteService {
 
         // on recupere les Ues de la formation globale de l'etudiant
         List<UE> uesdelaformation = new ArrayList<>();
-        for(UE ue : toutesLesUE){
-            if(ue.getMention() == mentionEtudiant){
+        for (UE ue : toutesLesUE) {
+            if (ue.getMention() == mentionEtudiant) {
                 uesdelaformation.add(ue);
             }
         }
@@ -76,25 +87,27 @@ public class ScolariteService {
         // on retourne le tableau des Ues accessibles, prêt pour l'affichage
         return accessibles;
     }
+
     public boolean inscrireEtudiant(Etudiant e, UE ue, String annee, Semestre semestre) {
         // Vérification des prérequis
         if (!possedePrerequis(ue, e)) {
             return false;
         }
-        //Calcul du total des crédits POUR CE SEMESTRE précis
+        // Calcul du total des crédits POUR CE SEMESTRE précis
         int creditsDuSemestre = 0;
         for (ResultatUE res : e.getResultatsUE()) {
-            // On additionne les crédits de toutes les matières de cette année ET de ce semestre
+            // On additionne les crédits de toutes les matières de cette année ET de ce
+            // semestre
             if (res.getAnnee().equals(annee) && res.getSemestre() == semestre) {
                 creditsDuSemestre += res.getUe().getCredit();
             }
         }
-        //On bloque si la nouvelle matière fait dépasser les 39 crédits sur le semestre
+        // On bloque si la nouvelle matière fait dépasser les 39 crédits sur le semestre
         if (creditsDuSemestre + ue.getCredit() > 39) {
             System.out.println("Inscription bloquée : La limite de 39 ECTS par semestre est atteinte.");
             return false;
         }
-        //Si tout est bon, on procède à l'inscription
+        // Si tout est bon, on procède à l'inscription
         ResultatUE inscription = new ResultatUE(ue, annee, semestre, StatutUE.ENCOURS);
         e.getResultatsUE().add(inscription);
         return true;
@@ -112,12 +125,13 @@ public class ScolariteService {
                     break;
                 }
             }
-            if (!valide) return false;
+            if (!valide)
+                return false;
         }
         return true;
     }
 
-    /* cette méthode permet savoir si un etudiant peut avoir son diplome*/
+    /* cette méthode permet savoir si un etudiant peut avoir son diplome */
     public Boolean estDiplome(Etudiant e) {
         // on initilase à 0 un compteur qui calcul les credits de l'etudiant
         int totalcredits = 0;
@@ -149,11 +163,16 @@ public class ScolariteService {
                 // on retourne false
                 return false;
         }
-        // si l'etudiant à un credit >=180 et a validé toutes les Ues obligatoires du parcours
+        // si l'etudiant à un credit >=180 et a validé toutes les Ues obligatoires du
+        // parcours
         // alors on retourne true ,il est diplomé
         return true;
     }
-    /* Cette methode permet de changer le statut d'une UE de l'etudant ( qui suit au semestre courant) à VALIDE*/
+
+    /*
+     * Cette methode permet de changer le statut d'une UE de l'etudant ( qui suit au
+     * semestre courant) à VALIDE
+     */
     public boolean validerUE(Etudiant e, UE ue) {
         // on boucle sur Resutlat de l'etudant
         for (ResultatUE res : e.getResultatsUE()) {
@@ -164,10 +183,12 @@ public class ScolariteService {
                 return true;
             }
         }
-        // s'il existe pas alors on retourne false car on peut pas valider qu on la suit pas
+        // s'il existe pas alors on retourne false car on peut pas valider qu on la suit
+        // pas
         return false;
     }
-    /* cette methode permet de marquer Echouer une Ue suivit par l'etudiant*/
+
+    /* cette methode permet de marquer Echouer une Ue suivit par l'etudiant */
     public boolean echoueUE(Etudiant e, UE ue) {
         // on recupere les resulats de l'etudiant
         for (ResultatUE res : e.getResultatsUE()) {
@@ -182,9 +203,13 @@ public class ScolariteService {
         return false;
     }
 
-    /* cette methode permet de passer un etudiant d'un semesre cournat à un semestre suivant*/
+    /*
+     * cette methode permet de passer un etudiant d'un semesre cournat à un semestre
+     * suivant
+     */
     public void passerSemestre(Etudiant e) {
-        // on recupere le semestre Cournat de l'etudiant suivant et on teste s'il est Impair
+        // on recupere le semestre Cournat de l'etudiant suivant et on teste s'il est
+        // Impair
         if (e.getSemestreCourant() == Semestre.IMPAIR)
             // on change à PAIR
             e.setSemestreCourant(Semestre.PAIR);
@@ -194,8 +219,10 @@ public class ScolariteService {
     }
 
     /**
-     * Simule le parcours le plus rapide possible pour obtenir la licence (180 ECTS + Obligatoires).
-     * @param etudiant L'étudiant concerné
+     * Simule le parcours le plus rapide possible pour obtenir la licence (180 ECTS
+     * + Obligatoires).
+     * 
+     * @param etudiant    L'étudiant concerné
      * @param toutesLesUE La liste globale des UEs de la formation
      * @return Le nombre de semestres supplémentaires nécessaires
      */
@@ -203,7 +230,7 @@ public class ScolariteService {
         ArrayList<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
         int totalCredits = 0;
         ArrayList<UE> obligatoiresRestantes = new ArrayList<>(etudiant.getParcours().getUEObligatoire());
-        //On cherche l'année et le semestre actuels de l'étudiant
+        // On cherche l'année et le semestre actuels de l'étudiant
         int anneeSimulee = java.time.Year.now().getValue();
         for (ResultatUE res : etudiant.getResultatsUE()) {
             try {
@@ -220,11 +247,12 @@ public class ScolariteService {
         for (ResultatUE res : simulationResultats) {
             if (res.getStatut() == StatutUE.VALIDE) {
                 totalCredits += res.getUe().getCredit();
-                //on va rajouter dans la classe UE un CampareTO pour supprimer la bonne UE
+                // on va rajouter dans la classe UE un CampareTO pour supprimer la bonne UE
                 obligatoiresRestantes.remove(res.getUe());
             }
         }
-        // On récupère toutes les matières de la Mention qui n'ont pas encore été validées
+        // On récupère toutes les matières de la Mention qui n'ont pas encore été
+        // validées
         Mention mention = etudiant.getParcours().getMention();
         List<UE> uesDisponibles = new ArrayList<>();
         for (UE ue : toutesLesUE) {
@@ -242,31 +270,38 @@ public class ScolariteService {
             }
         }
         int semestresSupplementaires = 0;
-        // On boucle tant que le total credit est inférieur à 180 credits et qu'il reste des matières obligatoires
-        // on arrete la boucle si au bout de 6 ans l'etudiant n'a pas abotenu son diplome
-        // c est pas démandé mais  pour etre coherant
+        // On boucle tant que le total credit est inférieur à 180 credits et qu'il reste
+        // des matières obligatoires
+        // on arrete la boucle si au bout de 6 ans l'etudiant n'a pas abotenu son
+        // diplome
+        // c est pas démandé mais pour etre coherant
         while ((totalCredits < 180 || !obligatoiresRestantes.isEmpty()) && semestresSupplementaires < 12) {
             semestresSupplementaires++;
-            //avancement du temps pour simuler le semestre
+            // avancement du temps pour simuler le semestre
             if (semestreSimule == Semestre.IMPAIR) {
                 semestreSimule = Semestre.PAIR;
             } else {
                 semestreSimule = Semestre.IMPAIR;
-                //on passe à l'année suivante
+                // on passe à l'année suivante
                 anneeSimulee++;
             }
             String anneeStr = String.valueOf(anneeSimulee);
             int creditsCeSemestre = 0;
             List<UE> uesChoisiesCeSemestre = new ArrayList<>();
 
-            /* ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la formation
-            uesDisponibles trier pour prioriser les Ues Verrous (quand une Ue est prerequis pour d'autres Ues il faut que l'algo priorise cet UE) */
-
+            /*
+             * ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la
+             * formation
+             * uesDisponibles trier pour prioriser les Ues Verrous (quand une Ue est
+             * prerequis pour d'autres Ues il faut que l'algo priorise cet UE)
+             */
 
             // remplissage du semestre
             for (UE ue : new ArrayList<>(uesDisponibles)) {
-                if (verifierPrerequisSimulation(ue, simulationResultats) && (creditsCeSemestre + ue.getCredit() <= 39)) {
-                    // Si c'est une optionnelle et qu'on a déja les 180 crédits (on cherche juste à finir les obligatoires), on ne la prend pas.
+                if (verifierPrerequisSimulation(ue, simulationResultats)
+                        && (creditsCeSemestre + ue.getCredit() <= 39)) {
+                    // Si c'est une optionnelle et qu'on a déja les 180 crédits (on cherche juste à
+                    // finir les obligatoires), on ne la prend pas.
                     if (!obligatoiresRestantes.contains(ue) && (totalCredits + creditsCeSemestre >= 180)) {
                         continue;
                     }
@@ -274,20 +309,26 @@ public class ScolariteService {
                     uesChoisiesCeSemestre.add(ue);
                 }
             }
-            //si aucune matière ne peut être prise (bloqué), on arrête
+            // si aucune matière ne peut être prise (bloqué), on arrête
             if (uesChoisiesCeSemestre.isEmpty()) {
                 break;
             }
-            //On valide les matières pour la suite de la simulation
+            // On valide les matières pour la suite de la simulation
             for (UE ue : uesChoisiesCeSemestre) {
                 simulationResultats.add(new ResultatUE(ue, anneeStr, semestreSimule, StatutUE.VALIDE));
                 uesDisponibles.remove(ue);
-                obligatoiresRestantes.remove(ue.getCode());
+                for (int i = 0; i < obligatoiresRestantes.size(); i++) {
+                    if (obligatoiresRestantes.get(i).getCode().equals(ue.getCode())) {
+                        obligatoiresRestantes.remove(i);
+                        break;
+                    }
+                }
                 totalCredits += ue.getCredit();
             }
         }
         return semestresSupplementaires;
     }
+
     // Vérifie si une UE bloque d'autres matières dans la liste restante
     private boolean estUnPrerequis(UE ueCible, ArrayList<UE> uesRestantes) {
         for (UE ue : uesRestantes) {
@@ -297,7 +338,9 @@ public class ScolariteService {
         }
         return false;
     }
-    //Vérification des prérequis basée sur une liste de résultats (pour la simulation)
+
+    // Vérification des prérequis basée sur une liste de résultats (pour la
+    // simulation)
     private boolean verifierPrerequisSimulation(UE ue, List<ResultatUE> resultats) {
         if (ue.getUEprerequis() == null || ue.getUEprerequis().isEmpty()) {
             return true;
