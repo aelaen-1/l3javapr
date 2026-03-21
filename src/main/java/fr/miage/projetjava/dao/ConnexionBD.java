@@ -20,7 +20,7 @@ import java.util.Properties;
  * 3. Renvoyer la connexion à la BD
  *
  * Si la connexion a échoué un message d'erreur est renvoyé
- *
+ * Cette classe utilise les identifiants présents dans le fichier config.properties pour ce connecter à la BD
  *
  *
  */
@@ -31,7 +31,8 @@ public class ConnexionBD {
     /**
      * Elle permet d'établir une connexion à la Base de données présente dans URL.
      * Elle est appelée depuis les classes dans le package dao qui ont besoin d'une connexion à la BD
-     *
+     * Elle va ouvrir un fichier contenant les informations de connexion à la BD,
+     * récupérer les informations de connexion et établir une connexion à la BD
 
      * @return : Une connexion à la BD de type Connection. Connection est une interface
      *         Retourne une erreur si la connexion à la BD a échoué ou si le sta
@@ -50,8 +51,8 @@ public class ConnexionBD {
             //transforme chaque ligne clé=valeur du fichier en entrée accessible en java
             properties.load(file);
 
-            //db.URL contient une String de connexion à la BD, et getProperty permet de récupérer la valeur
-            //associée à la clé db.URL
+            //db.URL contient une URL de type String qui contient les paramètres permettant la connexion à la BD,
+            // et getProperty permet de récupérer la valeur associée à la clé db.URL
             //url = jdbc:oracle:thin:@adresse:port:SID
             //jdbc est une API de bas niveau de Java et permet à java un accès à une BD
             //c'est lui qui permet de se connecter et d'intéragir avec une BD
@@ -62,7 +63,13 @@ public class ConnexionBD {
             //port correspond au port du réseau
             //SID nom de l'instance Oracle sur le serveur
             String URL = properties.getProperty("db.URL");
+
+            //db.USER contient une String avec l'identifiant de connexion à la BD, et getProperty permet de récupérer la valeur
+            //associée à la clé db.USER
             String USER = properties.getProperty("db.USER");
+
+            //db.PASSWORD contient une String avec le mdp de connexion à la BD, et getProperty permet de récupérer la valeur
+            //associée à la clé db.PASSWORD
             String PASSWORD = properties.getProperty("db.PASSWORD");
 
             // cette ligne permet d'établir une connexion avec la bd
