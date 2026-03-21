@@ -29,7 +29,7 @@ public class ParcoursBD {
 
 
     /**
-     * Méthode appelée dans ParcoursDAO dans chargerParcours
+     * Méthode appelée dans recuperationInformationListParcours
      *
      * Cette méthode va insérer les parcours dans la base de donnée à partir des informations du parcours passé en paramètre
      *
@@ -77,7 +77,7 @@ public class ParcoursBD {
 
 
     /**
-     * Méthode appelée depuis ParcoursDAO  dans la méthode ChargerParcours
+     * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
      *
      * Cette méthode va récupérer les informations des parcours donné dans la liste de parcours
      * et va appelé pour chaque parcours la méthode insertParcours
