@@ -251,15 +251,20 @@ public class ScolariteService {
                 }
             }
         }
-        //2nde boucle pour connaitre l'année courante (= celle du dernier résultat)
+        // 2nde boucle pour connaitre l'année courante (= celle du dernier résultat)
         for (ResultatUE res : etudiant.getResultatsUE()) {
             try {
                 int annee = Integer.parseInt(res.getAnnee());
-                if (annee > anneeSimulee) { anneeSimulee = annee;}
-            } catch (Exception e) {System.out.println(e);}
+                if (annee > anneeSimulee) {
+                    anneeSimulee = annee;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
 
-        // 3rd boucle pour avoir la liste de toutes les UE disponibles que l'on n'a pas validé
+        // 3rd boucle pour avoir la liste de toutes les UE disponibles que l'on n'a pas
+        // validé
         Mention mention = etudiant.getParcours().getMention();
         List<UE> uesRestantes = new ArrayList<>();
         for (UE ue : toutesLesUE) {
@@ -293,14 +298,13 @@ public class ScolariteService {
                 anneeSimulee++;
             }
 
-            // on récupère la liste des UE auxquelles on peut s'inscrire (= dont on a validé tous les prérequis)
+            // on récupère la liste des UE auxquelles on peut s'inscrire (= dont on a validé
+            // tous les prérequis)
             List<UE> uesAccessibles = new ArrayList<>();
             for (UE ue : uesRestantes) {
                 if (verifierPrerequisSimulation(ue, simulationResultats))
                     uesAccessibles.add(ue);
             }
-
-
 
             String anneeStr = String.valueOf(anneeSimulee);
             int creditsCeSemestre = 0;
@@ -376,5 +380,13 @@ public class ScolariteService {
             }
         }
         return true;
+    }
+
+    public boolean estDansLaListe(UE ue, List<UE> listeUE) {
+        for (UE elt : listeUE) {
+            if (ue.getCode().equals(elt.getCode()))
+                return true;
+        }
+        return false;
     }
 }
