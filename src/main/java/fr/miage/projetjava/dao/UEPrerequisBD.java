@@ -33,12 +33,12 @@ public class UEPrerequisBD {
     /**
      * Méthode appelée dans recuperationInformationListUEPre
      *
-     * Cette méthode va insérer les UE obligatoire pour un parcours dans la BD à partir des
-     * informations de la liste d'UE obligatoire donné en paramètre
+     * Cette méthode va insérer les UE prérequis pour un parcours dans la BD à partir des
+     * informations de la liste d'UE prérequis donné en paramètre
      *
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
      *
-     * @param : String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE obligatoires dans la BD
+     * @param : String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
      *
      */
     public static void insertUEPrerequis(String codeUE, ArrayList<UE> uePrerequis)
