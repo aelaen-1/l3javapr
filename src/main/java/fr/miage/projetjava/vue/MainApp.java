@@ -1,5 +1,6 @@
 package fr.miage.projetjava.vue;
 import fr.miage.projetjava.dao.CreationTableBD;
+import fr.miage.projetjava.dao.InsertBD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,6 +31,10 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         //création des tables dans la BD
         CreationTableBD.createTable();
+
+        //insertion des données du fichier csv dans les tables
+        InsertBD.insertionDonneeBD();
+
         //On appelle launch() pour démarrer le logiciel
         launch(args);
     }
