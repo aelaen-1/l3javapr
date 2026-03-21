@@ -78,7 +78,6 @@ public class EtudiantListController {
             {
                 // On définit l'apparence du bouton (couleurs et curseur)
                 btn.setStyle("-fx-background-color: #34495e; -fx-text-fill: white; -fx-cursor: hand;");
-
                 // On définit ce qu'il se passe quand on clique : ouvrir la fiche de l'étudiant choisi
                 btn.setOnAction(e -> ouvrirDetails(getTableView().getItems().get(getIndex())));
             }
@@ -97,7 +96,7 @@ public class EtudiantListController {
     private void ouvrirDetails(Etudiant e) {
         try {
             // On charge le fichier de l'interface des détails
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EtudiantDetailsController.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EtudiantDetails.fxml"));
             Parent root = loader.load();
             // On transmet l'objet étudiant cliqué au nouveau contrôleur qui va s'ouvrir
             EtudiantDetailsController controller = loader.getController();
