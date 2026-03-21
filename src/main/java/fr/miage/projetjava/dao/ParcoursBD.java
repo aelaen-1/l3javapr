@@ -82,7 +82,7 @@ public class ParcoursBD {
      * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
      *
      * Cette méthode va récupérer les informations des parcours donné dans la liste de parcours
-     * et va appelé pour chaque parcours la méthode insertParcours
+     * et va appeler pour chaque parcours la méthode insertParcours
      * afin d'insérer un par un les parcours dans la BD.
      *
      *
