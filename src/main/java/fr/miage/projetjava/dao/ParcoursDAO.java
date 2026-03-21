@@ -69,6 +69,10 @@ public class ParcoursDAO {
         } catch (IOException e) {
             System.out.println("Erreur lors de la lecture du fichier parcours.");
         }
+
+        //Une fois toute les données du fichier csv chargés dans l'ArrayList on appel la méthode pour insérer les parcours dans la BD
+        ParcoursBD.recuperationInformationListParcours(listeParcours);
+
         // On renvoie la liste de tous les parcours chargés
         return listeParcours;
     }
