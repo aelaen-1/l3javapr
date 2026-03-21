@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 /**
  * Classe EtudiantBD : Gère l'insertion des étudiants dans la BD
- * 2 méthodes : void insertEtudiant et void recuperationInformationListEtudiant
+ * 2 méthodes : static void insertEtudiant et static void recuperationInformationListEtudiant
  *
- * Cette classe permet de récupérer la liste d'étudiant fabriquer à partie du fichier csv et
- * d'insérer les différents étudiants dans la BD
+ * Cette classe permet de récupérer la liste d'étudiants fabriquée à partir du fichier csv et
+ * d'insérer les différents étudiants dans la BD.
  *
- * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+ * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
  *
  *
  *
@@ -30,9 +30,9 @@ public class EtudiantBD {
     private static final Logger log = LogManager.getLogger(EtudiantBD.class);
 
     /**
-     * Méthode appelée  par  l'autre méthode de cette classe
+     * Méthode appelée par la méthode recuperationInformationListEtudiant de la même classe
      *
-     * Cette méthode va insérer les Étudiants dans la base de donnée à partir des informations de l'étudiant passé en paramètre
+     * Cette méthode va insérer les étudiants dans la bd à partir des informations de l'étudiant passé en paramètre.
      *
      * @param: int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
      *
@@ -81,8 +81,8 @@ public class EtudiantBD {
     /**
      * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
      *
-     * Cette méthode va récupérer les informations des étudiants donné dans la liste d'étudiant
-     * et va appelé pour chaque étudiant la méthode insertEtudiant
+     * Cette méthode va récupérer les informations des étudiants données dans la liste d'étudiants
+     * et va appeler pour chaque étudiant la méthode insertEtudiant
      * afin d'insérer un par un les étudiants dans la BD.
      *
      *
