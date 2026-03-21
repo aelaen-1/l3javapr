@@ -1,7 +1,6 @@
 package fr.miage.projetjava.dao;
 
 import fr.miage.projetjava.model.Mention;
-import fr.miage.projetjava.model.Parcours;
 import fr.miage.projetjava.model.UE;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,13 +13,13 @@ import java.util.ArrayList;
 
 
 /**
- * Classe UEBD : Gère l'insertion des étudiants dans la BD
+ * Classe UEBD : Gère l'insertion des UE dans la BD
  * 2 méthodes : void insertUE et void recuperationInformationListUE
  *
- * Cette classe permet de récupérer la liste d'étudiant issus du fichier csv dans EtudiantDAO et
- * d'insérer les différents étudiants dans la BD
+ * Cette classe permet de récupérer la liste d'UE issues du fichier csv dans UEDAO et
+ * d'insérer les différentes UE dans la BD.
  *
- * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+ * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé.
  *
  *
  *
@@ -33,7 +32,7 @@ public class UEBD {
     /**
      * Méthode appelée par la méthode recuperationInformationListUE appartenant à la même classe
      *
-     * Cette méthode va insérer les UE dans la base de donnée à partir des informations de l'UE passé en paramètre
+     * Cette méthode va insérer les UE dans la base de données à partir des informations de l'UE passée en paramètre
      *
      * @param: String code, String intitule, int credit, String mention: informations qui doivent être ajoutées dans la BD
      *
@@ -79,10 +78,10 @@ public class UEBD {
 
 
     /**
-     * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD     *
-     * Cette méthode va récupérer les informations des UE donné dans la liste d'UE
-     * et va appelé pour chaque UE la méthode insertUE
-     * afin d'insérer une par une toutes les UE dans la BD.
+     * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
+     * Cette méthode va récupérer les informations des UE données dans la liste d'UE
+     * et va appeler pour chaque UE la méthode insertUE afin d'insérer une par une toutes
+     * les UE dans la BD.
      *
      *
      * @param: ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
