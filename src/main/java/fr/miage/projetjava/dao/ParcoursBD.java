@@ -86,7 +86,7 @@ public class ParcoursBD {
      * afin d'insérer un par un les parcours dans la BD.
      *
      *
-     * @param : ArrayList<Parcours> listeParcoursCSV:  liste d'objets Étudiant créés à partir des données du CSV
+     * @param : ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
      *
      *
      */
