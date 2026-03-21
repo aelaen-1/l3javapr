@@ -203,7 +203,6 @@ public class ScolariteService {
         List<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
         int totalCredits = 0;
         List<UE> obligatoiresRestantes = new ArrayList<>(etudiant.getParcours().getUEObligatoire());
-
         // On compte les crédits déjà acquis et on retire les obligatoires déjà validées
         for (ResultatUE res : simulationResultats) {
             if (res.getStatut() == StatutUE.VALIDE) {
@@ -234,21 +233,8 @@ public class ScolariteService {
             semestresSupplementaires++;
             int creditsCeSemestre = 0;
             List<UE> uesChoisiesCeSemestre = new ArrayList<>();
-
-            // on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la formation
-            uesDisponibles.sort((ue1, ue2) -> {
-                boolean ue1Obligatoire = obligatoiresRestantes.contains(ue1);
-                boolean ue2Obligatoire = obligatoiresRestantes.contains(ue2);
-
-                //On priorise toujours les matières obligatoires du parcours
-                if (ue1Obligatoire != ue2Obligatoire) {
-                    return Boolean.compare(ue2Obligatoire, ue1Obligatoire);
-                }
-                // on priorise la matière qui est un prérequis (le verrou)
-                boolean ue1Verrou = estUnPrerequis(ue1, uesDisponibles);
-                boolean ue2Verrou = estUnPrerequis(ue2, uesDisponibles);
-                return Boolean.compare(ue2Verrou, ue1Verrou);
-            });
+            // ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la formation
+            // uesDisponibles.sort pour prioriser les Ues Verrous
             //Remplissage du semestre
             for (UE ue : new ArrayList<>(uesDisponibles)) {
                 if (verifierPrerequisSimulation(ue, simulationResultats) && (creditsCeSemestre + ue.getCredit() <= 39)) {
