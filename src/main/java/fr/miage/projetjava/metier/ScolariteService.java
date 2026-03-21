@@ -227,34 +227,41 @@ public class ScolariteService {
      * @return Le nombre de semestres supplémentaires nécessaires
      */
     public int simulerDureeOptimale(Etudiant etudiant, ArrayList<UE> toutesLesUE) {
-        ArrayList<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
+
         int totalCredits = 0;
+        ArrayList<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
         ArrayList<UE> obligatoiresRestantes = new ArrayList<>(etudiant.getParcours().getUEObligatoire());
         // On cherche l'année et le semestre actuels de l'étudiant
         int anneeSimulee = java.time.Year.now().getValue();
-        for (ResultatUE res : etudiant.getResultatsUE()) {
-            try {
-                int annee = Integer.parseInt(res.getAnnee());
-                if (annee > anneeSimulee) {
-                    anneeSimulee = annee;
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
         Semestre semestreSimule = etudiant.getSemestreCourant();
-        // On compte les crédits déjà acquis et on retire les obligatoires déjà validées
+
+        /*
+         * 1ère boucle pour voir combien on a d'ects actuellement et quelles UE
+         * obligatoires on a validé
+         */
         for (ResultatUE res : simulationResultats) {
             if (res.getStatut() == StatutUE.VALIDE) {
                 totalCredits += res.getUe().getCredit();
-                // on va rajouter dans la classe UE un CampareTO pour supprimer la bonne UE
-                obligatoiresRestantes.remove(res.getUe());
+                // si cette ue est obligatoire, on la retire de obligatoiresRestantes
+                for (int i = 0; i < obligatoiresRestantes.size(); i++) {
+                    if (obligatoiresRestantes.get(i).getCode().equals(res.getUe().getCode())) {
+                        obligatoiresRestantes.remove(res.getUe());
+                        break;
+                    }
+                }
             }
         }
-        // On récupère toutes les matières de la Mention qui n'ont pas encore été
-        // validées
+        //2nde boucle pour connaitre l'année courante (= celle du dernier résultat)
+        for (ResultatUE res : etudiant.getResultatsUE()) {
+            try {
+                int annee = Integer.parseInt(res.getAnnee());
+                if (annee > anneeSimulee) { anneeSimulee = annee;}
+            } catch (Exception e) {System.out.println(e);}
+        }
+
+        // 3rd boucle pour avoir la liste de toutes les UE disponibles que l'on n'a pas validé
         Mention mention = etudiant.getParcours().getMention();
-        List<UE> uesDisponibles = new ArrayList<>();
+        List<UE> uesRestantes = new ArrayList<>();
         for (UE ue : toutesLesUE) {
             if (ue.getMention() == mention) {
                 boolean dejaValidee = false;
@@ -265,16 +272,16 @@ public class ScolariteService {
                     }
                 }
                 if (!dejaValidee) {
-                    uesDisponibles.add(ue);
+                    uesRestantes.add(ue);
                 }
             }
         }
+
         int semestresSupplementaires = 0;
         // On boucle tant que le total credit est inférieur à 180 credits et qu'il reste
         // des matières obligatoires
         // on arrete la boucle si au bout de 6 ans l'etudiant n'a pas abotenu son
-        // diplome
-        // c est pas démandé mais pour etre coherant
+        // diplome c est pas démandé mais pour etre coherant
         while ((totalCredits < 180 || !obligatoiresRestantes.isEmpty()) && semestresSupplementaires < 12) {
             semestresSupplementaires++;
             // avancement du temps pour simuler le semestre
@@ -285,19 +292,28 @@ public class ScolariteService {
                 // on passe à l'année suivante
                 anneeSimulee++;
             }
+
+            // on récupère la liste des UE auxquelles on peut s'inscrire (= dont on a validé tous les prérequis)
+            List<UE> uesAccessibles = new ArrayList<>();
+            for (UE ue : uesRestantes) {
+                if (verifierPrerequisSimulation(ue, simulationResultats))
+                    uesAccessibles.add(ue);
+            }
+
+
+
             String anneeStr = String.valueOf(anneeSimulee);
             int creditsCeSemestre = 0;
             List<UE> uesChoisiesCeSemestre = new ArrayList<>();
-
             /*
              * ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la
              * formation
-             * uesDisponibles trier pour prioriser les Ues Verrous (quand une Ue est
+             * uesRestantes trier pour prioriser les Ues Verrous (quand une Ue est
              * prerequis pour d'autres Ues il faut que l'algo priorise cet UE)
              */
 
             // remplissage du semestre
-            for (UE ue : new ArrayList<>(uesDisponibles)) {
+            for (UE ue : new ArrayList<>(uesRestantes)) {
                 if (verifierPrerequisSimulation(ue, simulationResultats)
                         && (creditsCeSemestre + ue.getCredit() <= 39)) {
                     // Si c'est une optionnelle et qu'on a déja les 180 crédits (on cherche juste à
@@ -316,7 +332,9 @@ public class ScolariteService {
             // On valide les matières pour la suite de la simulation
             for (UE ue : uesChoisiesCeSemestre) {
                 simulationResultats.add(new ResultatUE(ue, anneeStr, semestreSimule, StatutUE.VALIDE));
-                uesDisponibles.remove(ue);
+                uesRestantes.remove(ue);
+                // au lieu de faire directement obligatoiresRestantes.remove(ue), on vérifie
+                // qu'elle y soit;
                 for (int i = 0; i < obligatoiresRestantes.size(); i++) {
                     if (obligatoiresRestantes.get(i).getCode().equals(ue.getCode())) {
                         obligatoiresRestantes.remove(i);
