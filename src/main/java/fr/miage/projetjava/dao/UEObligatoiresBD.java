@@ -1,7 +1,6 @@
 package fr.miage.projetjava.dao;
 
 
-import fr.miage.projetjava.model.Mention;
 import fr.miage.projetjava.model.Parcours;
 import fr.miage.projetjava.model.UE;
 import org.apache.logging.log4j.LogManager;
@@ -13,11 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Classe UEObligatoires : Gère l'insertion des UE obligatoires liés à un parcours dans la BD
+ * Classe UEObligatoires : Gère l'insertion des UE obligatoires liées à un parcours dans la BD
  * 2 méthodes : static void insertUEObligatoires et static void recuperationInformationListUEObli
  *
- * Cette classe permet de récupérer la liste de parcours fabriquer à partie du fichier csv dans ParcoursDAO et
- *  d'insérer les différents étudiants dans la BD
+ * Cette classe permet de récupérer la liste d'UE fabriquée à partir du fichier csv dans UEDAO et
+ *  d'insérer les différentes UE obligatoires d'un parcours dans la BD
  *
  * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
  *
@@ -32,10 +31,10 @@ public class UEObligatoiresBD {
     /**
      * Méthode appelée dans recuperationInformationListUEObli
      *
-     * Cette méthode va insérer les UE obligatoire pour dans un parcours dans la base de donnée à partir des
-     * informations de la liste d'UE obligatoire donné en paramètre
+     * Cette méthode va insérer les UE obligatoires pour un parcours dans la BD à partir des
+     * informations de la liste d'UE obligatoire donnée en paramètre
      *
-     * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+     * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
      *
      * @param : String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE obligatoires dans la BD
      *
@@ -73,9 +72,9 @@ public class UEObligatoiresBD {
     /**
      * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
      *
-     * Cette méthode va récupérer les informations des parcours donné dans la liste de parcours
+     * Cette méthode va récupérer les informations des parcours donnés dans la liste de parcours
      * et va appeler pour chaque parcours la méthode insertUEObligatoires
-     * afin d'insérer dans la table UEObligatoire toutes les UES obligatoire liés à un parcours
+     * afin d'insérer dans la table UEObligatoire toutes les UES obligatoires liées à un parcours
      *
      *
      * @param : ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
