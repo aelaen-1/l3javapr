@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * Classe ParcoursBD : Gère l'insertion des parcours dans la BD
  * 2 méthodes : static void insertParcours et static void recuperationInformationListParcours
  *
- * Cette classe permet de récupérer la liste de parcours fabriquer à partie du fichier csv dans ParcoursDAO et
- *  d'insérer les différents étudiants dans la BD
+ * Cette classe permet de récupérer la liste de parcours issus du fichier csv dans ParcoursDAO et
+ *  d'insérer les différents parcours dans la BD
  *
  * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
  *
