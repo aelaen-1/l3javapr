@@ -106,8 +106,6 @@ public class EtudiantDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Une fois toute les données du fichier csv chargés dans l'ArrayList on appel la méthode pour insérer les étudiants dans la BD
-        EtudiantBD.recuperationInformationListEtudiant(etudiants);
         return etudiants;
     }
 
