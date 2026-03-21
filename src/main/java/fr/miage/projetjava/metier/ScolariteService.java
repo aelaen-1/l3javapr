@@ -199,18 +199,32 @@ public class ScolariteService {
      * @param toutesLesUE La liste globale des UEs de la formation
      * @return Le nombre de semestres supplémentaires nécessaires
      */
-    public int simulerDureeOptimale(Etudiant etudiant, List<UE> toutesLesUE) {
-        List<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
+    public int simulerDureeOptimale(Etudiant etudiant, ArrayList<UE> toutesLesUE) {
+        ArrayList<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
         int totalCredits = 0;
-        List<UE> obligatoiresRestantes = new ArrayList<>(etudiant.getParcours().getUEObligatoire());
+        ArrayList<UE> obligatoiresRestantes = new ArrayList<>(etudiant.getParcours().getUEObligatoire());
+        //On cherche l'année et le semestre actuels de l'étudiant
+        int anneeSimulee = java.time.Year.now().getValue();
+        for (ResultatUE res : etudiant.getResultatsUE()) {
+            try {
+                int annee = Integer.parseInt(res.getAnnee());
+                if (annee > anneeSimulee) {
+                    anneeSimulee = annee;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        Semestre semestreSimule = etudiant.getSemestreCourant();
         // On compte les crédits déjà acquis et on retire les obligatoires déjà validées
         for (ResultatUE res : simulationResultats) {
             if (res.getStatut() == StatutUE.VALIDE) {
                 totalCredits += res.getUe().getCredit();
-                obligatoiresRestantes.removeIf(u -> u.getCode().equals(res.getUe().getCode()));
+                //on va rajouter dans la classe UE un CampareTO pour supprimer la bonne UE
+                obligatoiresRestantes.remove(res.getUe());
             }
         }
-        //On récupère toutes les matières de la Mention qui n'ont pas encore été validées
+        // On récupère toutes les matières de la Mention qui n'ont pas encore été validées
         Mention mention = etudiant.getParcours().getMention();
         List<UE> uesDisponibles = new ArrayList<>();
         for (UE ue : toutesLesUE) {
@@ -229,16 +243,30 @@ public class ScolariteService {
         }
         int semestresSupplementaires = 0;
         // On boucle tant que le total credit est inférieur à 180 credits et qu'il reste des matières obligatoires
-        while ((totalCredits < 180 || !obligatoiresRestantes.isEmpty()) && semestresSupplementaires < 20) {
+        // on arrete la boucle si au bout de 6 ans l'etudiant n'a pas abotenu son diplome
+        // c est pas démandé pour etre coherant
+        while ((totalCredits < 180 || !obligatoiresRestantes.isEmpty()) && semestresSupplementaires < 12) {
             semestresSupplementaires++;
+            //avancement du temps pour simuler le semestre
+            if (semestreSimule == Semestre.IMPAIR) {
+                semestreSimule = Semestre.PAIR;
+            } else {
+                semestreSimule = Semestre.IMPAIR;
+                //on passe à l'année suivante
+                anneeSimulee++;
+            }
+            String anneeStr = String.valueOf(anneeSimulee);
             int creditsCeSemestre = 0;
             List<UE> uesChoisiesCeSemestre = new ArrayList<>();
-            // ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la formation
-            // uesDisponibles.sort pour prioriser les Ues Verrous
-            //Remplissage du semestre
+
+            /* ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la formation
+            uesDisponibles trier pour prioriser les Ues Verrous (quand une Ue est prerequis pour d'autres Ues il faut que l'algo priorise cet UE) */
+
+
+            // remplissage du semestre
             for (UE ue : new ArrayList<>(uesDisponibles)) {
                 if (verifierPrerequisSimulation(ue, simulationResultats) && (creditsCeSemestre + ue.getCredit() <= 39)) {
-                    //Si c'est une optionnelle et qu'on a déja les 180 crédits (on cherche juste à finir les obligatoires), on ne la prend pas.
+                    // Si c'est une optionnelle et qu'on a déja les 180 crédits (on cherche juste à finir les obligatoires), on ne la prend pas.
                     if (!obligatoiresRestantes.contains(ue) && (totalCredits + creditsCeSemestre >= 180)) {
                         continue;
                     }
@@ -246,22 +274,22 @@ public class ScolariteService {
                     uesChoisiesCeSemestre.add(ue);
                 }
             }
-            // Si aucune matière ne peut être prise (bloqué), on arrête
+            //si aucune matière ne peut être prise (bloqué), on arrête
             if (uesChoisiesCeSemestre.isEmpty()) {
                 break;
             }
             //On valide les matières pour la suite de la simulation
             for (UE ue : uesChoisiesCeSemestre) {
-                simulationResultats.add(new ResultatUE(ue, "SIMU", null, StatutUE.VALIDE));
+                simulationResultats.add(new ResultatUE(ue, anneeStr, semestreSimule, StatutUE.VALIDE));
                 uesDisponibles.remove(ue);
-                obligatoiresRestantes.removeIf(u -> u.getCode().equals(ue.getCode()));
+                obligatoiresRestantes.remove(ue.getCode());
                 totalCredits += ue.getCredit();
             }
         }
         return semestresSupplementaires;
     }
     // Vérifie si une UE bloque d'autres matières dans la liste restante
-    private boolean estUnPrerequis(UE ueCible, List<UE> uesRestantes) {
+    private boolean estUnPrerequis(UE ueCible, ArrayList<UE> uesRestantes) {
         for (UE ue : uesRestantes) {
             if (ue.getUEprerequis() != null && ue.getUEprerequis().contains(ueCible)) {
                 return true;
@@ -271,7 +299,9 @@ public class ScolariteService {
     }
     //Vérification des prérequis basée sur une liste de résultats (pour la simulation)
     private boolean verifierPrerequisSimulation(UE ue, List<ResultatUE> resultats) {
-        if (ue.getUEprerequis() == null || ue.getUEprerequis().isEmpty()) return true;
+        if (ue.getUEprerequis() == null || ue.getUEprerequis().isEmpty()) {
+            return true;
+        }
         for (UE pre : ue.getUEprerequis()) {
             boolean valide = false;
             for (ResultatUE res : resultats) {
@@ -280,7 +310,9 @@ public class ScolariteService {
                     break;
                 }
             }
-            if (!valide) return false;
+            if (!valide) {
+                return false;
+            }
         }
         return true;
     }
