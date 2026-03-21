@@ -9,14 +9,10 @@ import java.sql.Statement;
 
 /**
  * Classe CreationTableBD : Gère la création des tables dans la bd
- * 3 méthodes : void insertEtudiant, void recuperationInformationListEtudiant  et void recuperationInformationEtudiantCSV
  *
- * Cette classe est responsable de :
- * 1. Récupérer les informations transmises des fichiers CSV concernant les Étudiants
- * 2. Mettre ces informations sous le bon format
- * 3. Ajouter ces informations dans la BD
+ * Cette classe permet la création des différentes tables dans la BD
  *
- * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+ * Si la création des tables dans la base de données a échoué alors un message d'erreur est renvoyé
  *
  *
  *
@@ -26,7 +22,7 @@ public class CreationTableBD {
     private static final Logger log = LogManager.getLogger(ConnexionBD.class);
 
     /**
-     * Méthode appelée  dans la méthode main de la classe Main
+     * Méthode appelée  dans la méthode main de la classe MainApp
      *
      * Cette méthode va se connecter à la BD et exécuter toute les requêtes pour créer les différentes tables
      *
@@ -46,13 +42,13 @@ public class CreationTableBD {
         //tableau de String contenant toutes les requêtes de créations de table
         String[] requeteAjoutTable = {
 
-                "CREATE TABLE Parcours (nom Varchar2(30) PRIMARY KEY, mention Varchar2(20),CONSTRAINT ck_Parcours_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
+                "CREATE TABLE Parcours (code Varchar2(30) PRIMARY KEY, nom Varchar2(30), mention Varchar2(20),CONSTRAINT ck_Parcours_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
-                "CREATE TABLE Etudiant (numE number PRIMARY KEY, prenomE Varchar2(30), nomE Varchar2(30), parcours Varchar2(30), CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(nom))",
+                "CREATE TABLE Etudiant (numE number PRIMARY KEY, prenomE Varchar2(30), nomE Varchar2(30), parcours Varchar2(30), CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(code))",
 
                 "CREATE TABLE UE ( code Varchar2(10) PRIMARY KEY, intitule Varchar2(40), credit Number, mention Varchar2(20), CONSTRAINT ck_UE_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
-                "CREATE TABLE UEObligatoire (nom Varchar2(30), UE Varchar2(10), PRIMARY KEY(nom, UE),CONSTRAINT fk_UEObligatoire_Parcours FOREIGN KEY (nom) REFERENCES Parcours(nom),CONSTRAINT fk_UEObligatoire_UE FOREIGN KEY (UE) REFERENCES UE(code))",
+                "CREATE TABLE UEObligatoire (nom Varchar2(30), UE Varchar2(10), PRIMARY KEY(nom, UE),CONSTRAINT fk_UEObligatoire_Parcours FOREIGN KEY (nom) REFERENCES Parcours(code),CONSTRAINT fk_UEObligatoire_UE FOREIGN KEY (UE) REFERENCES UE(code))",
 
                 "CREATE TABLE UEprerequis (codeUE Varchar2(10), codeUEPrerequis Varchar2(10), PRIMARY KEY(codeUE, codeUEPrerequis), CONSTRAINT fk_UEPrerequis_codeUE FOREIGN KEY (codeUE) REFERENCES UE(code), CONSTRAINT fk_UEPrerequis_codeUEPrerequis FOREIGN KEY (codeUEPrerequis) REFERENCES UE(code))",
 
@@ -83,8 +79,6 @@ public class CreationTableBD {
 
             }
 
-            //BDEtudiant ajout = new BDEtudiant();
-            //ajout.insertEtudiant();
         }
 
         catch(SQLException e){
