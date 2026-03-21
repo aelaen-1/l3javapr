@@ -36,7 +36,7 @@ public class ParcoursBD {
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
      *
      */
-    public static void insertParcours(String code, String nom, Mention mention)
+    public static void insertParcours(String code, String nom, String mention)
     {
 
         // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
@@ -60,9 +60,7 @@ public class ParcoursBD {
             // et en premier c'est l'indice de où se trouve le paramètre dans la requête
             ajoutValues.setString(1,code);
             ajoutValues.setString(2,nom);
-
-            //permet de mettre Mention en String
-            ajoutValues.setString(3, String.valueOf(mention));
+            ajoutValues.setString(3, mention);
 
             //executeUpdate() va executer la requête sql qui est contenu dans l'objet ajoutValues
             //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
@@ -96,7 +94,7 @@ public class ParcoursBD {
             String code = parcours.getNom();
             Mention mention = parcours.getMention();
 
-            insertParcours(code, null,  mention);
+            insertParcours(code, null,  mention.toString());
         }
     }
 }
