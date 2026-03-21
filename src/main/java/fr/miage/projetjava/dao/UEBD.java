@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Classe UEBD : Gère l'insertion des étudiants dans la BD
  * 2 méthodes : void insertUE et void recuperationInformationListUE
  *
- * Cette classe permet de récupérer la liste d'étudiant fabriquer à partie du fichier csv dans EtudiantDAO et
+ * Cette classe permet de récupérer la liste d'étudiant issus du fichier csv dans EtudiantDAO et
  * d'insérer les différents étudiants dans la BD
  *
  * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
@@ -31,7 +31,7 @@ public class UEBD {
     private static final Logger log = LogManager.getLogger(EtudiantBD.class);
 
     /**
-     * Méthode appelée par l'autre méthode de cette classe
+     * Méthode appelée par la méthode recuperationInformationListUE appartenant à la même classe
      *
      * Cette méthode va insérer les UE dans la base de donnée à partir des informations de l'UE passé en paramètre
      *
