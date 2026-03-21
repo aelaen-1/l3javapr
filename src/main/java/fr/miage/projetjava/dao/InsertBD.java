@@ -34,6 +34,9 @@ public class InsertBD {
         //Une fois toute les données du fichier csv chargés dans l'ArrayList on appel la méthode pour insérer les parcours dans la BD
         ParcoursBD.recuperationInformationListParcours(listeParcours);
 
+        //on met listeParcours car c'est lui qui va contenir les UE obligatoires d'un parcours
+        UEObligatoiresBD.recuperationInformationListUEObli(listeParcours);
+
         //on charge les étudiants du fichier csv dans une liste d'étudiants
         ArrayList<Etudiant> etudiants = new EtudiantDAO().chargerTout(listeParcours, ues);
         //Une fois toute les données du fichier csv chargés dans l'ArrayList on appel la méthode pour insérer les étudiants dans la BD
