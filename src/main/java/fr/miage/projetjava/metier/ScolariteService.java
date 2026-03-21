@@ -306,29 +306,41 @@ public class ScolariteService {
                     uesAccessibles.add(ue);
             }
 
-            String anneeStr = String.valueOf(anneeSimulee);
-            int creditsCeSemestre = 0;
-            List<UE> uesChoisiesCeSemestre = new ArrayList<>();
-            /*
-             * ici on fait un tri sur Les Ues obligatoires du parcous et Ues Restantes de la
-             * formation
-             * uesRestantes trier pour prioriser les Ues Verrous (quand une Ue est
-             * prerequis pour d'autres Ues il faut que l'algo priorise cet UE)
-             */
+            /*  Algo de tri qui compare chaque UE à toutes les autres pour comparer 
+            leur niveau de priorité. Si une UE est prioritaire, on la swap
+            dans la liste des UE accessibles pour s'y inscrire */
+            for (int i = 0; i < uesAccessibles.size() - 1; i++) {
+                for (int j = i + 1; j < uesAccessibles.size(); j++) {
+                    UE ue1 = uesAccessibles.get(i);
+                    UE ue2 = uesAccessibles.get(j);
 
-            // remplissage du semestre
-            for (UE ue : new ArrayList<>(uesRestantes)) {
-                if (verifierPrerequisSimulation(ue, simulationResultats)
-                        && (creditsCeSemestre + ue.getCredit() <= 39)) {
-                    // Si c'est une optionnelle et qu'on a déja les 180 crédits (on cherche juste à
-                    // finir les obligatoires), on ne la prend pas.
-                    if (!obligatoiresRestantes.contains(ue) && (totalCredits + creditsCeSemestre >= 180)) {
-                        continue;
+                    int prioriteUE1 = calculerPrioriteUE(ue1, uesRestantes, obligatoiresRestantes);
+                    int prioriteUE2 = calculerPrioriteUE(ue2, uesRestantes, obligatoiresRestantes);
+
+                    if (prioriteUE2 > prioriteUE1) {
+                        uesAccessibles.set(i, ue2);
+                        uesAccessibles.set(j, ue1);
                     }
-                    creditsCeSemestre += ue.getCredit();
-                    uesChoisiesCeSemestre.add(ue);
                 }
             }
+
+            int creditsCeSemestre = 0;
+            List<UE> uesChoisiesCeSemestre = new ArrayList<>();
+            //remplissage du semestre
+            for (UE ue : uesAccessibles) {
+            if (creditsCeSemestre + ue.getCredit() <= 39) {
+                if (!estDansLaListe(ue, obligatoiresRestantes) 
+                        && totalCredits + creditsCeSemestre >= 180) {
+                    continue;
+                }
+                creditsCeSemestre += ue.getCredit();
+                uesChoisiesCeSemestre.add(ue);
+            }
+        }
+            
+
+            String anneeStr = String.valueOf(anneeSimulee);
+
             // si aucune matière ne peut être prise (bloqué), on arrête
             if (uesChoisiesCeSemestre.isEmpty()) {
                 break;
@@ -412,7 +424,6 @@ public class ScolariteService {
                 }
             }
         }
-
         niveauDePriorite += nbBloquees * 100;
         niveauDePriorite += ue.getCredit();
         return niveauDePriorite;
