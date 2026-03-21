@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 
 /**
- * Classe BDParcours : Gère l'insertion des parcours dans la BD
+ * Classe ParcoursBD : Gère l'insertion des parcours dans la BD
  * 2 méthodes : static void insertParcours et static void recuperationInformationListParcours
  *
  * Cette classe permet de récupérer la liste de parcours fabriquer à partie du fichier csv dans ParcoursDAO et
@@ -34,6 +34,8 @@ public class ParcoursBD {
      * Cette méthode va insérer les parcours dans la base de donnée à partir des informations du parcours passé en paramètre
      *
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
+     *
+     * @param : String code, String nom, String mention: information nécessaire pour l'ajout du parcours dans la BD
      *
      */
     public static void insertParcours(String code, String nom, String mention)
@@ -84,7 +86,7 @@ public class ParcoursBD {
      * afin d'insérer un par un les parcours dans la BD.
      *
      *
-     * @param ArrayList<Parcours> listeParcoursCSV:  liste d'objets Étudiant créés à partir des données du CSV
+     * @param : ArrayList<Parcours> listeParcoursCSV:  liste d'objets Étudiant créés à partir des données du CSV
      *
      *
      */
