@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Classe BDEtudiant : Gère l'insertion des étudiants dans la BD
- * 2 méthodes : void insertEtudiant et void recuperationInformationEtudiantCSV
+ * Classe EtudiantBD : Gère l'insertion des étudiants dans la BD
+ * 2 méthodes : void insertEtudiant et void recuperationInformationListEtudiant
  *
- * Cette classe permet de récupérer la liste d'étudiant fabriquer à partie du fichier csv dans EtudiantDAO et
+ * Cette classe permet de récupérer la liste d'étudiant fabriquer à partie du fichier csv et
  * d'insérer les différents étudiants dans la BD
  *
  * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
@@ -34,7 +34,7 @@ public class EtudiantBD {
      *
      * Cette méthode va insérer les Étudiants dans la base de donnée à partir des informations de l'étudiant passé en paramètre
      *
-     * @param int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
+     * @param: int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
      *
      *
      */
@@ -86,7 +86,7 @@ public class EtudiantBD {
      * afin d'insérer un par un les étudiants dans la BD.
      *
      *
-     * @param ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Étudiant créés à partir des données du CSV
+     * @param: ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Étudiant créés à partir des données du CSV
      *
      *
      */
