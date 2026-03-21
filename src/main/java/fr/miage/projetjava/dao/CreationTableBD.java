@@ -46,13 +46,13 @@ public class CreationTableBD {
 
                 "CREATE TABLE Etudiant (numE number PRIMARY KEY, prenomE Varchar2(30), nomE Varchar2(30), parcours Varchar2(30), CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(code))",
 
-                "CREATE TABLE UE ( code Varchar2(10) PRIMARY KEY, intitule Varchar2(40), credit Number, mention Varchar2(20), CONSTRAINT ck_UE_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
+                "CREATE TABLE UE ( codeUE Varchar2(10) PRIMARY KEY, intitule Varchar2(40), credit Number, mention Varchar2(20), CONSTRAINT ck_UE_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
-                "CREATE TABLE UEObligatoire (nom Varchar2(30), UE Varchar2(10), PRIMARY KEY(nom, UE),CONSTRAINT fk_UEObligatoire_Parcours FOREIGN KEY (nom) REFERENCES Parcours(code),CONSTRAINT fk_UEObligatoire_UE FOREIGN KEY (UE) REFERENCES UE(code))",
+                "CREATE TABLE UEObligatoire (nomParcours Varchar2(30), UE Varchar2(10), PRIMARY KEY(nom, UE),CONSTRAINT fk_UEObligatoire_Parcours FOREIGN KEY (nomParcours) REFERENCES Parcours(code),CONSTRAINT fk_UEObligatoire_UE FOREIGN KEY (UE) REFERENCES UE(codeUE))",
 
-                "CREATE TABLE UEprerequis (codeUE Varchar2(10), codeUEPrerequis Varchar2(10), PRIMARY KEY(codeUE, codeUEPrerequis), CONSTRAINT fk_UEPrerequis_codeUE FOREIGN KEY (codeUE) REFERENCES UE(code), CONSTRAINT fk_UEPrerequis_codeUEPrerequis FOREIGN KEY (codeUEPrerequis) REFERENCES UE(code))",
+                "CREATE TABLE UEprerequis (codeUE Varchar2(10), codeUEPrerequis Varchar2(10), PRIMARY KEY(codeUE, codeUEPrerequis), CONSTRAINT fk_UEPrerequis_codeUE FOREIGN KEY (codeUE) REFERENCES UE(codeUE), CONSTRAINT fk_UEPrerequis_codeUEPrerequis FOREIGN KEY (codeUEPrerequis) REFERENCES UE(codeUE))",
 
-                "CREATE TABLE ResultatUE (code Varchar2(10), numE number, annee number ,semestre Varchar2(20), statut Varchar2(20), PRIMARY KEY (code, numE), CONSTRAINT fk_ResultatUE_code FOREIGN KEY (code) REFERENCES UE(code), CONSTRAINT fk_ResultatUE_numE FOREIGN KEY (numE) REFERENCES Etudiant(numE), CONSTRAINT ck_ResultatUE_statut CHECK (statut in ('Valide', 'En cours', 'Echoué')), CONSTRAINT ck_ResultatUE_Semestre CHECK(semestre = 'Pair' or semestre = 'Impair'))"
+                "CREATE TABLE ResultatUE (codeUE Varchar2(10), numE number, annee number ,semestre Varchar2(20), statut Varchar2(20), PRIMARY KEY (codeUE, numE), CONSTRAINT fk_ResultatUE_code FOREIGN KEY (codeUE) REFERENCES UE(codeUE), CONSTRAINT fk_ResultatUE_numE FOREIGN KEY (numE) REFERENCES Etudiant(numE), CONSTRAINT ck_ResultatUE_statut CHECK (statut in ('Valide', 'En cours', 'Echoué')), CONSTRAINT ck_ResultatUE_Semestre CHECK(semestre = 'Pair' or semestre = 'Impair'))"
 
         };
 
