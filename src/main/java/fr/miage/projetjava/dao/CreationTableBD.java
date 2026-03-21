@@ -12,19 +12,19 @@ import java.sql.Statement;
  *
  * Cette classe permet la création des différentes tables dans la BD
  *
- * Si la création des tables dans la base de données a échoué alors un message d'erreur est renvoyé
+ * Si la création des tables dans la base de données a échoué, alors un message d'erreur est renvoyé
  *
  *
  *
  */
 
 public class CreationTableBD {
-    private static final Logger log = LogManager.getLogger(ConnexionBD.class);
+    private static final Logger log = LogManager.getLogger(CreationTableBD.class);
 
     /**
      * Méthode appelée  dans la méthode main de la classe MainApp
      *
-     * Cette méthode va se connecter à la BD et exécuter toute les requêtes pour créer les différentes tables
+     * Cette méthode va se connecter à la BD et exécuter toutes les requêtes pour créer les différentes tables
      *
      */
 
