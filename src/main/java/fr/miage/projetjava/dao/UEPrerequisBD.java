@@ -1,6 +1,5 @@
 package fr.miage.projetjava.dao;
 
-import fr.miage.projetjava.model.Parcours;
 import fr.miage.projetjava.model.UE;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,11 +11,11 @@ import java.util.ArrayList;
 
 
 /**
- * Classe UEPrerequisBD : Gère l'insertion des UE prerequis à une autre UE dans la BD
+ * Classe UEPrerequisBD : Gère l'insertion des UE prérequis à une autre UE dans la BD
  * 2 méthodes : static void insertUEPrerequis et static void recuperationInformationListUEPre
  *
- * Cette classe permet de récupérer la liste de parcours fabriquer à partie du fichier csv dans ParcoursDAO et
- *  d'insérer les différents étudiants dans la BD
+ * Cette classe permet de récupérer la liste d'UE fabriqué à partir du fichier csv dans UEDAO et
+ *  d'insérer les différentes UE prérequis à d'autres UE dans la BD
  *
  * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
  *
@@ -28,13 +27,13 @@ import java.util.ArrayList;
 
 public class UEPrerequisBD {
 
-    private static final Logger log = LogManager.getLogger(UEObligatoiresBD.class);
+    private static final Logger log = LogManager.getLogger(UEPrerequisBD.class);
 
 
     /**
      * Méthode appelée dans recuperationInformationListUEPre
      *
-     * Cette méthode va insérer les UE obligatoire pour dans un parcours dans la base de donnée à partir des
+     * Cette méthode va insérer les UE obligatoire pour un parcours dans la BD à partir des
      * informations de la liste d'UE obligatoire donné en paramètre
      *
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
@@ -77,7 +76,7 @@ public class UEPrerequisBD {
      *
      * Cette méthode va récupérer les informations des UE donné dans la liste d'UE
      * et va appeler pour chaque UE la méthode insertUEPrerequis si celle-ci possède des prérequis
-     * afin d'insérer dans la table UEprerequis toutes les UES prérequis concernant l'UE
+     * afin d'insérer dans la table UEprerequis toutes les UES prérequis concernant l'UE.
      *
      *
      * @param : ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
