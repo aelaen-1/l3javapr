@@ -97,7 +97,7 @@ public class EtudiantListController {
     private void ouvrirDetails(Etudiant e) {
         try {
             // On charge le fichier de l'interface des détails
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EtudiantDetailsController.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EtudiantDetails.fxml"));
             Parent root = loader.load();
             // On transmet l'objet étudiant cliqué au nouveau contrôleur qui va s'ouvrir
             EtudiantDetailsController controller = loader.getController();
