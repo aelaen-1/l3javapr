@@ -6,8 +6,21 @@ import fr.miage.projetjava.model.UE;
 
 import java.util.ArrayList;
 
+
+/**
+ * Classe InsertBD : Gère l'appel aux autres classes permettant l'insertion des données dans la BD
+ *
+ */
+
+
 public class InsertBD {
 
+    /**
+     * Méthode appelée  dans la méthode main de la classe MainApp
+     *
+     * Cette méthode va faire appel aux différentes méthodes d'insertion des données dans les BD
+     *
+     */
 
     public static void insertionDonneeBD(){
 
