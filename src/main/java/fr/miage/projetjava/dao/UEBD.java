@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 
 /**
- * Classe BDEtudiant : Gère l'insertion des étudiants dans la BD
- * 2 méthodes : void insertEtudiant et void recuperationInformationEtudiantCSV
+ * Classe UEBD : Gère l'insertion des étudiants dans la BD
+ * 2 méthodes : void insertUE et void recuperationInformationListUE
  *
  * Cette classe permet de récupérer la liste d'étudiant fabriquer à partie du fichier csv dans EtudiantDAO et
  * d'insérer les différents étudiants dans la BD
@@ -31,11 +31,11 @@ public class UEBD {
     private static final Logger log = LogManager.getLogger(EtudiantBD.class);
 
     /**
-     * Méthode appelée  par  l'autre méthode de cette classe
+     * Méthode appelée par l'autre méthode de cette classe
      *
-     * Cette méthode va insérer les Étudiants dans la base de donnée à partir des informations de l'étudiant passé en paramètre
+     * Cette méthode va insérer les UE dans la base de donnée à partir des informations de l'UE passé en paramètre
      *
-     * @param int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
+     * @param: String code, String intitule, int credit, String mention: informations qui doivent être ajoutées dans la BD
      *
      *
      */
@@ -79,14 +79,13 @@ public class UEBD {
 
 
     /**
-     * Méthode appelée depuis UEDAO  dans la méthode ChargerUEs
-     *
+     * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD     *
      * Cette méthode va récupérer les informations des UE donné dans la liste d'UE
      * et va appelé pour chaque UE la méthode insertUE
      * afin d'insérer une par une toutes les UE dans la BD.
      *
      *
-     * @param ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
+     * @param: ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
      *
      *
      */
