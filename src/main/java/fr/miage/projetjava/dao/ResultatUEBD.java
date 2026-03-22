@@ -47,11 +47,11 @@ public class ResultatUEBD {
         //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
         // à la BD
         try(Connection connexion = ConnexionBD.connexionBD()){
-            String requeteInsertParcours = "INSERT INTO  ResultatUE (codeUE, numE, annee, semestre, statut)" +
+            String requeteInsertResultatUE = "INSERT INTO  ResultatUE (codeUE, numE, annee, semestre, statut)" +
                     "VALUES ( ?, ?, ?, ?, ?)";
 
 
-            PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertParcours);
+            PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertResultatUE);
 
             ajoutValues.setString(1,codeUE);
             ajoutValues.setInt(2,numE);
