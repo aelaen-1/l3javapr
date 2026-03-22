@@ -50,13 +50,13 @@ public class UEBD {
             // les ? sont là car on va utiliser PreparedStatement qui crée des objets preparedStatement permettant
             // d'envoyer des requêtes sql paramétrés à la BD
 
-            String requeteInsertEtudiant = "INSERT INTO  UE (codeUE, intitule, credit, mention )" +
+            String requeteInsertUE = "INSERT INTO  UE (codeUE, intitule, credit, mention )" +
                     "VALUES ( ?, ?, ?, ?)";
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
             //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
             //prend en paramètre une requête sql qui contient des ? qui vont ensuite être remplacé par des valeurs
-            PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
+            PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertUE);
             //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
             // et en premier c'est l'indice de où se trouve le paramètre dans la requête
             ajoutValues.setString(1, code);
