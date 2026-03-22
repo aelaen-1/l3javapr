@@ -3,12 +3,11 @@ package fr.miage.projetjava.dao;
 
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Parcours;
+import fr.miage.projetjava.model.Semestre;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -38,7 +37,7 @@ public class EtudiantBD {
      *
      *
      */
-    public static void insertEtudiant(int numE, String prenomE, String nomE, String parcours)
+    public static void insertEtudiant(int numE, String prenomE, String nomE, String parcours, String semestre)
     {
 
 
@@ -51,8 +50,8 @@ public class EtudiantBD {
             // les ? sont là car on va utiliser PreparedStatement qui crée des objets preparedStatement permettant
             // d'envoyer des requêtes sql paramétrés à la BD
 
-            String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours )" +
-                    "VALUES ( ?, ?, ?, ?)";
+            String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours, semestre)" +
+                    "VALUES ( ?, ?, ?, ?, ?)";
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
             //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
@@ -64,6 +63,7 @@ public class EtudiantBD {
             ajoutValues.setString(2,prenomE);
             ajoutValues.setString(3,nomE);
             ajoutValues.setString(4,parcours);
+            ajoutValues.setString(5, semestre);
 
             //executeUpdate() va executer la requête sql qui est contenu dans l'objet ajoutValues
             //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
@@ -97,10 +97,10 @@ public class EtudiantBD {
             String prenomE = etudiant.getPrenomE();
             String nomE = etudiant.getNomE();
             Parcours parcours = etudiant.getParcours();
+            Semestre semestre = etudiant.getSemestreCourant();
 
-            insertEtudiant(numE,prenomE,nomE,parcours.getNom());
+            insertEtudiant(numE,prenomE,nomE,parcours.getNom(), semestre.toString());
         }
     }
-
 
 }
