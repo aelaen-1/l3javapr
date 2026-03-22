@@ -44,7 +44,7 @@ public class CreationTableBD {
 
                 "CREATE TABLE Parcours (code Varchar2(30) PRIMARY KEY, nom Varchar2(30), mention Varchar2(20),CONSTRAINT ck_Parcours_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
-                "CREATE TABLE Etudiant (numE number PRIMARY KEY, prenomE Varchar2(30), nomE Varchar2(30), parcours Varchar2(30), CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(code))",
+                "CREATE TABLE Etudiant (numE number PRIMARY KEY, prenomE Varchar2(30), nomE Varchar2(30), parcours Varchar2(30), semestre Varchar2(20), CONSTRAINT fk_Etudiant_parcours FOREIGN KEY (parcours) REFERENCES Parcours(code), CONSTRAINT ck_Etudiant_Semestre CHECK(semestre = 'Pair' or semestre = 'Impair'))",
 
                 "CREATE TABLE UE ( codeUE Varchar2(10) PRIMARY KEY, intitule Varchar2(50), credit Number, mention Varchar2(20), CONSTRAINT ck_UE_MENTION CHECK (mention IN('MIASHS','Informatique', 'Biologie', 'Chimie', 'Physique')))",
 
