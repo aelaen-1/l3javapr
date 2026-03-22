@@ -1,47 +1,36 @@
 package fr.miage.projetjava.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.miage.projetjava.dao.EtudiantDAO;
-import fr.miage.projetjava.dao.ParcoursDAO;
+import fr.miage.projetjava.dao.*;
+import fr.miage.projetjava.model.*;
 import fr.miage.projetjava.metier.ScolariteService;
-import fr.miage.projetjava.model.Etudiant;
-import fr.miage.projetjava.model.Parcours;
-import fr.miage.projetjava.model.ResultatUE;
-import fr.miage.projetjava.model.StatutUE;
-import fr.miage.projetjava.model.UE;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import java.io.IOException;
+import java.util.*;
 
 public class EtudiantDetailsController {
     // identité de l'étudiant
     @FXML private Label lblTitre, lblParcours, lblMention;
     // affichage sur l'IHM les informations d'un Etudiant
     @FXML private Label lblCreditsValides, lblCreditsEnCours, lblSemestreActuel, lblAnneeActuelle;
+
+   //Label pour l'algorithme du chemin critique (estimation)
+    @FXML private Label lblEstimation;
+
     // Listes des Ues  suivies par un Etudiant
     @FXML private ListView<String> listValidees, listEnCours, listAccessibles;
     private Etudiant etudiant;
     private List<UE> toutesLesUE;
     private final ScolariteService service = new ScolariteService();
+
     /*
      * Initialise les données de la vue quand on arrive sur la fiche
      */
@@ -50,7 +39,8 @@ public class EtudiantDetailsController {
         this.toutesLesUE = ues;
         rafraichir();
     }
-    /*
+
+    /**
      * cette méthode met à jour tous les éléments graphiques de l'écran
      */
     private void rafraichir() {
@@ -84,6 +74,15 @@ public class EtudiantDetailsController {
         }
         lblCreditsValides.setText(valides + " ECTS");
         lblCreditsEnCours.setText(enCours + " ECTS");
+        if (service.estDiplome(etudiant)) {
+            lblEstimation.setText("DIPLÔMÉ !");
+        } else {
+            // On appelle l'algorithme de simulation
+            int semestresSimules = service.simulerDureeOptimale(etudiant, toutesLesUE);
+            // Conversion en années (2 semestres = 1 an)
+            double anneesRestantes = semestresSimules / 2.0;
+            lblEstimation.setText(anneesRestantes + " an(s)");
+        }
         // Remplissage des listes UEs
         ArrayList<String> listeValidees = new ArrayList<>();
         ArrayList<String> listeEnCours = new ArrayList<>();
@@ -97,6 +96,7 @@ public class EtudiantDetailsController {
         }
         listValidees.getItems().setAll(listeValidees);
         listEnCours.getItems().setAll(listeEnCours);
+
         //cette méthode fait appel au Service pour savoir quelles UEs sont accessibles
         List<UE> accessibles = service.obtenirUEAccessibles(etudiant, new ArrayList<>(toutesLesUE));
         ArrayList<String> listeAcc = new ArrayList<>();
@@ -105,7 +105,8 @@ public class EtudiantDetailsController {
         }
         listAccessibles.getItems().setAll(listeAcc);
     }
-    /*
+
+    /**
      * cettte methode affiche une fenêtre surgissante avec tout l'historique de l'étudiant
      */
     @FXML
@@ -137,7 +138,7 @@ public class EtudiantDetailsController {
         dialog.showAndWait();
     }
 
-    /*
+    /**
      * Ouvre une boîte de choix pour inscrire l'étudiant à une nouvelle UE
      */
     @FXML
@@ -151,7 +152,8 @@ public class EtudiantDetailsController {
             sauvegarder();
         });
     }
-    /*
+
+    /**
      *cette methode permet de mettre une note (Valider ou Échouer) à une UE en cours
      */
     @FXML
@@ -186,7 +188,8 @@ public class EtudiantDetailsController {
             sauvegarder();
         });
     }
-    /*
+
+    /**
      * Change le semestre de l'étudiant (Impair <-> Pair)
      */
     @FXML
@@ -194,7 +197,8 @@ public class EtudiantDetailsController {
         service.passerSemestre(etudiant);
         sauvegarder();
     }
-    /*
+
+    /**
      * Retourne à la liste globale des étudiants
      */
     @FXML
@@ -208,7 +212,8 @@ public class EtudiantDetailsController {
             e.printStackTrace();
         }
     }
-    /*
+
+    /**
      * Enregistre les modifications dans le fichier CSV et rafraîchit l'écran
      */
     private void sauvegarder() {
