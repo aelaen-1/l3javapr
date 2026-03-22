@@ -52,11 +52,11 @@ public class UEPrerequisBD {
 
             //on va parcourir la liste des UE prerequis de l'UE mis en paramètre et on les insérer dans la table
             for (UE ue : uePrerequis){
-                String requeteInsertParcours = "INSERT INTO  UEprerequis (codeUE, codeUEPrerequis)" +
+                String requeteInsertUEPrere = "INSERT INTO  UEprerequis (codeUE, codeUEPrerequis)" +
                         "VALUES ( ?, ?)";
 
 
-                PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertParcours);
+                PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertUEPrere);
 
                 ajoutValues.setString(1,codeUE);
                 ajoutValues.setString(2,ue.getCode());
