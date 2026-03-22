@@ -50,11 +50,11 @@ public class UEObligatoiresBD {
 
             //on va parcourir la liste des UE obligatoire du parcours et les insérer dans la table
             for (UE ue : ueObligatoire){
-                String requeteInsertParcours = "INSERT INTO  UEObligatoire (nomParcours, UE)" +
+                String requeteInsertUEObli = "INSERT INTO  UEObligatoire (nomParcours, UE)" +
                         "VALUES ( ?, ?)";
 
 
-                PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertParcours);
+                PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertUEObli);
 
                 ajoutValues.setString(1,nomParcours);
                 ajoutValues.setString(2,ue.getCode());
