@@ -33,6 +33,11 @@
             <Label fx:id="lblSemestreActuel" text="-" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
         </VBox>
 
+        <VBox alignment="CENTER" style="-fx-background-color:light; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #f1c40f; -fx-border-radius: 10;">
+            <Label text="Années Restantes" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #f39c12;"/>
+            <Label fx:id="lblEstimation" text="-" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
+        </VBox>
+
         <VBox alignment="CENTER" style="-fx-background-color: #f1f2f6; -fx-padding: 5 12; -fx-background-radius: 10; -fx-border-color: #bdc3c7; -fx-border-radius: 10;">
             <Label text="ANNÉE" style="-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
             <Label fx:id="lblAnneeActuelle" text="-" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
