@@ -42,10 +42,7 @@ public class UEObligatoiresBD {
     public static void insertUEObligatoires(String nomParcours, ArrayList<UE> ueObligatoire)
     {
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
-        //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
-        // à la BD
+        // on se connecte à la bd
         try(Connection connexion = ConnexionBD.connexionBD()){
 
             //on va parcourir la liste des UE obligatoire du parcours et les insérer dans la table
