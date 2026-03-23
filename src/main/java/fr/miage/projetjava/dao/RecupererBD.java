@@ -17,6 +17,36 @@ public class RecupererBD {
     private static final Logger log = LogManager.getLogger(RecupererBD.class);
 
 
+    /***
+     * Méthode appelé dans
+     *
+     * Cette méthode va appeler les méthodes recupInfoUEBD, recupInfoParcoursBD et recupInfoEtudiantBD
+     *
+     * @param : Connection connexion, String typeRenvoie
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     *  typeRenvoie : indique quel type d'ArrayList on veut récupérer, celle des étudiants des parcours ou des UE
+     * @return la liste de parcours, d'UE ou d'étudiant
+     */
+
+
+    public static ArrayList<?> renvoieListe(Connection connexion, String typeRenvoie)
+    {
+        ArrayList<UE> listeUE = recupInfoUEBD(connexion);
+        ArrayList<Parcours> listeParcours = recupInfoParcoursBD(connexion, listeUE);
+        ArrayList<Etudiant> listeEtudiant = recupInfoEtudiantBD(connexion, listeParcours, listeUE);
+
+        if (typeRenvoie.equals("UE")){
+            return listeUE;
+        }
+        else if (typeRenvoie.equals("Parcours")) {
+            return listeParcours;
+        }
+        else{
+            return listeEtudiant;
+        }
+
+    }
+
 
     /***
      * Méthode appelé dans renvoieListe
