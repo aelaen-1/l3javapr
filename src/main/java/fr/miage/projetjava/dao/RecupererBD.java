@@ -97,7 +97,7 @@ public class RecupererBD {
     }
 
     /***
-     * Méthode appelé dans recupInfoUEBD
+     * Méthode appelé dans recupInfoUEBD et recupInfoParcoursBD
      *
      * Cette méthode va chercher toutes les UE prérequis ou obligatoires d'une UE ou d'un parcours passé en paramètre
      * et va renvoyer une ArrayList de ces UE prérequis ou obligatoires.
@@ -174,6 +174,72 @@ public class RecupererBD {
         return listeUEPrerequisObli;
     }
 
+
+    /***
+     * Méthode appelé dans
+     *
+     * Cette méthode va chercher toutes les informations des Parcours dans la bd et va renvoyer une liste de parcours
+     * @return la liste de parcours récupéré de la BD
+     */
+
+    public static ArrayList<Parcours> recupInfoParcoursBD(ArrayList<UE> listeUE)
+    {
+        //liste de parcours que l'on va renvoyer
+        ArrayList<Parcours> listeParcours = new ArrayList<>();
+
+
+        try(Connection connexion = ConnexionBD.connexionBD()){
+
+            //requête pour récupérer les étudiants de la bd
+            String requete = "Select * from Parcours";
+
+            //Statement est un objet qui représente une requête SQL à envoyer à la bd
+            Statement recupParcours = connexion.createStatement();
+
+            //execute de Statement renvoie un boolean,
+            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
+            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
+            // ligne donc renvoie un false.
+            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
+            boolean resultatRequete = recupParcours.execute(requete);
+
+            //si on a bien le select qui a été exécuté
+            if(resultatRequete){
+
+                //on va récupérer les résultats de la requête
+                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
+                //si la requête n'a renvoyé aucune ligne alors rsListeEtudiant va être vide
+                ResultSet rsListeParcours = recupParcours.getResultSet();
+
+                //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
+                while(rsListeParcours.next()){
+
+                    //getInt ou getString renvoie l'information de la colonne mis en ()
+                    String nom = rsListeParcours.getString("code");
+                    String mention = rsListeParcours.getString("mention");
+
+
+                    //on créé le parcours et on a transformé mention en objet mention
+                    Parcours parcours = new Parcours(nom,  Mention.valueOf(mention.toUpperCase()) );
+
+                    ArrayList<UE> UEObligatoire = recupInfoUEPrerequisObliBD(nom, connexion, listeUE, "obligatoire");
+                    for(UE ue : UEObligatoire ){
+                        parcours.addUEObligatoire(ue);
+                    }
+
+                    //on l'ajout à la liste
+                    listeParcours.add(parcours);
+
+                }
+            }
+        }
+        catch (SQLException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return listeParcours;
+    }
 
 
 
