@@ -1,12 +1,11 @@
 package fr.miage.projetjava.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.miage.projetjava.dao.EtudiantDAO;
-import fr.miage.projetjava.dao.ParcoursDAO;
-import fr.miage.projetjava.dao.UEDAO;
+import fr.miage.projetjava.dao.*;
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Parcours;
 import fr.miage.projetjava.model.UE;
@@ -42,6 +41,39 @@ public class EtudiantListController {
     /*
      * Cette méthode prépare la page dès qu'elle s'affiche à l'écran
      */
+
+
+    @FXML
+    public void initialize() {
+        Connection connexion = ConnexionBD.connexionBD();
+
+        // On demande aux classes DAO de lire les fichiers CSV pour remplir nos listes
+        toutesLesUE = (ArrayList<UE>) RecupererBD.renvoieListe(connexion, "UE");
+        tousLesParcours = new ParcoursDAO().chargerParcours(toutesLesUE);
+        EtudiantDAO etuDao = new EtudiantDAO();
+        List<Etudiant> etudiants = etuDao.chargerTout(tousLesParcours, toutesLesUE);
+        // On indique au tableau quelle variable de la classe Etudiant va dans quelle colonne
+        colId.setCellValueFactory(new PropertyValueFactory<>("numE"));
+        colNom.setCellValueFactory(new PropertyValueFactory<>("nomE"));
+        colPrenom.setCellValueFactory(new PropertyValueFactory<>("prenomE"));
+        // Pour le parcours on récupère uniquement le nom pour l'afficher en texte
+        colParcours.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getParcours().getNom()));
+
+        // Pareil pour le semestre on transforme l'objet en simple texte
+        colSemestre.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getSemestreCourant().toString()));
+
+        // On injecte la liste finale des étudiants dans le tableau visuel
+        tableEtudiants.setItems(FXCollections.observableArrayList(etudiants));
+
+        // On lance la création automatique des boutons d'action sur chaque ligne
+        setupActions();
+        System.out.println("DEBUG: Chargement terminé. " + etudiants.size() + " étudiants trouvés.");
+    }
+
+
+    /*Adoum marche
     @FXML
     public void initialize() {
         // On demande aux classes DAO de lire les fichiers CSV pour remplir nos listes
@@ -67,7 +99,7 @@ public class EtudiantListController {
         // On lance la création automatique des boutons d'action sur chaque ligne
         setupActions();
         System.out.println("DEBUG: Chargement terminé. " + etudiants.size() + " étudiants trouvés.");
-    }
+    }*/
 
     /*
      * Cette méthode fabrique un bouton pour chaque ligne du tableau
