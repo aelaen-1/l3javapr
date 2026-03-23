@@ -36,14 +36,13 @@ public class ResultatUEBD {
      *
      * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
      *
-     * @param :int numE, String codeUE, int annee, String semestre, String statut: information nécessaire pour l'ajout des résultats à une UE dans la BD
-     *
+     * @param :Connection connexion, int numE, String codeUE, int annee, String semestre, String statut: information nécessaire pour l'ajout des résultats à une UE dans la BD
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
-    public static void insertResultatUE(int numE, String codeUE, int annee, String semestre, String statut)
+    public static void insertResultatUE(Connection connexion, int numE, String codeUE, int annee, String semestre, String statut)
     {
 
-        // on se connecte à la bd
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
             String requeteInsertResultatUE = "INSERT INTO  ResultatUE (codeUE, numE, annee, semestre, statut)" +
                     "VALUES ( ?, ?, ?, ?, ?)";
 
@@ -76,11 +75,11 @@ public class ResultatUEBD {
      * afin d'insérer dans la table ResultatUE les informations concernant ce résultat d'UE pour cet étudiant.
      *
      *
-     * @param : ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Etudiant créés à partir des données du CSV
-     *
+     * @param : Connection connexion,  ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Etudiant créés à partir des données du CSV
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
-    public static void recuperationInformationListResultatUE(ArrayList<Etudiant> listeEtudiantCSV)
+    public static void recuperationInformationListResultatUE(Connection connexion, ArrayList<Etudiant> listeEtudiantCSV)
     {
         for (Etudiant etudiant : listeEtudiantCSV) {
             ArrayList<ResultatUE> listeResultatUE = etudiant.getResultatsUE();
@@ -96,7 +95,7 @@ public class ResultatUEBD {
                     String semetre = resultatUE.getSemestre().toString();
                     String statut = resultatUE.getStatut().toString();
 
-                    insertResultatUE(numE,  codeUE, annee, semetre,  statut);
+                    insertResultatUE(connexion, numE,  codeUE, annee, semetre,  statut);
 
                 }
             }
