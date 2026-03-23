@@ -337,4 +337,91 @@ public class RecupererBD {
         return listeResultatUE;
     }
 
+
+
+    /***
+     * Méthode appelé dans renvoieListe
+     *
+     * Cette méthode va chercher toutes les informations des étudiants dans la bd.
+     * Elle appel la méthode recupInfoResultatUEBD pour récupérer les résultats des UE des étudians.
+     *
+     * @param : Connection connexion,  ArrayList<Parcours> listeParcours, ArrayList<UE> listeUE
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     * listeParcours : utilisé pour rajouter le parcours que suit l'étudiant
+     * listeUE : va être nécessaire pour l'appel à la méthode recupInfoResultatUEBD
+     * @return la liste d'étudiant récupéré de la BD
+     */
+
+    public static ArrayList<Etudiant> recupInfoEtudiantBD(Connection connexion, ArrayList<Parcours> listeParcours, ArrayList<UE> listeUE)
+    {
+        //liste d'étudiant que l'on va renvoyer
+        ArrayList<Etudiant> listeEtudiant = new ArrayList<>();
+
+
+        try{
+
+            //requête pour récupérer les étudiants de la bd
+            String requete = "Select * from Etudiant";
+
+            //Statement est un objet qui représente une requête SQL à envoyer à la bd
+            Statement recupEtudiant = connexion.createStatement();
+
+            //execute de Statement renvoie un boolean,
+            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
+            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
+            // ligne donc renvoie un false.
+            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
+            boolean resultatRequete = recupEtudiant.execute(requete);
+
+            //si on a bien le select qui a été exécuté
+            if(resultatRequete){
+
+                //on va récupérer les résultats de la requête
+                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
+                //si la requête n'a renvoyé aucune ligne alors rsListeEtudiant va être vide
+                ResultSet rsListeEtudiant = recupEtudiant.getResultSet();
+
+                //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
+                while(rsListeEtudiant.next()){
+
+                    //getInt ou getString renvoie l'information de la colonne mis en ()
+                    int numE = rsListeEtudiant.getInt("numE");
+                    String prenomE = rsListeEtudiant.getString("prenomE");
+                    String nomE = rsListeEtudiant.getString("nomE");
+                    String parcoursString = rsListeEtudiant.getString("parcours");
+                    String semestre = rsListeEtudiant.getString("semestre");
+
+                    //on va chercher le parcours que l'étudiant suit dans la liste de parcours existant
+                    for(Parcours chercheParcours : listeParcours){
+                        if (chercheParcours.getNom().equals(parcoursString)){
+                            //on créé l'étudiant et on a transformé semestre en objet semestre
+                            Etudiant etudiant = new Etudiant(numE, nomE, prenomE, chercheParcours, Semestre.valueOf(semestre.toUpperCase()) );
+
+                            //on va récupérer les Resultats d'UE de l'étudiant
+                            ArrayList<ResultatUE> listeResultatUE = recupInfoResultatUEBD(connexion, numE, listeUE);
+
+                            //on ajoute les resultat d'UE à l'étudiant
+                            for (ResultatUE resultatUE : listeResultatUE){
+                                log.info(etudiant + "L'etudiant à des resultats pour au moins une UE");
+                                etudiant.addResultatUE(resultatUE);
+                            }
+
+                            //on l'ajout à la liste
+                            listeEtudiant.add(etudiant);
+
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+        catch (SQLException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return listeEtudiant;
+    }
+
+
 }
