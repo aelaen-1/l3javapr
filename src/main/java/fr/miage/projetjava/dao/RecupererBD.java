@@ -248,4 +248,93 @@ public class RecupererBD {
         return listeParcours;
     }
 
+
+
+
+    /***
+     * Méthode appelé dans recupInfoEtudiantBD
+     *
+     * Cette méthode va chercher toutes les informations des résultats des UE des étudiants dans la bd.
+     *
+     * @param : Connection connexion, int numE, ArrayList<UE> listeUE
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     * numE : numéro étudiant pour lequel on veut récupérer la liste de Resutat d'UE
+     * listeUE: liste d'UE existante et qui va permettre d'ajouter les UE exsitantes dans les objets ResultatUE
+     *
+     * @return la liste d'étudiant récupéré de la BD
+     */
+
+    public static ArrayList<ResultatUE> recupInfoResultatUEBD(Connection connexion, int numE, ArrayList<UE> listeUE)
+    {
+        //liste de résultat d'UE de l'étudiant passer en paramètre
+        ArrayList<ResultatUE> listeResultatUE = new ArrayList<>();
+
+        try{
+
+            //requête pour récupérer les étudiants de la bd
+            String requete = "Select * from ResultatUE where numE = ?";
+
+
+            //Statement est un objet qui représente une requête SQL à envoyer à la bd
+            PreparedStatement recupResultatUE = connexion.prepareStatement(requete);
+
+            recupResultatUE.setInt(1, numE);
+            //execute de Statement renvoie un boolean,
+            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
+            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
+            // ligne donc renvoie un false.
+            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
+            boolean resultatResultatUE = recupResultatUE.execute();
+
+            //si on a bien le select qui a été exécuté
+            if(resultatResultatUE){
+
+                //on va récupérer les résultats de la requête
+                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
+                //si la requête n'a renvoyé aucune ligne alors rsListeEtudiant va être vide
+                ResultSet rsListeResultatUE = recupResultatUE.getResultSet();
+
+                //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
+                while(rsListeResultatUE.next()){
+
+                    //getInt ou getString renvoie l'information de la colonne mis en ()
+                    //on récupère toutes les informations des résultats des UE de la BD
+                    String codeUE = rsListeResultatUE.getString("codeUE");
+                    int annee = rsListeResultatUE.getInt("annee");
+                    String semestre = rsListeResultatUE.getString("semestre");
+                    String statut = rsListeResultatUE.getString("statut");
+
+                    for(UE chercheUE : listeUE){
+                        if (chercheUE.getCode().equals(codeUE)){
+                            //pour que ça puisse coller avec l'enum statut
+                            if (statut.equals("En cours")){
+                                statut = "encours";
+                            }
+                            else if(statut.equals("Echoué")){
+                                statut = "echoue";
+                            }
+
+                            //on créé le ResultatUE et on a transformé semestre en objet semestre et statut en un objet Statut
+
+                            ResultatUE resultatUE = new ResultatUE(chercheUE, Integer.toString(annee),Semestre.valueOf(semestre.toUpperCase()), StatutUE.valueOf(statut.toUpperCase()));
+
+                            //on l'ajout à la liste des résultats UE de l'étudiant
+                            listeResultatUE.add(resultatUE);
+
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+        catch (SQLException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+
+        return listeResultatUE;
+    }
+
 }
