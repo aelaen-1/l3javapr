@@ -41,10 +41,7 @@ public class ParcoursBD {
     public static void insertParcours(String code, String nom, String mention)
     {
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
-        //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
-        // à la BD
+        // on se connecte à la bd
         try(Connection connexion = ConnexionBD.connexionBD()){
 
             //requête qui va être exécuté
@@ -56,7 +53,7 @@ public class ParcoursBD {
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
             //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
-            //prend en paramètre une requête sql qui contient des ? qui vont ensuite être remplacé par des valeurs
+            //On utilise PreparedSatetment car les valeurs changent à chaque fois, et de plus il permet de bien formater les différentes valeurs
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertParcours);
             //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
             // et en premier c'est l'indice de où se trouve le paramètre dans la requête
