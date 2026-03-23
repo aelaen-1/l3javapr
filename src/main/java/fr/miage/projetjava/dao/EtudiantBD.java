@@ -54,8 +54,8 @@ public class EtudiantBD {
                     "VALUES ( ?, ?, ?, ?, ?)";
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
-            //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
-            //prend en paramètre une requête sql qui contient des ? qui vont ensuite être remplacé par des valeurs
+            //pour être exécuté, chaque ? de la requête doit être définie sur un type (int, String...)
+            //On utilise PreparedSatetment car les valeurs changent à chaque fois, et de plus il permet de bien formater les différentes valeurs
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
             //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
             // et en premier c'est l'indice de où se trouve le paramètre dans la requête
