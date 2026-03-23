@@ -33,16 +33,14 @@ public class EtudiantBD {
      *
      * Cette méthode va insérer les étudiants dans la bd à partir des informations de l'étudiant passé en paramètre.
      *
-     * @param: int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
-     *
-     *
+     * @param: Connection connexion, int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
-    public static void insertEtudiant(int numE, String prenomE, String nomE, String parcours, String semestre)
+    public static void insertEtudiant(Connection connexion, int numE, String prenomE, String nomE, String parcours, String semestre)
     {
 
 
-        // on se connecte à la bd
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+parcours);
 
@@ -86,11 +84,12 @@ public class EtudiantBD {
      * afin d'insérer un par un les étudiants dans la BD.
      *
      *
-     * @param: ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Étudiant créés à partir des données du CSV
-     *
+     * @param: ArrayList<Etudiant> listeEtudiantCSV, Connection connexion
+     * listeEtudiantCSV:  liste d'objets Étudiant créés à partir des données du CSV
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
-    public static void recuperationInformationListEtudiant (ArrayList<Etudiant> listeEtudiantCSV)
+    public static void recuperationInformationListEtudiant (Connection connexion, ArrayList<Etudiant> listeEtudiantCSV)
     {
         for (Etudiant etudiant : listeEtudiantCSV) {
             int numE = etudiant.getNumE();
@@ -99,7 +98,7 @@ public class EtudiantBD {
             Parcours parcours = etudiant.getParcours();
             Semestre semestre = etudiant.getSemestreCourant();
 
-            insertEtudiant(numE,prenomE,nomE,parcours.getNom(), semestre.toString());
+            insertEtudiant(connexion, numE,prenomE,nomE,parcours.getNom(), semestre.toString());
         }
     }
 
