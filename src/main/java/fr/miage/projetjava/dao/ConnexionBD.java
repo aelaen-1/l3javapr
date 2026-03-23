@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Classe ConnexionBD : Gère la connexion à la BD et la créer si elle n'existe pas
+ * Classe ConnexionBD : Gère la connexion à la BD et la crée si elle n'existe pas
  * Une seule méthode static : Connection connexionBD()
  * Cette classe est responsable de :
  * 1. Établir une connexion à la BD
@@ -20,16 +20,15 @@ import java.util.Properties;
  * 3. Renvoyer la connexion à la BD
  *
  * Si la connexion a échoué, un message d'erreur est renvoyé
- * Cette classe utilise les identifiants présents dans le fichier config.properties pour ce connecter à la BD
- *
- *
+ * Cette classe utilise les identifiants présents dans le fichier config.properties pour se connecter à la BD
+
  */
 public class ConnexionBD {
     private static final Logger log = LogManager.getLogger(ConnexionBD.class);
 
 
     /**
-     * Elle permet d'établir une connexion à la Base de données présente dans URL.
+     * Elle permet d'établir une connexion à la base de données présente dans URL.
      * Elle est appelée depuis les classes du package dao qui ont besoin d'une connexion à la BD.
      * Elle va ouvrir un fichier contenant les informations de connexion à la BD,
      * récupérer les informations de connexion et établir une connexion à la BD.
