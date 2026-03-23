@@ -32,16 +32,14 @@ public class UEBD {
      *
      * Cette méthode va insérer les UE dans la base de données à partir des informations de l'UE passée en paramètre
      *
-     * @param: String code, String intitule, int credit, String mention: informations qui doivent être ajoutées dans la BD
-     *
+     * @param: Connection connexion, String code, String intitule, int credit, String mention: informations qui doivent être ajoutées dans la BD
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
-    public static void insertUE(String code, String intitule, int credit, String mention)
+    public static void insertUE(Connection connexion, String code, String intitule, int credit, String mention)
     {
 
-
-        // on se connecte à la bd
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
 
             //requête qui va être exécuté
@@ -82,11 +80,11 @@ public class UEBD {
      * les UE dans la BD.
      *
      *
-     * @param: ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
-     *
+     * @param: Connection connexion, ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
-    public static void recuperationInformationListUE (ArrayList<UE> listeUECSV)
+    public static void recuperationInformationListUE (Connection connexion, ArrayList<UE> listeUECSV)
     {
         for (UE ue : listeUECSV) {
             String code = ue.getCode();
@@ -94,7 +92,7 @@ public class UEBD {
             int credit = ue.getCredit();
             Mention mention = ue.getMention();
 
-            insertUE(code,intitule,credit, mention.toString());
+            insertUE(connexion, code,intitule,credit, mention.toString());
         }
     }
 }
