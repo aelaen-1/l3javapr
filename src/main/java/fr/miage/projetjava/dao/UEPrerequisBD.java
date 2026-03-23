@@ -38,14 +38,13 @@ public class UEPrerequisBD {
      *
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
      *
-     * @param : String codeUE, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
-     *
+     * @param : Connection connexion, String codeUE, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
-    public static void insertUEPrerequis(String codeUE, ArrayList<UE> uePrerequis)
+    public static void insertUEPrerequis(Connection connexion, String codeUE, ArrayList<UE> uePrerequis)
     {
 
-        // on se connecte à la bd
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //on va parcourir la liste des UE prerequis de l'UE mis en paramètre et on les insérer dans la table
             for (UE ue : uePrerequis){
@@ -76,11 +75,11 @@ public class UEPrerequisBD {
      * afin d'insérer dans la table UEprerequis toutes les UES prérequis concernant l'UE.
      *
      *
-     * @param : ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
-     *
+     * @param : Connection connexion, ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
-    public static void recuperationInformationListUEPre(ArrayList<UE> listeUECSV)
+    public static void recuperationInformationListUEPre(Connection connexion, ArrayList<UE> listeUECSV)
     {
         for (UE ue : listeUECSV) {
             ArrayList<UE> uePrerequis = ue.getUEprerequis();
@@ -88,7 +87,7 @@ public class UEPrerequisBD {
 
             //si l'UE contient des prérequis alors on va les ajouter dans la BD
             if(!uePrerequis.isEmpty()){
-                insertUEPrerequis(codeUE, uePrerequis);
+                insertUEPrerequis(connexion, codeUE, uePrerequis);
             }
         }
     }
