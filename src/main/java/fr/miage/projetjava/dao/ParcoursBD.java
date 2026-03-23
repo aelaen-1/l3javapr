@@ -35,14 +35,13 @@ public class ParcoursBD {
      *
      * Si l'insertion dans la base de données, a échoué alors un message d'erreur est renvoyé
      *
-     * @param : String code, String nom, String mention: information nécessaire pour l'ajout du parcours dans la BD
-     *
+     * @param : Connection connexion, String code, String nom, String mention: information nécessaire pour l'ajout du parcours dans la BD
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
-    public static void insertParcours(String code, String nom, String mention)
+    public static void insertParcours(Connection connexion, String code, String nom, String mention)
     {
 
-        // on se connecte à la bd
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //requête qui va être exécuté
             // les ? sont là car on va utiliser PreparedStatement qui crée des objets preparedStatement permettant
@@ -83,17 +82,17 @@ public class ParcoursBD {
      * afin d'insérer un par un les parcours dans la BD.
      *
      *
-     * @param : ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
-     *
-     *
+     * @param : Connection connexion, ArrayList<Parcours> listeParcoursCSV
+     * listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
-    public static void recuperationInformationListParcours (ArrayList<Parcours> listeParcoursCSV)
+    public static void recuperationInformationListParcours (Connection connexion, ArrayList<Parcours> listeParcoursCSV)
     {
         for (Parcours parcours : listeParcoursCSV) {
             String code = parcours.getNom();
             Mention mention = parcours.getMention();
 
-            insertParcours(code, null,  mention.toString());
+            insertParcours(connexion, code, null,  mention.toString());
         }
     }
 }
