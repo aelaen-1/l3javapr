@@ -432,7 +432,6 @@ public class RecupererBD {
 
                             //on ajoute les resultat d'UE à l'étudiant
                             for (ResultatUE resultatUE : listeResultatUE){
-                                log.info(etudiant + "L'etudiant à des resultats pour au moins une UE");
                                 etudiant.addResultatUE(resultatUE);
                             }
 
