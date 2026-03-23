@@ -36,14 +36,13 @@ public class UEObligatoiresBD {
      *
      * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
      *
-     * @param : String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE obligatoires dans la BD
-     *
+     * @param : Connection connexion, String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE obligatoires dans la BD
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
-    public static void insertUEObligatoires(String nomParcours, ArrayList<UE> ueObligatoire)
+    public static void insertUEObligatoires(Connection connexion, String nomParcours, ArrayList<UE> ueObligatoire)
     {
 
-        // on se connecte à la bd
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //on va parcourir la liste des UE obligatoire du parcours et les insérer dans la table
             for (UE ue : ueObligatoire){
@@ -74,17 +73,17 @@ public class UEObligatoiresBD {
      * afin d'insérer dans la table UEObligatoire toutes les UES obligatoires liées à un parcours
      *
      *
-     * @param : ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
-     *
+     * @param : Connection connexion, ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
-    public static void recuperationInformationListUEObli(ArrayList<Parcours> listeParcoursCSV)
+    public static void recuperationInformationListUEObli(Connection connexion, ArrayList<Parcours> listeParcoursCSV)
     {
         for (Parcours parcours : listeParcoursCSV) {
             ArrayList<UE> ueObligatoire = parcours.getUEObligatoire();
             String nomParcours = parcours.getNom();
 
-            insertUEObligatoires(nomParcours, ueObligatoire);
+            insertUEObligatoires(connexion, nomParcours, ueObligatoire);
         }
     }
 
