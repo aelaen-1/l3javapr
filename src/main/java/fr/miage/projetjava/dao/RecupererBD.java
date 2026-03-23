@@ -20,6 +20,18 @@ public class RecupererBD {
 
     private static final Logger log = LogManager.getLogger(RecupererBD.class);
 
+    /***
+     * Méthode appelé dans
+     *
+     * Cette méthode va appeler les méthodes recupInfoUEBD, recupInfoParcoursBD et recupInfoEtudiantBD
+     *
+     * @param : Connection connexion, String typeRenvoie
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     *  typeRenvoie : indique quel type d'ArrayList on veut récupérer, celle des étudiants des parcours ou des UE
+     * @return la liste de parcours, d'UE ou d'étudiant
+     */
+
+
     public static ArrayList<?> renvoieListe(Connection connexion, String typeRenvoie)
     {
         ArrayList<UE> listeUE = recupInfoUEBD(connexion);
@@ -40,13 +52,14 @@ public class RecupererBD {
 
 
 
-
-
     /***
-     * Méthode appelé dans
+     * Méthode appelé dans renvoieListe
      *
      * Cette méthode va chercher toutes les informations des UE dans la bd créer une liste d'UE.
      * Elle va faire appel à la méthode recupInfoUEPrerequisObliBD pour récupérer les UE obligatoire de chaque UE
+     *
+     * @param : Connection connexion
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * @return la liste d'UE récupéré de la BD
      */
 
@@ -121,7 +134,8 @@ public class RecupererBD {
      *
      * Cette méthode va chercher toutes les UE prérequis ou obligatoires d'une UE ou d'un parcours passé en paramètre
      * et va renvoyer une ArrayList de ces UE prérequis ou obligatoires.
-     * @param : String nom, Connection connexion, ArrayList<UE> listeUE, String type:
+     * @param : Connection connexion, String nom, Connection connexion, ArrayList<UE> listeUE, String type:
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * nom : indique soit le code de l'UE sur laquelle on veut récupérer les prérequis, soit le nom du parcours sur lequel
      * on veut récupérer les UE obligatoires
      * listeUE : indique la liste d'UE déjà existante dans laquelle on va aller chercher les UE obligatoires ou prérequis
@@ -196,14 +210,14 @@ public class RecupererBD {
 
 
     /***
-     * Méthode appelé dans
+     * Méthode appelé dans renvoieListe
      *
      * Cette méthode va chercher toutes les informations des Parcours dans la bd et va renvoyer une liste de parcours
      *
-     * @param : ArrayList<UE> listeUE
+     * @param : Connection connexion,  ArrayList<UE> listeUE
      * listeUE: liste contenant toutes UE et va permettre d'ajouter les UE exsitantes dans la liste d'UE obligatoires
      * associés à un parcours
-     *
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * @return la liste de parcours récupéré de la BD
      */
 
@@ -271,7 +285,8 @@ public class RecupererBD {
      *
      * Cette méthode va chercher toutes les informations des résultats des UE des étudiants dans la bd.
      *
-     * @param : int numE, ArrayList<UE> listeUE
+     * @param : Connection connexion, int numE, ArrayList<UE> listeUE
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * numE : numéro étudiant pour lequel on veut récupérer la liste de Resutat d'UE
      * listeUE: liste d'UE existante et qui va permettre d'ajouter les UE exsitantes dans les objets ResultatUE
      *
@@ -352,12 +367,13 @@ public class RecupererBD {
     }
 
     /***
-     * Méthode appelé dans
+     * Méthode appelé dans renvoieListe
      *
      * Cette méthode va chercher toutes les informations des étudiants dans la bd.
      * Elle appel la méthode recupInfoResultatUEBD pour récupérer les résultats des UE des étudians.
      *
-     * @param : ArrayList<Parcours> listeParcours, ArrayList<UE> listeUE
+     * @param : Connection connexion,  ArrayList<Parcours> listeParcours, ArrayList<UE> listeUE
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * listeParcours : utilisé pour rajouter le parcours que suit l'étudiant
      * listeUE : va être nécessaire pour l'appel à la méthode recupInfoResultatUEBD
      * @return la liste d'étudiant récupéré de la BD
