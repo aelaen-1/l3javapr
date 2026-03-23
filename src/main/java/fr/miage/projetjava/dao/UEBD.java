@@ -14,14 +14,12 @@ import java.util.ArrayList;
 
 /**
  * Classe UEBD : Gère l'insertion des UE dans la BD
- * 2 méthodes : void insertUE et void recuperationInformationListUE
+ * 2 méthodes : static void insertUE et static void recuperationInformationListUE
  *
  * Cette classe permet de récupérer la liste d'UE issues du fichier csv dans UEDAO et
  * d'insérer les différentes UE dans la BD.
  *
  * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé.
- *
- *
  *
  */
 public class UEBD {
@@ -55,7 +53,7 @@ public class UEBD {
 
             //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
             //pour être exécuté chaque ? de la requête doit être définie sur un type (int, String...)
-            //prend en paramètre une requête sql qui contient des ? qui vont ensuite être remplacé par des valeurs
+            //On utilise PreparedSatetment car les valeurs changent à chaque fois, et de plus il permet de bien formater les différentes valeurs
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertUE);
             //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
             // et en premier c'est l'indice de où se trouve le paramètre dans la requête
