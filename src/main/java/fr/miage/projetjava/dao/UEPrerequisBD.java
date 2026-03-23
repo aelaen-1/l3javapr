@@ -38,16 +38,13 @@ public class UEPrerequisBD {
      *
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
      *
-     * @param : String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
+     * @param : String codeUE, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
      *
      */
     public static void insertUEPrerequis(String codeUE, ArrayList<UE> uePrerequis)
     {
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
-        //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
-        // à la BD
+        // on se connecte à la bd
         try(Connection connexion = ConnexionBD.connexionBD()){
 
             //on va parcourir la liste des UE prerequis de l'UE mis en paramètre et on les insérer dans la table
