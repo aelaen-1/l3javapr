@@ -42,10 +42,7 @@ public class ResultatUEBD {
     public static void insertResultatUE(int numE, String codeUE, int annee, String semestre, String statut)
     {
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
-        //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
-        //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
-        // à la BD
+        // on se connecte à la bd
         try(Connection connexion = ConnexionBD.connexionBD()){
             String requeteInsertResultatUE = "INSERT INTO  ResultatUE (codeUE, numE, annee, semestre, statut)" +
                     "VALUES ( ?, ?, ?, ?, ?)";
