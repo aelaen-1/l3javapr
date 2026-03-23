@@ -1,10 +1,14 @@
 package fr.miage.projetjava.vue;
+import fr.miage.projetjava.dao.ConnexionBD;
 import fr.miage.projetjava.dao.CreationTableBD;
 import fr.miage.projetjava.dao.InsertBD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+
 /**
  * C'est la classe de départ qui lance toute l'interface graphique.
  */
@@ -29,11 +33,12 @@ public class MainApp extends Application {
      * C'est la méthode main standard de Java.
      */
     public static void main(String[] args) {
+        Connection connexion =  ConnexionBD.connexionBD();
         //création des tables dans la BD
-        CreationTableBD.createTable();
+        CreationTableBD.createTable(connexion);
 
         //insertion des données du fichier csv dans les tables
-        InsertBD.insertionDonneeBD();
+        InsertBD.insertionDonneeBD(connexion);
 
         //On appelle launch() pour démarrer le logiciel
         launch(args);
