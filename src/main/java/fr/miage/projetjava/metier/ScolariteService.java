@@ -11,11 +11,13 @@ import fr.miage.projetjava.model.StatutUE;
 import fr.miage.projetjava.model.UE;
 
 public class ScolariteService {
-    /*
+    /**
      * cette méthode permet d'obtenir les Ues accessibles par un etudiant
      * elle prend en entrée un etudiant et la liste de TOUTES les Ues
      * si l'utilisateur veut voir les Ues accessibles par un etudiant, le controller
      * doit faire appel a cete methode
+     * @param etudiant ,l'etudiant où on veut savoir ses Ues accessibles
+     * @param toutesLesUE  toutes les Ues de sa mention
      */
     public List<UE> obtenirUEAccessibles(Etudiant etudiant, List<UE> toutesLesUE) {
         // on crée un tableaux des Ues pour stocker les Ues accessibmes par l'étudiant
@@ -31,7 +33,6 @@ public class ScolariteService {
                 uesdelaformation.add(ue);
             }
         }
-
         // On boucle sur toutes les UE de la formation
         for (UE ueCible : uesdelaformation) {
             // On part du principe que c'est bon, et on cherche si un prérequis manque
@@ -188,7 +189,7 @@ public class ScolariteService {
         return false;
     }
 
-    /* cette methode permet de marquer Echouer une Ue suivit par l'etudiant */
+    /** cette methode permet de marquer Echouer une Ue suivit par l'etudiant */
     public boolean echoueUE(Etudiant e, UE ue) {
         // on recupere les resulats de l'etudiant
         for (ResultatUE res : e.getResultatsUE()) {
@@ -203,9 +204,10 @@ public class ScolariteService {
         return false;
     }
 
-    /*
+    /**
      * cette methode permet de passer un etudiant d'un semesre cournat à un semestre
      * suivant
+     * @param e ,l'etudiant qu'on veut faire passer au semestre suivant
      */
     public void passerSemestre(Etudiant e) {
         // on recupere le semestre Cournat de l'etudiant suivant et on teste s'il est
@@ -226,7 +228,7 @@ public class ScolariteService {
      * @param toutesLesUE La liste globale des UEs de la formation
      * @return Le nombre de semestres supplémentaires nécessaires
      */
-    public int simulerDureeOptimale(Etudiant etudiant, ArrayList<UE> toutesLesUE) {
+    public int simulerDureeOptimale(Etudiant etudiant, List<UE> toutesLesUE) {
 
         int totalCredits = 0;
         ArrayList<ResultatUE> simulationResultats = new ArrayList<>(etudiant.getResultatsUE());
@@ -373,8 +375,11 @@ public class ScolariteService {
         return false;
     }
 
-    // Vérification des prérequis basée sur une liste de résultats (pour la
-    // simulation)
+    /** Méthode de vérification des prérequis basée sur une liste de résultats (pour la simulation)
+     * @param ue
+     * @param resultats
+     * @return
+     * */
     private boolean verifierPrerequisSimulation(UE ue, List<ResultatUE> resultats) {
         if (ue.getUEprerequis() == null || ue.getUEprerequis().isEmpty()) {
             return true;
@@ -394,6 +399,11 @@ public class ScolariteService {
         return true;
     }
 
+    /** methode pour savoir si une Une est dans une liste d'ues chosies ou pas
+     * @param ue
+     * @param listeUE
+     * @return
+     */
     public boolean estDansLaListe(UE ue, List<UE> listeUE) {
         for (UE elt : listeUE) {
             if (ue.getCode().equals(elt.getCode()))
@@ -402,10 +412,14 @@ public class ScolariteService {
         return false;
     }
 
-    /*
+    /**
      * méthode qui donne un score de priorité en fonction de si elle est obligatoire
      * et si elle est prérequis d'autres ue (si elle "bloque" d'autres ue)
      * plus elle est bloquante/prérequis pour d'autres ue, plus elle est prioritaire
+     * @param ue
+     * @param obligatoiresRestantes
+     * @param uesRestantes
+     * @return
      */
     public int calculerPrioriteUE(UE ue, List<UE> uesRestantes, List<UE> obligatoiresRestantes) {
         int niveauDePriorite = 0;

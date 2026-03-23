@@ -39,7 +39,7 @@ public class EtudiantListController {
     // Variables pour stocker les données chargées depuis les fichiers csv
     private ArrayList<UE> toutesLesUE;
     private ArrayList<Parcours> tousLesParcours;
-    /*
+    /**
      * Cette méthode prépare la page dès qu'elle s'affiche à l'écran
      */
     @FXML
@@ -66,10 +66,10 @@ public class EtudiantListController {
 
         // On lance la création automatique des boutons d'action sur chaque ligne
         setupActions();
-        System.out.println("DEBUG: Chargement terminé. " + etudiants.size() + " étudiants trouvés.");
+        System.out.println("Chargement terminé. " + etudiants.size() + " étudiants trouvés.");
     }
 
-    /*
+    /**
      * Cette méthode fabrique un bouton pour chaque ligne du tableau
      */
     private void setupActions() {
@@ -90,7 +90,7 @@ public class EtudiantListController {
             }
         });
     }
-    /*
+    /**
      * Cette méthode permet de changer de page pour voir les notes de l'étudiant
      */
     private void ouvrirDetails(Etudiant e) {
@@ -108,7 +108,7 @@ public class EtudiantListController {
             System.out.println("Erreur de chargement de la vue : " + ex.getMessage());
         }
     }
-    /*
+    /**
      * Retourne à la liste globale des étudiants
      */
     @FXML
@@ -121,7 +121,7 @@ public class EtudiantListController {
             // On change la vue
             contentArea.getChildren().setAll(root);
         } catch (IOException e) {
-            System.out.println("Erreur lors du retour à l'accueil : " + e.getMessage());
+            System.out.println("Erreur lors du retour à l'accueil :" + e.getMessage());
         }
     }
 }

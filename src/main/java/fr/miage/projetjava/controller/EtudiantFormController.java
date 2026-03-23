@@ -43,9 +43,8 @@ public class EtudiantFormController {
     private List<UE> toutesLesUE;
     private Etudiant etudiantModif;
 
-    /*
+    /**
      * cette methode prépare le formulaire et les listes déroulantes au démarrage de
-     * l'appli
      */
     @FXML
     public void initialize() {
@@ -55,21 +54,17 @@ public class EtudiantFormController {
         // On remplit les listes pour les mentions et les semestres
         comboMention.setItems(FXCollections.observableArrayList(Mention.values()));
         comboSemestre.setItems(FXCollections.observableArrayList(Semestre.values()));
-
-        // CLASSES ANONYMES
         // On configure l'affichage de la Mention pour ne pas voir des codes bizarres
         comboMention.setConverter(new StringConverter<Mention>() {
             @Override
             public String toString(Mention m) {
                 return (m == null) ? "" : m.toString();
             }
-
             @Override
             public Mention fromString(String s) {
                 return null;
             }
         });
-
         // l'affichage du Parcours pour ne voir que son nom
         comboParcours.setConverter(new StringConverter<Parcours>() {
             @Override
@@ -103,7 +98,7 @@ public class EtudiantFormController {
     }
 
 
-    /*
+    /**
      * Enregistre l'étudiant (nouveau ou modifié) dans le fichier CSV.
      */
     @FXML
@@ -148,12 +143,15 @@ public class EtudiantFormController {
         }
     }
 
+    /**
+     * Cette methode retourne à  la page "EtudiantListController"
+     */
     @FXML
     private void handleAnnuler() {
         retournerALaListe();
     }
 
-    /*
+    /**
      * Onclick boutton "Retour". Recharge la vue de la liste des étudiants.
      */
     private void retournerALaListe() {
@@ -163,12 +161,12 @@ public class EtudiantFormController {
             Parent root = loader.load();
             contentArea.getChildren().setAll(root);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
 
-    /*
+    /**
      * Remplit le formulaire si on veut modifier un étudiant existant.
      */
     public void setEtudiant(Etudiant e) {

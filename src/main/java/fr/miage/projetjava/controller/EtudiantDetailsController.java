@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class EtudiantDetailsController {
-    // identité de l'étudiant
+    // informations sur l'étudiant (nom et prenom,son parcours ,sa mention)
     @FXML private Label lblTitre, lblParcours, lblMention;
     // affichage sur l'IHM les informations d'un Etudiant
     @FXML private Label lblCreditsValides, lblCreditsEnCours, lblSemestreActuel, lblAnneeActuelle;
@@ -31,7 +31,7 @@ public class EtudiantDetailsController {
     private List<UE> toutesLesUE;
     private final ScolariteService service = new ScolariteService();
 
-    /*
+    /**
      * Initialise les données de la vue quand on arrive sur la fiche
      */
     public void setEtudiant(Etudiant e, List<UE> ues) {
@@ -217,6 +217,7 @@ public class EtudiantDetailsController {
      * Enregistre les modifications dans le fichier CSV et rafraîchit l'écran
      */
     private void sauvegarder() {
+        //Cree une instante d'un Objet EtudiantDAO pour enregistrer les étudiants le fichier csv
         EtudiantDAO dao = new EtudiantDAO();
         List<Parcours> parcours = new ParcoursDAO().chargerParcours(toutesLesUE);
         List<Etudiant> liste = dao.chargerTout(parcours, toutesLesUE);

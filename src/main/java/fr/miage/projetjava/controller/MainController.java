@@ -22,12 +22,12 @@ public class MainController {
     @FXML
     private StackPane contentArea;
 
-    // s'exécute automatiquement au démarrage de la fenêtre.
+    /** s'exécute automatiquement au démarrage de la fenêtre.*/
     @FXML
     public void initialize() {
     }
 
-    // méthode qui change le contenu à l'écran à partir d'un fichier fxml (chemin en paramètre)
+    /** méthode qui change le contenu à l'écran à partir d'un fichier fxml (chemin en paramètre)*/
     private void loadView(String fxmlPath) {
         try {
             // crée un objet FXMLLoader
@@ -44,19 +44,19 @@ public class MainController {
         }
     }
 
-    // Onclick bouton "Voir les étudiants".
+    /** Onclick bouton "Voir les étudiants".*/
     @FXML
     private void handleVoirEtudiants() {
         loadView("/EtudiantListView.fxml");
     }
 
-    // Onclick boutton "Ajouter un étudiant".
+    /** Onclick boutton "Ajouter un étudiant".*/
     @FXML
     private void handleAjouterEtudiant() {
         loadView("/EtudiantForm.fxml");
     }
 
-    // Onclick boutton "Quitter"
+    /** Onclick boutton "Quitter"*/
     @FXML
     private void handleQuitter() {
         javafx.application.Platform.exit();
