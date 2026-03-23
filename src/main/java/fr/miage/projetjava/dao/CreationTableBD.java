@@ -25,10 +25,11 @@ public class CreationTableBD {
      * Méthode appelée  dans la méthode main de la classe MainApp
      *
      * Cette méthode va se connecter à la BD et exécuter toutes les requêtes pour créer les différentes tables
-     *
+     * @param : Connection conn
+     * conn : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
 
-    public static void createTable(){
+    public static void createTable(Connection conn){
         //tableau de String contenant les requêtes permettant la suppresion des tables pour repartir sur de nouvelle table
         String[] requeteSuppressionTable = {
                 "DROP Table ResultatUE",
@@ -56,11 +57,11 @@ public class CreationTableBD {
 
         };
 
-        // on se connecte à la bd et statement va être utilisé pour exécuter les requêtes SQL
+        // statement va être utilisé pour exécuter les requêtes SQL
         //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
         //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
         // à la BD
-        try(Connection conn = ConnexionBD.connexionBD(); Statement stmt = conn.createStatement();){
+        try( Statement stmt = conn.createStatement();){
 
             //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute
             // peux éxecuter que une à une toutes les requêtes
