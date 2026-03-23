@@ -18,6 +18,83 @@ public class RecupererBD {
 
 
 
+    /***
+     * Méthode appelé dans renvoieListe
+     *
+     * Cette méthode va chercher toutes les informations des UE dans la bd créer une liste d'UE.
+     * Elle va faire appel à la méthode recupInfoUEPrerequisObliBD pour récupérer les UE obligatoire de chaque UE
+     *
+     * @param : Connection connexion
+     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     * @return la liste d'UE récupéré de la BD
+     */
+
+    public static ArrayList<UE> recupInfoUEBD(Connection connexion)
+    {
+        //liste d'UE que l'on va renvoyer
+        ArrayList<UE> listeUE = new ArrayList<>();
+
+
+        try{
+
+            //requête pour récupérer les UE de la bd
+            String requeteUE = "Select * from UE";
+
+            //Statement est un objet qui représente une requête SQL à envoyer à la bd
+            Statement recupUE = connexion.createStatement();
+
+            //execute de Statement renvoie un boolean, pour exécuter la requête SQL.
+            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
+            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
+            // ligne donc renvoie un false.
+            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
+            boolean resultatRequeteUE = recupUE.execute(requeteUE);
+
+
+            //si on a bien le select qui a été exécuté et que l'on a bien des lignes
+            if(resultatRequeteUE){
+
+                //on va récupérer les résultats de la requête
+                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
+                //si la requête n'a renvoyé aucune ligne alors rsListeUE va être vide
+                ResultSet rsListeUE = recupUE.getResultSet();
+
+                //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
+                while(rsListeUE.next()){
+
+                    //getInt ou getString renvoie l'information de la colonne mis en ()
+                    String code = rsListeUE.getString("codeUE");
+                    String intitule = rsListeUE.getString("intitule");
+                    int credit = rsListeUE.getInt("credit");
+                    String mention = rsListeUE.getString("mention");
+
+                    //on créé l'UE et on a transformé mention en objet mention
+                    UE ue = new UE(code, intitule, credit, Mention.valueOf(mention.toUpperCase()));
+
+                    //on va aller récuperer les prérequis de l'UE si elle en a, on donne listeUE car les UE prérequis
+                    // sont des UE qui existent déjà et qui sont donc dans la liste d'UE
+                    ArrayList<UE> UEprerequis = recupInfoUEPrerequisObliBD(connexion, code, listeUE, "prerequis");
+
+                    //on ajoute les prérequis de l'UE
+                    for (UE uePrerequis : UEprerequis){
+                        ue.setUEprerequis(uePrerequis);
+                    }
+
+                    //on l'ajout l'UE à la liste
+                    listeUE.add(ue);
+
+                }
+            }
+        }
+        catch (SQLException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+
+        return listeUE;
+    }
+
 
     /***
      * Méthode appelé dans recupInfoUEBD et recupInfoParcoursBD
