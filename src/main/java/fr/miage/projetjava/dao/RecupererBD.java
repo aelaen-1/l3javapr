@@ -20,6 +20,26 @@ public class RecupererBD {
 
     private static final Logger log = LogManager.getLogger(RecupererBD.class);
 
+    public static ArrayList<?> renvoieListe(String typeRenvoie)
+    {
+        ArrayList<UE> listeUE = recupInfoUEBD();
+        ArrayList<Parcours> listeParcours = recupInfoParcoursBD(listeUE);
+        ArrayList<Etudiant> listeEtudiant = recupInfoEtudiantBD(listeParcours, listeUE);
+
+        if (typeRenvoie.equals("UE")){
+            return listeUE;
+        }
+        else if (typeRenvoie.equals("Parcours")) {
+            return listeParcours;
+        }
+        else{
+            return listeEtudiant;
+        }
+
+    }
+
+
+
 
 
     /***
@@ -278,7 +298,7 @@ public class RecupererBD {
             // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
             // ligne donc renvoie un false.
             //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
-            boolean resultatResultatUE = recupResultatUE.execute(requete);
+            boolean resultatResultatUE = recupResultatUE.execute();
 
             //si on a bien le select qui a été exécuté
             if(resultatResultatUE){
@@ -300,8 +320,17 @@ public class RecupererBD {
 
                     for(UE chercheUE : listeUE){
                         if (chercheUE.getCode().equals(codeUE)){
+                            //pour que ça puisse coller avec l'enum statut
+                            if (statut.equals("En cours")){
+                                statut = "encours";
+                            }
+                            else if(statut.equals("Echoué")){
+                                statut = "echoue";
+                            }
+
                             //on créé le ResultatUE et on a transformé semestre en objet semestre et statut en un objet Statut
-                            ResultatUE resultatUE = new ResultatUE(chercheUE, Integer.toString(annee),Semestre.valueOf(semestre), StatutUE.valueOf(statut));
+
+                            ResultatUE resultatUE = new ResultatUE(chercheUE, Integer.toString(annee),Semestre.valueOf(semestre.toUpperCase()), StatutUE.valueOf(statut.toUpperCase()));
 
                             //on l'ajout à la liste des résultats UE de l'étudiant
                             listeResultatUE.add(resultatUE);
@@ -377,13 +406,14 @@ public class RecupererBD {
                     for(Parcours chercheParcours : listeParcours){
                         if (chercheParcours.getNom().equals(parcoursString)){
                             //on créé l'étudiant et on a transformé semestre en objet semestre
-                            Etudiant etudiant = new Etudiant(numE, nomE, prenomE, chercheParcours, Semestre.valueOf(semestre) );
+                            Etudiant etudiant = new Etudiant(numE, nomE, prenomE, chercheParcours, Semestre.valueOf(semestre.toUpperCase()) );
 
                             //on va récupérer les Resultats d'UE de l'étudiant
                             ArrayList<ResultatUE> listeResultatUE = recupInfoResultatUEBD(numE, listeUE);
 
                             //on ajoute les resultat d'UE à l'étudiant
                             for (ResultatUE resultatUE : listeResultatUE){
+                                log.info(etudiant + "L'etudiant à des resultats pour au moins une UE");
                                 etudiant.addResultatUE(resultatUE);
                             }
 
