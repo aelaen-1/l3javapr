@@ -20,11 +20,11 @@ public class RecupererBD {
 
     private static final Logger log = LogManager.getLogger(RecupererBD.class);
 
-    public static ArrayList<?> renvoieListe(String typeRenvoie)
+    public static ArrayList<?> renvoieListe(Connection connexion, String typeRenvoie)
     {
-        ArrayList<UE> listeUE = recupInfoUEBD();
-        ArrayList<Parcours> listeParcours = recupInfoParcoursBD(listeUE);
-        ArrayList<Etudiant> listeEtudiant = recupInfoEtudiantBD(listeParcours, listeUE);
+        ArrayList<UE> listeUE = recupInfoUEBD(connexion);
+        ArrayList<Parcours> listeParcours = recupInfoParcoursBD(connexion, listeUE);
+        ArrayList<Etudiant> listeEtudiant = recupInfoEtudiantBD(connexion, listeParcours, listeUE);
 
         if (typeRenvoie.equals("UE")){
             return listeUE;
@@ -50,13 +50,13 @@ public class RecupererBD {
      * @return la liste d'UE récupéré de la BD
      */
 
-    public static ArrayList<UE> recupInfoUEBD()
+    public static ArrayList<UE> recupInfoUEBD(Connection connexion)
     {
         //liste d'UE que l'on va renvoyer
         ArrayList<UE> listeUE = new ArrayList<>();
 
 
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //requête pour récupérer les UE de la bd
             String requeteUE = "Select * from UE";
@@ -94,7 +94,7 @@ public class RecupererBD {
 
                     //on va aller récuperer les prérequis de l'UE si elle en a, on donne listeUE car les UE prérequis
                     // sont des UE qui existent déjà et qui sont donc dans la liste d'UE
-                    ArrayList<UE> UEprerequis = recupInfoUEPrerequisObliBD(code, connexion, listeUE, "prerequis");
+                    ArrayList<UE> UEprerequis = recupInfoUEPrerequisObliBD(connexion, code, listeUE, "prerequis");
 
                     //on ajoute les prérequis de l'UE
                     for (UE uePrerequis : UEprerequis){
@@ -130,7 +130,7 @@ public class RecupererBD {
      * @return la liste d'UE prérequis ou obligatoire récupérée de la BD
      */
 
-    public static ArrayList<UE> recupInfoUEPrerequisObliBD(String nom, Connection connexion, ArrayList<UE> listeUE, String type){
+    public static ArrayList<UE> recupInfoUEPrerequisObliBD(Connection connexion, String nom, ArrayList<UE> listeUE, String type){
         ArrayList<UE> listeUEPrerequisObli = new ArrayList<>();
         String requeteUE;
 
@@ -207,13 +207,13 @@ public class RecupererBD {
      * @return la liste de parcours récupéré de la BD
      */
 
-    public static ArrayList<Parcours> recupInfoParcoursBD(ArrayList<UE> listeUE)
+    public static ArrayList<Parcours> recupInfoParcoursBD(Connection connexion, ArrayList<UE> listeUE)
     {
         //liste de parcours que l'on va renvoyer
         ArrayList<Parcours> listeParcours = new ArrayList<>();
 
 
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //requête pour récupérer les étudiants de la bd
             String requete = "Select * from Parcours";
@@ -247,7 +247,7 @@ public class RecupererBD {
                     //on créé le parcours et on a transformé mention en objet mention
                     Parcours parcours = new Parcours(nom,  Mention.valueOf(mention.toUpperCase()) );
 
-                    ArrayList<UE> UEObligatoire = recupInfoUEPrerequisObliBD(nom, connexion, listeUE, "obligatoire");
+                    ArrayList<UE> UEObligatoire = recupInfoUEPrerequisObliBD(connexion, nom, listeUE, "obligatoire");
                     for(UE ue : UEObligatoire ){
                         parcours.addUEObligatoire(ue);
                     }
@@ -278,12 +278,12 @@ public class RecupererBD {
      * @return la liste d'étudiant récupéré de la BD
      */
 
-    public static ArrayList<ResultatUE> recupInfoResultatUEBD(int numE, ArrayList<UE> listeUE)
+    public static ArrayList<ResultatUE> recupInfoResultatUEBD(Connection connexion, int numE, ArrayList<UE> listeUE)
     {
         //liste de résultat d'UE de l'étudiant passer en paramètre
         ArrayList<ResultatUE> listeResultatUE = new ArrayList<>();
 
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //requête pour récupérer les étudiants de la bd
             String requete = "Select * from ResultatUE where numE = ?";
@@ -363,13 +363,13 @@ public class RecupererBD {
      * @return la liste d'étudiant récupéré de la BD
      */
 
-    public static ArrayList<Etudiant> recupInfoEtudiantBD(ArrayList<Parcours> listeParcours, ArrayList<UE> listeUE)
+    public static ArrayList<Etudiant> recupInfoEtudiantBD(Connection connexion, ArrayList<Parcours> listeParcours, ArrayList<UE> listeUE)
     {
         //liste d'étudiant que l'on va renvoyer
         ArrayList<Etudiant> listeEtudiant = new ArrayList<>();
 
 
-        try(Connection connexion = ConnexionBD.connexionBD()){
+        try{
 
             //requête pour récupérer les étudiants de la bd
             String requete = "Select * from Etudiant";
@@ -409,7 +409,7 @@ public class RecupererBD {
                             Etudiant etudiant = new Etudiant(numE, nomE, prenomE, chercheParcours, Semestre.valueOf(semestre.toUpperCase()) );
 
                             //on va récupérer les Resultats d'UE de l'étudiant
-                            ArrayList<ResultatUE> listeResultatUE = recupInfoResultatUEBD(numE, listeUE);
+                            ArrayList<ResultatUE> listeResultatUE = recupInfoResultatUEBD(connexion, numE, listeUE);
 
                             //on ajoute les resultat d'UE à l'étudiant
                             for (ResultatUE resultatUE : listeResultatUE){
