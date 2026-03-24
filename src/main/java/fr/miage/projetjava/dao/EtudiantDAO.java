@@ -10,7 +10,7 @@ public class EtudiantDAO {
     // C'est l'endroit où on range le fichier sur l'ordinateur
     private static final String FILE_PATH = "data/etudiants.csv";
 
-    /*
+    /**
      * Cette méthode sert à lire le fichier et à créer les étudiants dans le logiciel.
      */
     public ArrayList<Etudiant> chargerTout(List<Parcours> parcoursDispos, List<UE> toutesLesUE) {
@@ -19,7 +19,7 @@ public class EtudiantDAO {
         // On vérifie si le fichier existe bien avant de l'ouvrir
         Path path = Paths.get(FILE_PATH);
         if (!Files.exists(path)) {
-            System.err.println("Le fichier n'existe pas encore.");
+            System.out.println("Le fichier n'existe pas encore.");
             return etudiants;
         }
         // On ouvre le fichier pour lire ce qu'il y a dedans
@@ -35,7 +35,6 @@ public class EtudiantDAO {
                     premiereLigne = false;
                     if (ligne.startsWith("NumE")) continue; // On passe à la suite si c'est bien l'en-tête
                 }
-
                 // Si une ligne est vide, on l'ignore
                 if (ligne.isEmpty()) continue;
 
@@ -52,10 +51,8 @@ public class EtudiantDAO {
                     String nom = morceaux[1];
                     String prenom = morceaux[2];
                     String codeDuParcours = morceaux[3]; // On utilise le code du parcours (ex: MIAGE), c'est plus sûr
-
                     // On transforme le texte du semestre en objet Semestre
                     Semestre sem = Semestre.valueOf(morceaux[4].toUpperCase());
-
                     // Trouver le bon parcours
                     Parcours leBonParcours = null;
                     for (Parcours p : parcoursDispos) {
@@ -65,11 +62,9 @@ public class EtudiantDAO {
                             break;
                         }
                     }
-
                     // Si on a trouvé le parcours, on crée l'étudiant
                     if (leBonParcours != null) {
                         Etudiant etu = new Etudiant(nume, nom, prenom, leBonParcours, sem);
-
                         // Chargement des notes
                         // Si la 6ème colonne contient des notes
                         if (morceaux.length > 5 && !morceaux[5].isEmpty()) {
@@ -89,7 +84,7 @@ public class EtudiantDAO {
                                             ResultatUE res = new ResultatUE(ue, infos[1],
                                                     Semestre.valueOf(infos[2]), StatutUE.valueOf(infos[3]));
                                             etu.addResultatUE(res);
-                                            break; // Ce break est mnt bien placé, il sort de la boucle de recherche d'UE
+                                            break; // Ce break est maintenant bien placé, il sort de la boucle de recherche d'UE
                                         }
                                     }
                                 }
@@ -109,21 +104,18 @@ public class EtudiantDAO {
         return etudiants;
     }
 
-    /*
+    /**
      * Cette méthode sert à enregistrer la liste des étudiants dans le fichier CSV.
      */
     public void sauvegarderTout(List<Etudiant> etudiants) {
         try {
             // On crée le dossier "data" s'il n'existe pas
             Files.createDirectories(Paths.get("data"));
-
             // On ouvre le fichier pour écrire par dessus l'ancien
             try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(FILE_PATH))) {
-
                 // On écrit l'en-tête (Optionnel, mais c'est propre)
                 bw.write("NumE;Nom;Prenom;Parcours;SemestreCourant;ResultatsUE");
                 bw.newLine();
-
                 for (Etudiant e : etudiants) {
                     // On prépare le texte pour les notes
                     String blocNotes = "";

@@ -61,7 +61,7 @@ public class ResultatUEDAO {
             System.out.println("Erreur lors de la lecture des résultats.");
         }
     }
-    /*
+    /**
      * Cette méthode enregistre toutes les notes de tous les étudiants dans le fichier CSV.
      */
     public void sauvegarderCursus(List<Etudiant> etudiants) {
