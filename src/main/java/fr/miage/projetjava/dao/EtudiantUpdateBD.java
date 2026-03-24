@@ -30,14 +30,13 @@ public class EtudiantUpdateBD {
 
             //va permettre d'exéctuer la requête
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
-            //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
-            // et en premier c'est l'indice de où se trouve le paramètre dans la requête
+
             ajoutValues.setString(1, statut.toString());
             ajoutValues.setInt(2, numE);
             ajoutValues.setString(3,codeUE);
             ajoutValues.setString(4,"En cours");
 
-            //executeUpdate() va executer la requête sql qui est contenu dans l'objet ajoutValues
+
             //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
             ajoutValues.executeUpdate();
             log.info("résultat étudiant MAJ:" + numE + "  MAJ " + codeUE + "nouveau statut : " + statut );
@@ -66,12 +65,10 @@ public class EtudiantUpdateBD {
 
             //va permettre d'exéctuer la requête
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
-            //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
-            // et en premier c'est l'indice de où se trouve le paramètre dans la requête
+
             ajoutValues.setString(1, semestre.toString());
             ajoutValues.setInt(2, numE);
 
-            //executeUpdate() va executer la requête sql qui est contenu dans l'objet ajoutValues
             //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
             ajoutValues.executeUpdate();
             log.info("Semestre étudiant MAJ :" + numE + "  Semestre " + semestre );
