@@ -233,22 +233,15 @@ public class RecupererBD {
             //Statement est un objet qui représente une requête SQL à envoyer à la bd
             Statement recupParcours = connexion.createStatement();
 
-            //execute de Statement renvoie un boolean,
-            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
-            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
-            // ligne donc renvoie un false.
-            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
+
             boolean resultatRequete = recupParcours.execute(requete);
 
             //si on a bien le select qui a été exécuté
             if(resultatRequete){
 
                 //on va récupérer les résultats de la requête
-                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
-                //si la requête n'a renvoyé aucune ligne alors rsListeEtudiant va être vide
                 ResultSet rsListeParcours = recupParcours.getResultSet();
 
-                //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
                 while(rsListeParcours.next()){
 
                     //getInt ou getString renvoie l'information de la colonne mis en ()
@@ -309,19 +302,13 @@ public class RecupererBD {
             PreparedStatement recupResultatUE = connexion.prepareStatement(requete);
 
             recupResultatUE.setInt(1, numE);
-            //execute de Statement renvoie un boolean,
-            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
-            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
-            // ligne donc renvoie un false.
-            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
+
             boolean resultatResultatUE = recupResultatUE.execute();
 
             //si on a bien le select qui a été exécuté
             if(resultatResultatUE){
 
-                //on va récupérer les résultats de la requête
-                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
-                //si la requête n'a renvoyé aucune ligne alors rsListeEtudiant va être vide
+
                 ResultSet rsListeResultatUE = recupResultatUE.getResultSet();
 
                 //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
@@ -396,22 +383,14 @@ public class RecupererBD {
             //Statement est un objet qui représente une requête SQL à envoyer à la bd
             Statement recupEtudiant = connexion.createStatement();
 
-            //execute de Statement renvoie un boolean,
-            //renvoie true si la requête a été exécutée avec succès et qu'elle peut renvoyer des
-            // lignes donc si dans la requête il y a un select. Si c'est un update ou delete ça renvoie pas de
-            // ligne donc renvoie un false.
-            //renvoie false si la requête renvoie un nombre de ligne, ca va être le cas avec update ou delete mais pas avec select
             boolean resultatRequete = recupEtudiant.execute(requete);
 
             //si on a bien le select qui a été exécuté
             if(resultatRequete){
 
                 //on va récupérer les résultats de la requête
-                //ResultSet est un curseur qui va parcourir les lignes une par une du résultat de la requête
-                //si la requête n'a renvoyé aucune ligne alors rsListeEtudiant va être vide
                 ResultSet rsListeEtudiant = recupEtudiant.getResultSet();
 
-                //c'est next qui va permettre de passer à la ligne suivante, il renvoie true tant qu'il reste des lignes à parcourir
                 while(rsListeEtudiant.next()){
 
                     //getInt ou getString renvoie l'information de la colonne mis en ()
