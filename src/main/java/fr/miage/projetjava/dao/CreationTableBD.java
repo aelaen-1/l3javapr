@@ -56,13 +56,10 @@ public class CreationTableBD {
         };
 
         // statement va être utilisé pour exécuter les requêtes SQL
-        //Statement est une classe permettant l'exécution des différentes requêtes avec l'appel de la méthode execute
-        //qui lui appartient. D'abord createStatement créé un objet Statement qui va ensuite pouvoir envoyer les requêtes sql
-        // à la BD
         try(Statement stmt = conn.createStatement();){
 
             //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute
-            // peux éxecuter que une à une toutes les requêtes
+            // peux exécuter que une à une toutes les requêtes
             for (String requete : requeteSuppressionTable){
 
                 stmt.executeUpdate(requete);
@@ -70,7 +67,7 @@ public class CreationTableBD {
 
             }
             //boucle pour parcourir le tableau de String et exécuté une à une toutes les requêtes car stmt.execute
-            // peux éxecuter que une à une toutes les requêtes
+            // peux exécuter que une à une toutes les requêtes
             for (String requete : requeteAjoutTable){
 
                 stmt.executeUpdate(requete);
