@@ -44,17 +44,12 @@ public class EtudiantBD {
             log.info("numeE: "+numE +"\n prenomE "+prenomE+"\n nomE: "+nomE+"\n parcours: "+parcours);
 
             //requête qui va être exécuté
-            // les ? sont là car on va utiliser PreparedStatement qui crée des objets preparedStatement permettant
-            // d'envoyer des requêtes sql paramétrés à la BD
-
             String requeteInsertEtudiant = "INSERT INTO  Etudiant (numE, prenomE, nomE, parcours, semestre)" +
                     "VALUES ( ?, ?, ?, ?, ?)";
 
-            //PreparedStatement est un objet représentant une requête sql pré-compilé, elle va permettre d'envoyer la requête sql
-            //pour être exécuté, chaque ? de la requête doit être définie sur un type (int, String...)
-            //On utilise PreparedSatetment car les valeurs changent à chaque fois, et de plus il permet de bien formater les différentes valeurs
+            //PreparedStatement va permettre d'envoyer la requête sql
             PreparedStatement ajoutValues = connexion.prepareStatement(requeteInsertEtudiant);
-            //on indique au driver (ici JDBC) le type de chaque paramètres de la requête
+            //on indique le type de chaque paramètres de la requête
             // et en premier c'est l'indice de où se trouve le paramètre dans la requête
             ajoutValues.setInt(1, numE);
             ajoutValues.setString(2,prenomE);
@@ -62,7 +57,6 @@ public class EtudiantBD {
             ajoutValues.setString(4,parcours);
             ajoutValues.setString(5, semestre);
 
-            //executeUpdate() va executer la requête sql qui est contenu dans l'objet ajoutValues
             //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
             ajoutValues.executeUpdate();
             log.info("étudiant ajouté : " );
