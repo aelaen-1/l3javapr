@@ -1,12 +1,11 @@
 package fr.miage.projetjava.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.miage.projetjava.dao.EtudiantDAO;
-import fr.miage.projetjava.dao.ParcoursDAO;
-import fr.miage.projetjava.dao.UEDAO;
+import fr.miage.projetjava.dao.*;
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Mention;
 import fr.miage.projetjava.model.Parcours;
@@ -111,6 +110,10 @@ public class EtudiantFormController {
             }
             EtudiantDAO dao = new EtudiantDAO();
             ArrayList<Etudiant> listeEtudiants = dao.chargerTout(tousLesParcours, toutesLesUE);
+
+            //pour ajouter l'étudiant dans la bd
+            Connection connexion = ConnexionBD.connexionBD();
+
             if (etudiantModif == null) {
                 // création d'un nouvel étudiant
                 // On cherche le NumE le plus élevé pour calculer le suivant
@@ -123,6 +126,10 @@ public class EtudiantFormController {
                 Etudiant nouvelEtu = new Etudiant(maxId + 1, txtNom.getText(), txtPrenom.getText(),
                         comboParcours.getValue(), comboSemestre.getValue());
                 listeEtudiants.add(nouvelEtu);
+                //on insert tous le nouveau étudiant dans la bd
+                EtudiantBD.insertEtudiant(connexion, maxId+1, txtNom.getText(), txtPrenom.getText(), comboParcours.getValue().getNom(), comboSemestre.getValue().toString());
+
+
             } else {
                 // modification d'un étudiant existant
                 for (Etudiant e : listeEtudiants) {
