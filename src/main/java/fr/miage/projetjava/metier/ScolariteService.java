@@ -1,8 +1,12 @@
 package fr.miage.projetjava.metier;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.miage.projetjava.dao.ConnexionBD;
+import fr.miage.projetjava.dao.EtudiantUpdateBD;
+import fr.miage.projetjava.dao.ResultatUEBD;
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Mention;
 import fr.miage.projetjava.model.ResultatUE;
@@ -10,7 +14,12 @@ import fr.miage.projetjava.model.Semestre;
 import fr.miage.projetjava.model.StatutUE;
 import fr.miage.projetjava.model.UE;
 
+import static java.lang.Integer.parseInt;
+
 public class ScolariteService {
+
+    private static Connection connexion = ConnexionBD.connexionBD();
+
     /**
      * cette méthode permet d'obtenir les Ues accessibles par un etudiant
      * elle prend en entrée un etudiant et la liste de TOUTES les Ues
@@ -111,6 +120,10 @@ public class ScolariteService {
         // Si tout est bon, on procède à l'inscription
         ResultatUE inscription = new ResultatUE(ue, annee, semestre, StatutUE.ENCOURS);
         e.getResultatsUE().add(inscription);
+
+        //on va insérer le résultat dans la bd
+        ResultatUEBD.insertResultatUE(connexion, e.getNumE(), ue.getCode(), parseInt(annee), semestre.toString(), StatutUE.ENCOURS.toString());
+
         return true;
     }
 
@@ -181,6 +194,7 @@ public class ScolariteService {
             if (res.getUe().getCode().equals(ue.getCode())) {
                 // on change le statut
                 res.setStatut(StatutUE.VALIDE);
+                EtudiantUpdateBD.updateResultatUE( connexion,  e.getNumE(),  res.getUe().getCode(), StatutUE.VALIDE);
                 return true;
             }
         }
@@ -197,6 +211,7 @@ public class ScolariteService {
             if (res.getUe().getCode().equals(ue.getCode())) {
                 // on marque statut ECHOUE
                 res.setStatut(StatutUE.ECHOUE);
+                EtudiantUpdateBD.updateResultatUE( connexion,  e.getNumE(),  res.getUe().getCode(), StatutUE.ECHOUE);
                 return true;
             }
         }
@@ -212,12 +227,17 @@ public class ScolariteService {
     public void passerSemestre(Etudiant e) {
         // on recupere le semestre Cournat de l'etudiant suivant et on teste s'il est
         // Impair
-        if (e.getSemestreCourant() == Semestre.IMPAIR)
+        if (e.getSemestreCourant() == Semestre.IMPAIR){
             // on change à PAIR
             e.setSemestreCourant(Semestre.PAIR);
-        else
+            EtudiantUpdateBD.updateSemestre(connexion,  e.getNumE(),  Semestre.PAIR);
+        }
+        else{
             // sion on change à IMPAIR le semestre courant
             e.setSemestreCourant(Semestre.IMPAIR);
+            EtudiantUpdateBD.updateSemestre(connexion, e.getNumE(), Semestre.IMPAIR);
+        }
+
     }
 
     /**
