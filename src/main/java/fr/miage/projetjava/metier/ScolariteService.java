@@ -13,6 +13,7 @@ import fr.miage.projetjava.model.ResultatUE;
 import fr.miage.projetjava.model.Semestre;
 import fr.miage.projetjava.model.StatutUE;
 import fr.miage.projetjava.model.UE;
+import javafx.scene.control.Alert;
 
 import static java.lang.Integer.parseInt;
 
@@ -98,6 +99,14 @@ public class ScolariteService {
         return accessibles;
     }
 
+    /**
+     * methode pour inscrire un etudiant a une Ue
+     * @param e , un etudiant
+     * @param ue, une Ue
+     * @param annee, Une année
+     * @param semestre, Un sesmestre
+     * @return
+     */
     public boolean inscrireEtudiant(Etudiant e, UE ue, String annee, Semestre semestre) {
         // Vérification des prérequis
         if (!possedePrerequis(ue, e)) {
@@ -114,8 +123,14 @@ public class ScolariteService {
         }
         // On bloque si la nouvelle matière fait dépasser les 39 crédits sur le semestre
         if (creditsDuSemestre + ue.getCredit() > 39) {
-            System.out.println("Inscription bloquée : La limite de 39 ECTS par semestre est atteinte.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Limite atteinte");
+            alert.setHeaderText("Surcharge de crédits");
+            alert.setContentText("Impossible d'ajouter " + ue.getIntitule() + " (" + ue.getCredit() + " ECTS).\n" +
+                        "Le total des ECTS pour ce semestre dépasserait de 39 crédits.");
+            alert.showAndWait();
             return false;
+
         }
         // Si tout est bon, on procède à l'inscription
         ResultatUE inscription = new ResultatUE(ue, annee, semestre, StatutUE.ENCOURS);
@@ -126,6 +141,13 @@ public class ScolariteService {
 
         return true;
     }
+
+    /**
+     * méthode pour vérifier si un étudiant possède le prérequis de l'UE dans lequl on veut l'inscrire
+     * @param uecible
+     * @param e
+     * @return
+     */
 
     public Boolean possedePrerequis(UE uecible, Etudiant e) {
         if (uecible.getUEprerequis() == null || uecible.getUEprerequis().isEmpty()) {
@@ -145,7 +167,10 @@ public class ScolariteService {
         return true;
     }
 
-    /* cette méthode permet savoir si un etudiant peut avoir son diplome */
+    /**
+     * cette méthode permet savoir si un etudiant peut avoir son diplome
+     * @param e , l'etudiant où il fallait tester s'il est diplomé ou pas
+     * */
     public Boolean estDiplome(Etudiant e) {
         // on initilase à 0 un compteur qui calcul les credits de l'etudiant
         int totalcredits = 0;
@@ -183,7 +208,7 @@ public class ScolariteService {
         return true;
     }
 
-    /*
+    /**
      * Cette methode permet de changer le statut d'une UE de l'etudant ( qui suit au
      * semestre courant) à VALIDE
      */
@@ -203,7 +228,9 @@ public class ScolariteService {
         return false;
     }
 
-    /** cette methode permet de marquer Echouer une Ue suivit par l'etudiant */
+    /**
+     * cette methode permet de marquer Echouer une Ue suivit par l'etudiant
+     */
     public boolean echoueUE(Etudiant e, UE ue) {
         // on recupere les resulats de l'etudiant
         for (ResultatUE res : e.getResultatsUE()) {
@@ -328,7 +355,7 @@ public class ScolariteService {
                     uesAccessibles.add(ue);
             }
 
-            /*  Algo de tri qui compare chaque UE à toutes les autres pour comparer 
+            /* Algo de tri qui compare chaque UE à toutes les autres pour comparer
             leur niveau de priorité. Si une UE est prioritaire, on la swap
             dans la liste des UE accessibles pour s'y inscrire */
             for (int i = 0; i < uesAccessibles.size() - 1; i++) {

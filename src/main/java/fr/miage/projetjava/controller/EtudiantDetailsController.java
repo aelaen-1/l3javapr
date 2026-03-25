@@ -89,7 +89,7 @@ public class EtudiantDetailsController {
 
         for (ResultatUE r : etudiant.getResultatsUE()) {
             if (r.getStatut() == StatutUE.VALIDE) {
-                listeValidees.add(r.getUe().getCode() + " - " + r.getUe().getIntitule() + " (" + r.getUe().getCredit() + " pts)");
+                listeValidees.add(r.getUe().getCode() + " - " + r.getUe().getIntitule() + " (" + r.getUe().getCredit() + " ECTS)");
             } else if (r.getStatut() == StatutUE.ENCOURS) {
                 listeEnCours.add(r.getUe().getCode() + " - " + r.getUe().getIntitule());
             }
@@ -217,7 +217,7 @@ public class EtudiantDetailsController {
      * Enregistre les modifications dans le fichier CSV et rafraîchit l'écran
      */
     private void sauvegarder() {
-        //Cree une instante d'un Objet EtudiantDAO pour enregistrer les étudiants le fichier csv
+        //Crée une instante d'un Objet EtudiantDAO pour enregistrer les étudiants le fichier csv
         EtudiantDAO dao = new EtudiantDAO();
         List<Parcours> parcours = new ParcoursDAO().chargerParcours(toutesLesUE);
         List<Etudiant> liste = dao.chargerTout(parcours, toutesLesUE);
