@@ -1,13 +1,12 @@
 package fr.miage.projetjava.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import fr.miage.projetjava.dao.EtudiantDAO;
-import fr.miage.projetjava.dao.ParcoursDAO;
-import fr.miage.projetjava.dao.UEDAO;
+import fr.miage.projetjava.dao.*;
 import fr.miage.projetjava.model.Etudiant;
 import fr.miage.projetjava.model.Parcours;
 import fr.miage.projetjava.model.UE;
@@ -134,6 +133,10 @@ public class EtudiantListController {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                //on le supprime de la BD
+                Connection connexion = ConnexionBD.connexionBD();
+                EtudiantBD.supprimerEtudiant(connexion, etudiantSelectionne.getNumE());
+
                 //On le retire du tableau visuel
                 tableEtudiants.getItems().remove(etudiantSelectionne);
                 // On demande au DAO de mettre à jour le fichier CSV
