@@ -3,11 +3,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
-
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="fr.miage.projetjava.controller.MainController"
             prefWidth="1100" prefHeight="700" style="-fx-background-color: #f0f2f5;">
-
     <top>
         <ToolBar style="-fx-background-color: #2c3e50; -fx-padding: 10;">
             <Label text="SCOLARITÉ" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
@@ -40,14 +38,14 @@
                           style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 15; -fx-border-color: #dcdde1; -fx-border-radius: 15; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
                         <Label text="📁" style="-fx-font-size: 50px;"/>
                         <Label text="LISTE DES ÉTUDIANTS" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
-                        <Text text="Consulter, modifier et gérer les dossiers des étudiany." wrappingWidth="200" textAlignment="CENTER" style="-fx-fill: #95a5a6;"/>
+                        <Text text="Consulter et gérer les dossiers des étudiants." wrappingWidth="200" textAlignment="CENTER" style="-fx-fill: #95a5a6;"/>
                     </VBox>
 
                     <VBox spacing="15" alignment="CENTER" onMouseClicked="#handleAjouterEtudiant"
                           style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 15; -fx-border-color: #dcdde1; -fx-border-radius: 15; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
                         <Label text="👤" style="-fx-font-size: 50px;"/>
-                        <Label text="NOUVEL ÉTUDIANT" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
-                        <Text text="Inscrire un nouvel étudiantndans un parcours spécifique." wrappingWidth="200" textAlignment="CENTER" style="-fx-fill: #95a5a6;"/>
+                        <Label text="NOUVEL ÉTUDIANT(E)" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
+                        <Text text="Inscrire un nouvel étudiant(e) dans un parcours spécifique." wrappingWidth="200" textAlignment="CENTER" style="-fx-fill: #95a5a6;"/>
                     </VBox>
                 </HBox>
                 <Label text="©2025-2026" style="-fx-text-fill: #bdc3c7; -fx-font-size: 12px;"/>

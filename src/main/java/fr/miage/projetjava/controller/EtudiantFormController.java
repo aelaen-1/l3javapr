@@ -164,7 +164,7 @@ public class EtudiantFormController {
     private void retournerALaListe() {
         try {
             StackPane contentArea = (StackPane) btnEnregistrer.getScene().lookup("#contentArea");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EtudiantListView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
             Parent root = loader.load();
             contentArea.getChildren().setAll(root);
         } catch (IOException e) {
