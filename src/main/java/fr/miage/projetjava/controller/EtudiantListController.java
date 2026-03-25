@@ -3,6 +3,7 @@ package fr.miage.projetjava.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import fr.miage.projetjava.dao.EtudiantDAO;
 import fr.miage.projetjava.dao.ParcoursDAO;
@@ -15,12 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 /*
@@ -39,6 +37,7 @@ public class EtudiantListController {
     // Variables pour stocker les données chargées depuis les fichiers csv
     private ArrayList<UE> toutesLesUE;
     private ArrayList<Parcours> tousLesParcours;
+    private EtudiantDAO etuDao = new EtudiantDAO();
     /**
      * Cette méthode prépare la page dès qu'elle s'affiche à l'écran
      */
@@ -74,19 +73,28 @@ public class EtudiantListController {
      */
     private void setupActions() {
         colActions.setCellFactory(p -> new TableCell<>() {
-            private final Button btn = new Button("GÉRER DOSSIER");
+            private final Button btnGerer = new Button("GÉRER");
+            private final Button btnSuppr = new Button("SUPPRIMER");
+            private final HBox container = new HBox(10, btnGerer, btnSuppr); // On met les deux dans un conteneur
             {
-                // On définit l'apparence du bouton (couleurs et curseur)
-                btn.setStyle("-fx-background-color: #34495e; -fx-text-fill: white; -fx-cursor: hand;");
-                // On définit ce qu'il se passe quand on clique : ouvrir la fiche de l'étudiant choisi
-                btn.setOnAction(e -> ouvrirDetails(getTableView().getItems().get(getIndex())));
+                btnGerer.setStyle("-fx-background-color: #34495e; -fx-text-fill: white;");
+                btnSuppr.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+
+                // Action du bouton Gérer
+                btnGerer.setOnAction(e -> ouvrirDetails(getTableView().getItems().get(getIndex())));
+
+                // Action du bouton Supprimer ,on appelle la méthode handleSupprimer
+                btnSuppr.setOnAction(e -> {
+                    tableEtudiants.getSelectionModel().select(getIndex()); // On force la sélection
+                    handleSupprimer();
+                });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                // Si la ligne du tableau est vide on ne met pas de bouton
                 if (empty) setGraphic(null);
-                else setGraphic(btn);
+                else setGraphic(container); // On affiche le groupe de boutons
             }
         });
     }
@@ -106,6 +114,42 @@ public class EtudiantListController {
             contentArea.getChildren().setAll(root);
         } catch (IOException ex) {
             System.out.println("Erreur de chargement de la vue : " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Methode pour supprimer un etudiant
+     */
+    @FXML
+    private void handleSupprimer() {
+        //On récupère l'étudiant sélectionné dans le tableau
+        Etudiant etudiantSelectionne = tableEtudiants.getSelectionModel().getSelectedItem();
+
+        if (etudiantSelectionne != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation de suppression");
+            alert.setHeaderText("Supprimer " + etudiantSelectionne.getNomE() + " " + etudiantSelectionne.getPrenomE() + " ?");
+            alert.setContentText("Action irréversible!");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                //On le retire du tableau visuel
+                tableEtudiants.getItems().remove(etudiantSelectionne);
+                // On demande au DAO de mettre à jour le fichier CSV
+                // On récupère la liste complète actuelle du tableau pour la sauvegarder
+                List<Etudiant> listeAMettreAJour = new ArrayList<>(tableEtudiants.getItems());
+                // On utilise la méthode de sauvegarde du DAO
+                etuDao.sauvegarderTout(listeAMettreAJour);
+                System.out.println("Étudiant supprimé et CSV mis à jour.");
+            }
+        } else {
+            // Alerte si rien n'est sélectionné
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Aucune sélection");
+            alert.setContentText("Sélectionnez un étudiant dans le tableau d'abord.");
+            alert.showAndWait();
         }
     }
     /**

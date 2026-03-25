@@ -147,4 +147,12 @@ public class EtudiantDAO {
             ex.printStackTrace();
         }
     }
+    // Dans EtudiantDAO.java
+    public void supprimerEtudiant(Etudiant e, List<Etudiant> tousLesEtudiants) {
+        // 1. On le retire de la liste globale en mémoire
+        tousLesEtudiants.remove(e);
+
+        // 2. On réécrit le fichier CSV avec la nouvelle liste
+        sauvegarderTout(tousLesEtudiants);
+    }
 }
