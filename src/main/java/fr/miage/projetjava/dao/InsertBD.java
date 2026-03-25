@@ -9,10 +9,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
- * Classe InsertBD : Gère l'appel aux autres classes permettant l'insertion des données dans la BD
+ * Classe InsertSuppBD : Gère l'appel aux autres classes permettant l'insertion des données dans la BD et la suppression des étudiants de la BD
  *
  */
-public class InsertBD {
+public class InsertSuppBD {
 
     /**
      * Méthode appelée  dans la méthode main de la classe MainApp
@@ -27,31 +27,41 @@ public class InsertBD {
      * va permettre d'exécuter les requêtes sql.
      *
      */
-    public static void insertionDonneeBD(Connection connexion){
+    public static void insertionSuppDonneeBD(Connection connexion, String insertOuSupp){
+
 
         //on charge les informations des UES du fichier csv dans une liste d'objets UE
         ArrayList<UE> listeUE = new UEDAO().chargerUEs();
-        //Une fois toute les données du fichier csv chargées dans l'ArrayList on appel la méthode pour insérer les UE dans la BD
-        UEBD.recuperationInformationListUE(connexion, listeUE);
-
-        //Pour les prérequis des UE on utilise la liste d'UE car c'est elle qui contient les objets UE et leurs prérequis
-        UEPrerequisBD.recuperationInformationListUEPre(connexion, listeUE);
 
         //on charge les parcours du fichier csv dans une liste d'objets parcours
         ArrayList<Parcours> listeParcours = new ParcoursDAO().chargerParcours(listeUE);
-        //Une fois toute les données du fichier csv chargées dans l'ArrayList on appel la méthode pour insérer les parcours dans la BD
-        ParcoursBD.recuperationInformationListParcours(connexion, listeParcours);
-
-        //Pour les UE obligatoireson on utilise listeParcours car c'est cette liste qui va contenir les UE obligatoires d'un parcours
-        UEObligatoiresBD.recuperationInformationListUEObli(connexion, listeParcours);
 
         //on charge les étudiants du fichier csv dans une liste d'objets étudiants
         ArrayList<Etudiant> listeEtudiants = new EtudiantDAO().chargerTout(listeParcours, listeUE);
-        //Une fois toute les données du fichier csv chargées dans l'ArrayList on appel la méthode pour insérer les étudiants dans la BD
-        EtudiantBD.recuperationInformationListEtudiant(connexion, listeEtudiants);
 
-        //Pour résultat UE on utilise la liste des étudiants car c'est dans celle-ci qu'est contenu les différents résultats des étudiants
-        ResultatUEBD.recuperationInformationListResultatUE(connexion, listeEtudiants);
+        if(insertOuSupp.equals("insert")){
+            //Une fois toute les données du fichier csv pour les UE chargées dans l'ArrayList on appel la méthode pour insérer les UE dans la BD
+            UEBD.recuperationInformationListUE(connexion, listeUE);
+
+            //Pour les prérequis des UE on utilise la liste d'UE car c'est elle qui contient les objets UE et leurs prérequis
+            UEPrerequisBD.recuperationInformationListUEPre(connexion, listeUE);
+
+            //Une fois toute les données du fichier csv chargées dans l'ArrayList on appel la méthode pour insérer les parcours dans la BD
+            ParcoursBD.recuperationInformationListParcours(connexion, listeParcours);
+
+            //Pour les UE obligatoireson on utilise listeParcours car c'est cette liste qui va contenir les UE obligatoires d'un parcours
+            UEObligatoiresBD.recuperationInformationListUEObli(connexion, listeParcours);
+
+            //Une fois toute les données du fichier csv chargées dans l'ArrayList on appel la méthode pour insérer les étudiants dans la BD
+            EtudiantBD.recuperationInformationListEtudiant(connexion, listeEtudiants);
+
+            //Pour résultat UE on utilise la liste des étudiants car c'est dans celle-ci qu'est contenu les différents résultats des étudiants
+            ResultatUEBD.recuperationInformationListResultatUE(connexion, listeEtudiants);
+        }
+        else {
+            //appel pour supprimer les étudiants
+        }
+
     }
 }
 

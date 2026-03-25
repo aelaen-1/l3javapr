@@ -66,6 +66,41 @@ public class ResultatUEBD {
     }
 
 
+
+    /**
+     * Méthode appelée depuis EtudiantBD dans la méthode supprimerEtudiant
+     *
+     * Cette méthode va supprimer les resultats d'UE de l'étudiant de la BD.
+     *
+     *
+     * @param  Connection connexion, int numE
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     * numE : numéro de l'étudiant qui va être supprimé.
+     */
+    public static void supprimerResultatUE(Connection connexion, int numE){
+        try{
+            log.info("Les résultats d'UE de l'étudiant, numeE: "+numE +"\n vont être supprimés");
+
+            //requête qui va être exécuté
+            String requeteSupResultatUE = "Delete From  ResultatUE  where numE = ?";
+
+            //PreparedStatement va permettre d'envoyer la requête sql
+            PreparedStatement ajoutValues = connexion.prepareStatement(requeteSupResultatUE);
+            //on indique le type de chaque paramètres de la requête
+            // et en premier c'est l'indice de où se trouve le paramètre dans la requête
+            ajoutValues.setInt(1, numE);
+
+
+            //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
+            ajoutValues.executeUpdate();
+            log.info("Résultats supprimés " );
+
+        }
+        catch(SQLException e){
+            log.error(e.getMessage());
+        }
+    }
+
     /**
      * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
      *
