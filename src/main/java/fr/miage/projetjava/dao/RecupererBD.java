@@ -22,7 +22,7 @@ public class RecupererBD {
      *
      * Cette méthode va appeler les méthodes recupInfoUEBD, recupInfoParcoursBD et recupInfoEtudiantBD
      *
-     * @param : Connection connexion, String typeRenvoie
+     * @param connexion, String typeRenvoie
      *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *  typeRenvoie : indique quel type d'ArrayList on veut récupérer, celle des étudiants des parcours ou des UE
      * @return la liste de parcours, d'UE ou d'étudiant
@@ -54,7 +54,7 @@ public class RecupererBD {
      * Cette méthode va chercher toutes les informations des UE dans la bd créer une liste d'UE.
      * Elle va faire appel à la méthode recupInfoUEPrerequisObliBD pour récupérer les UE obligatoire de chaque UE
      *
-     * @param : Connection connexion
+     * @param connexion
      *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * @return la liste d'UE récupéré de la BD
      */
@@ -131,7 +131,7 @@ public class RecupererBD {
      *
      * Cette méthode va chercher toutes les UE prérequis ou obligatoires d'une UE ou d'un parcours passé en paramètre
      * et va renvoyer une ArrayList de ces UE prérequis ou obligatoires.
-     * @param : Connection connexion, String nom, Connection connexion, ArrayList<UE> listeUE, String type:
+     * @param connexion, String nom, Connection connexion, ArrayList<UE> listeUE, String type:
      *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * nom : indique soit le code de l'UE sur laquelle on veut récupérer les prérequis, soit le nom du parcours sur lequel
      * on veut récupérer les UE obligatoires
@@ -212,7 +212,7 @@ public class RecupererBD {
      *
      * Cette méthode va chercher toutes les informations des Parcours dans la bd et va renvoyer une liste de parcours
      *
-     * @param : Connection connexion,  ArrayList<UE> listeUE
+     * @param  connexion,  ArrayList<UE> listeUE
      * listeUE: liste contenant toutes UE et va permettre d'ajouter les UE exsitantes dans la liste d'UE obligatoires
      * associés à un parcours
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
@@ -279,7 +279,7 @@ public class RecupererBD {
      *
      * Cette méthode va chercher toutes les informations des résultats des UE des étudiants dans la bd.
      *
-     * @param : Connection connexion, int numE, ArrayList<UE> listeUE
+     * @param connexion, int numE, ArrayList<UE> listeUE
      *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * numE : numéro étudiant pour lequel on veut récupérer la liste de Resutat d'UE
      * listeUE: liste d'UE existante et qui va permettre d'ajouter les UE exsitantes dans les objets ResultatUE

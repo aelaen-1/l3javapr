@@ -32,7 +32,7 @@ public class UEBD {
      *
      * Cette méthode va insérer les UE dans la base de données à partir des informations de l'UE passée en paramètre
      *
-     * @param: Connection connexion, String code, String intitule, int credit, String mention: informations qui doivent être ajoutées dans la BD
+     * @param connexion, String code, String intitule, int credit, String mention: informations qui doivent être ajoutées dans la BD
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */

@@ -35,7 +35,7 @@ public class UEObligatoiresBD {
      *
      * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
      *
-     * @param : Connection connexion, String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE obligatoires dans la BD
+     * @param connexion, String nomParcours, ArrayList<UE>: information nécessaire pour l'ajout des UE obligatoires dans la BD
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void insertUEObligatoires(Connection connexion, String nomParcours, ArrayList<UE> ueObligatoire)
@@ -72,7 +72,7 @@ public class UEObligatoiresBD {
      * afin d'insérer dans la table UEObligatoire toutes les UES obligatoires liées à un parcours
      *
      *
-     * @param : Connection connexion, ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
+     * @param connexion, ArrayList<Parcours> listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */

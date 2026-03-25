@@ -35,7 +35,7 @@ public class ParcoursBD {
      *
      * Si l'insertion dans la base de données, a échoué alors un message d'erreur est renvoyé
      *
-     * @param : Connection connexion, String code, String nom, String mention: information nécessaire pour l'ajout du parcours dans la BD
+     * @param connexion, String code, String nom, String mention: information nécessaire pour l'ajout du parcours dans la BD
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void insertParcours(Connection connexion, String code, String nom, String mention)
@@ -75,7 +75,7 @@ public class ParcoursBD {
      * afin d'insérer un par un les parcours dans la BD.
      *
      *
-     * @param : Connection connexion, ArrayList<Parcours> listeParcoursCSV
+     * @param connexion, ArrayList<Parcours> listeParcoursCSV
      * listeParcoursCSV:  liste d'objets Parcours créés à partir des données du CSV
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */

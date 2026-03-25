@@ -10,11 +10,13 @@ import javafx.stage.Stage;
 import java.sql.Connection;
 
 /**
- * C'est la classe de départ qui lance toute l'interface graphique.
+ * Classe principale de l'application gérant le cycle de vie de l'interface JavaFX.
  */
 public class MainApp extends Application {
-    /*
-     * Cette méthode start est le vrai point de départ de l'affichage.
+    /**
+     * La méthode start est appelée automatiquement par JavaFX après le launch().
+     * Elle définit ce que l'utilisateur va voir à l'écran.
+     * @param: primaryStage Le "cadre" de la fenêtre principale (le Stage)
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -29,7 +31,7 @@ public class MainApp extends Application {
         //On rend la fenêtre visible à l'écran
         primaryStage.show();
     }
-    /*
+    /**
      * C'est la méthode main standard de Java.
      */
     public static void main(String[] args) {

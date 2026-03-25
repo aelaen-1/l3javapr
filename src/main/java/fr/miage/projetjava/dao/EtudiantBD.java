@@ -32,7 +32,7 @@ public class EtudiantBD {
      *
      * Cette méthode va insérer les étudiants dans la bd à partir des informations de l'étudiant passé en paramètre.
      *
-     * @param: Connection connexion, int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
+     * @param connexion, int numE, String prenomE, String nomE, String parcours: informations qui doivent être ajoutées dans la BD
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void insertEtudiant(Connection connexion, int numE, String prenomE, String nomE, String parcours, String semestre)
@@ -74,7 +74,7 @@ public class EtudiantBD {
      * Cette méthode va supprimer l'étudiant passé en paramètre de la BD, et ses résultats qui lui sont associés.
      *
      *
-     * @param  Connection connexion, int numE
+     * @param  connexion, int numE
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * numE : numéro de l'étudiant à qui on doit supprimer ses résultats de la BD.
      */
@@ -117,10 +117,8 @@ public class EtudiantBD {
      * afin d'insérer un par un les étudiants dans la BD.
      *
      *
-     * @param: ArrayList<Etudiant> listeEtudiantCSV, Connection connexion
-     * listeEtudiantCSV:  liste d'objets Étudiant créés à partir des données du CSV
-     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
-     *
+     * @param listeEtudiantCSV liste d'objets Étudiant créés à partir des données du CSV
+     * @param  connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void recuperationInformationListEtudiant (Connection connexion, ArrayList<Etudiant> listeEtudiantCSV)
     {

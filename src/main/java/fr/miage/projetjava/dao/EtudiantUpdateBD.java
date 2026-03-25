@@ -14,10 +14,9 @@ public class EtudiantUpdateBD {
 
     /**
      * Méthode appelée par la méthode validerUE et echoueUE de la classe ScolaritéService
-     *
      * Cette méthode mettre à jour les résultats des UE des étudiants dans la bd selon ce qui est modifié depuis l'interface.
      *
-     * @param: Connection connexion, int numE, String codeUE, StatutUE statut: informations pour permettre la MAJ
+     * @param connexion, int numE, String codeUE, StatutUE statut: informations pour permettre la MAJ
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void updateResultatUE(Connection connexion, int numE, String codeUE, StatutUE statut)
@@ -52,7 +51,7 @@ public class EtudiantUpdateBD {
      *
      * Cette méthode mettre à jour le semestre des étudiants dans la bd selon ce qui est modifié depuis l'interface.
      *
-     * @param: Connection connexion, int numE, Semestre semestre: informations pour permettre la MAJ
+     * @param connexion, int numE, Semestre semestre: informations pour permettre la MAJ
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void updateSemestre(Connection connexion, int numE, Semestre semestre)

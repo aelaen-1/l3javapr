@@ -23,7 +23,7 @@ public class CreationTableBD {
      * Méthode appelée  dans la méthode main de la classe MainApp
      *
      * Cette méthode va se connecter à la BD et exécuter toutes les requêtes pour créer les différentes tables
-     * @param : Connection conn
+     * @param  conn
      * conn : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
 

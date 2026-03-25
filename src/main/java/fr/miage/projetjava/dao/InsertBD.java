@@ -22,7 +22,7 @@ public class InsertBD {
      * Elle va d'abord charger une liste pour un fichier csv afin de récupérer les différentes informations de ces fichiers.
      * Elle va ensuite utiliser ces listes comme paramètre pour l'insertion des données dans la BD.
      *
-     * @param : Connection connexion
+     * @param  connexion
      * connexion : connexion à la bd qui va être donné en appel des méthodes d'insertions des données dans la BD et qui
      * va permettre d'exécuter les requêtes sql.
      *

@@ -1,12 +1,13 @@
 package fr.miage.projetjava.vue;
 
 import fr.miage.projetjava.vue.MainApp;
-/*
- *cette méthode lance notre application en fait appel a la classe main APP
+/**
+ * Cette classe est le point d'entrée technique.
+ * Elle lance l'application en appelant la méthode main de la classe MainApp.
  */
 public class Lanceur {
     public static void main(String[] args) {
-        //Appelle le main de MainApp sans hériter d'Application
+        //Appelle le lancement de l'interface
         MainApp.main(args);
     }
 }

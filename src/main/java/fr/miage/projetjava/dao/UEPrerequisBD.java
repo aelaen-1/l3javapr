@@ -33,8 +33,8 @@ public class UEPrerequisBD {
      *
      * Si l'insertion dans la base de données a échoué alors un message d'erreur est renvoyé
      *
-     * @param : Connection connexion, String codeUE, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
-     *  connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     * @param  connexion, String codeUE, ArrayList<UE>: information nécessaire pour l'ajout des UE prérequis dans la BD
+     *  connexion  connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void insertUEPrerequis(Connection connexion, String codeUE, ArrayList<UE> uePrerequis)
     {
@@ -70,7 +70,7 @@ public class UEPrerequisBD {
      * afin d'insérer dans la table UEprerequis toutes les UES prérequis concernant l'UE.
      *
      *
-     * @param : Connection connexion, ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
+     * @param connexion, ArrayList<UE> listeUECSV:  liste d'objets UE créés à partir des données du CSV
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */

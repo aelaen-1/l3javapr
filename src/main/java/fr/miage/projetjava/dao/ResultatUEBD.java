@@ -36,7 +36,7 @@ public class ResultatUEBD {
      *
      * Si l'insertion dans la base de données a échoué, alors un message d'erreur est renvoyé
      *
-     * @param :Connection connexion, int numE, String codeUE, int annee, String semestre, String statut: information nécessaire pour l'ajout des résultats à une UE dans la BD
+     * @param connexion, int numE, String codeUE, int annee, String semestre, String statut: information nécessaire pour l'ajout des résultats à une UE dans la BD
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      */
     public static void insertResultatUE(Connection connexion, int numE, String codeUE, int annee, String semestre, String statut)
@@ -73,7 +73,7 @@ public class ResultatUEBD {
      * Cette méthode va supprimer les resultats d'UE de l'étudiant de la BD.
      *
      *
-     * @param  Connection connexion, int numE
+     * @param  connexion, int numE
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      * numE : numéro de l'étudiant qui va être supprimé.
      */
@@ -110,7 +110,7 @@ public class ResultatUEBD {
      * afin d'insérer dans la table ResultatUE les informations concernant ce résultat d'UE pour cet étudiant.
      *
      *
-     * @param : Connection connexion,  ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Etudiant créés à partir des données du CSV
+     * @param connexion,  ArrayList<Etudiant> listeEtudiantCSV:  liste d'objets Etudiant créés à partir des données du CSV
      * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
      *
      */
