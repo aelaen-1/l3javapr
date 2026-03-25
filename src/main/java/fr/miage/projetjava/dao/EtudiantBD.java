@@ -68,6 +68,46 @@ public class EtudiantBD {
     }
 
 
+    /**
+     * Méthode appelée depuis EtudiantListController dans la méthode handleSupprimer
+     *
+     * Cette méthode va supprimer l'étudiant passé en paramètre de la BD, et ses résultats qui lui sont associés.
+     *
+     *
+     * @param  Connection connexion, int numE
+     * connexion : connexion à la bd qui va permettre de pouvoir exécuter les différentes requêtes sql
+     * numE : numéro de l'étudiant à qui on doit supprimer ses résultats de la BD.
+     */
+    public static void supprimerEtudiant(Connection connexion, int numE){
+
+
+        try{
+            log.info("numeE: "+numE +"\n vas être supprimé");
+
+            //avant de supprimer un étudiant il faut supprimer ses résultats aux UE de la BD
+            ResultatUEBD.supprimerResultatUE(connexion, numE);
+
+            //requête qui va être exécuté
+            String requeteSupEtudiant = "Delete From  Etudiant  where numE = ?";
+
+            //PreparedStatement va permettre d'envoyer la requête sql
+            PreparedStatement ajoutValues = connexion.prepareStatement(requeteSupEtudiant);
+            //on indique le type de chaque paramètres de la requête
+            // et en premier c'est l'indice de où se trouve le paramètre dans la requête
+            ajoutValues.setInt(1, numE);
+
+
+            //utilisation de executeUpdate à la place de execute car ici on fait une MAJ des informations de la BD
+            ajoutValues.executeUpdate();
+            log.info("étudiant supprimé " );
+
+        }
+        catch(SQLException e){
+            log.error(e.getMessage());
+        }
+
+    }
+
 
     /**
      * Méthode appelée depuis InsertBD dans la méthode insertionDonneeBD
