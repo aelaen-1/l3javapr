@@ -45,7 +45,6 @@ public class EtudiantListController {
         // On demande aux classes DAO de lire les fichiers CSV pour remplir nos listes
         toutesLesUE = new UEDAO().chargerUEs();
         tousLesParcours = new ParcoursDAO().chargerParcours(toutesLesUE);
-        EtudiantDAO etuDao = new EtudiantDAO();
         List<Etudiant> etudiants = etuDao.chargerTout(tousLesParcours, toutesLesUE);
         // On indique au tableau quelle variable de la classe Etudiant va dans quelle colonne
         colId.setCellValueFactory(new PropertyValueFactory<>("numE"));
@@ -161,14 +160,17 @@ public class EtudiantListController {
     @FXML
     private void handleRetour() {
         try {
+            // Pour éviter de dupliquer le Header, on recharge le MainView
+            // et on l'installe comme nouvelle racine (Root) de la fenêtre.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
             Parent root = loader.load();
-            // On récupère la zone centrale via le tableau
-            StackPane contentArea = (StackPane) tableEtudiants.getScene().lookup("#contentArea");
-            // On change la vue
-            contentArea.getChildren().setAll(root);
+
+            // On remplace TOUTE la scène actuelle par une nouvelle instance propre de MainView
+            tableEtudiants.getScene().setRoot(root);
+
+            System.out.println("Retour à l'accueil : interface réinitialisée.");
         } catch (IOException e) {
-            System.out.println("Erreur lors du retour à l'accueil :" + e.getMessage());
+            System.out.println("Erreur lors du retour à l'accueil : " + e.getMessage());
         }
     }
 }

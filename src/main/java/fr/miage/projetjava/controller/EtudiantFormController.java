@@ -163,15 +163,18 @@ public class EtudiantFormController {
      */
     private void retournerALaListe() {
         try {
-            StackPane contentArea = (StackPane) btnEnregistrer.getScene().lookup("#contentArea");
+            // On charge le fichier MainView propre
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
             Parent root = loader.load();
-            contentArea.getChildren().setAll(root);
+
+            // On remplace la RACINE (root) de la scène actuelle
+            // Cela écrase l'affichage buggé par un affichage tout neuf
+            btnEnregistrer.getScene().setRoot(root);
+
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Erreur de retour : " + e.getMessage());
         }
     }
-
 
     /**
      * Remplit le formulaire si on veut modifier un étudiant existant.
